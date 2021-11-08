@@ -8,6 +8,9 @@ const db = mysql.createConnection({
     database: 'food'
 });
 
+app.get('/', (req, res) => {
+    res.send("Hello world");
+});
 /* //user signup 
 app.post('/signup', function (req, res) {
     const firstName = req.body.firstName;
