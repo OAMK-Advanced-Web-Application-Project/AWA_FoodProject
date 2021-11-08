@@ -1,8 +1,15 @@
 import React from 'react';
-import './App.css';
+import UserLogin from './components/userLogin';
+import UserSignup from './components/userSignup';
+
 
 function App() {
-  return <div className="App">Hello</div>;
+  return (
+    <div>
+      <UserSignup />
+{/*       <UserLogin /> */}
+    </div>
+  );
 }
 
 export default App;
