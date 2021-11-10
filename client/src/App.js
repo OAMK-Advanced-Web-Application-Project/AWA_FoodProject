@@ -1,13 +1,14 @@
 import React from "react";
 import UserSignup from "./components/userSignup";
+import UserLogin from "./components/userLogin";
 //import NavbarNoSearch from "./components/NavbarNoSearch.js";
-//import UserLogin from "./components/userLogin";
 //import "./App.css";
 
 function App() {
   return (
     <div>
       <UserSignup />
+      <UserLogin />
     </div>
   );
 }
