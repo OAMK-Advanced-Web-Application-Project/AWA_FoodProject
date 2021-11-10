@@ -11,7 +11,7 @@ export default function UserSignup() {
   const [addressReg, setAddressReg] = useState("");
 
   const addUser = () => {
-    Axios.post("http://localhost:3001/create", {
+    Axios.post("http://localhost:3001/createUser", {
       firstname: firstnameReg,
       lastname: lastnameReg,
       username: usernameReg,
