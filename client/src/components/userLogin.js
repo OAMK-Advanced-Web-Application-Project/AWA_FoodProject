@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Axios from "axios";
 
 export default function UserLogin() {
@@ -41,8 +42,11 @@ export default function UserLogin() {
           setPasswordLog(event.target.value);
         }}
       />
-      <button onClick={login}> Login </button>
-      <h2>If you have not registered yet please signup</h2>
+      <Link to="/mainpage">
+        <button onClick={login}> Login </button>
+      </Link>
+      <h2>If you have not registered yet please</h2>
+      <Link to="/userSignup">Sign up</Link>
       <h1>{loginStatus}</h1>
     </div>
   );

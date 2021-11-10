@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Axios from "axios";
 import "./signup.css";
 
@@ -59,7 +60,9 @@ export default function UserSignup() {
           setAddressReg(event.target.value);
         }}
       />
-      <button onClick={addUser}> Register </button>
+      <Link to="/userlogin">
+        <button onClick={addUser}> Register </button>
+      </Link>
     </div>
   );
 }
