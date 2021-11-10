@@ -4,10 +4,10 @@ import "./Navbar.css";
 class NavbarWithSearch extends React.Component {
   render() {
     return (
-      <div class="NavbarBase">
-        <div class="NavbarContent">
-          <img class="MainLogo" src="images/jolt_logo.png" alt="Logo" />
-          <input class="SearchBox" type="text" placeholder="Search"/>
+      <div className="NavbarBase">
+        <div className="NavbarContent">
+          <img className="MainLogo" src="images/jolt_logo.png" alt="Logo" />
+          <input className="SearchBox" type="text" placeholder="Search"/>
         </div>
       </div>
     );
