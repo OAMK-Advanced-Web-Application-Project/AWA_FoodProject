@@ -8,8 +8,8 @@ export default function UserLogin() {
 
   const [loginStatus, setLoginStatus] = useState("");
 
-  const login = () => {
-    Axios.post("http://localhost:3001/login", {
+  const userLogin = () => {
+    Axios.post("http://localhost:3001/loginUser", {
       username: usernameLog,
       password: passwordLog,
     }).then((response) => {
@@ -42,8 +42,9 @@ export default function UserLogin() {
           setPasswordLog(event.target.value);
         }}
       />
-      <Link to="/mainpage">
-        <button onClick={login}> Login </button>
+{/*       must be linked to user mainpage
+ */}      <Link to="/userMainpage">
+        <button onClick={userLogin}> Login </button>
       </Link>
       <h2>If you have not registered yet please</h2>
       <Link to="/userSignup">Sign up</Link>
