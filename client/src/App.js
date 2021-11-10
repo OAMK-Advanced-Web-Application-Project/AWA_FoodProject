@@ -1,5 +1,3 @@
-
-/*import './App.css';*/
 import NavbarNoSearch from "./components/NavbarNoSearch.js"
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -14,7 +12,6 @@ function App() {
     <div>
       <Router>
           <NavbarNoSearch/>
-          
           <Routes>
             <Route path="/" element={<LandingPage/>} />
             <Route path="/userlogin" element={<UserLogin/>} />
@@ -23,7 +20,6 @@ function App() {
             <Route path="/restaurantsignup" element={<RestaurantSignup/>} />
           </Routes>
       </Router>
-
     </div>
   );
 }
