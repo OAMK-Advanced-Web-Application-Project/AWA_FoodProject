@@ -25,3 +25,24 @@
     flex-direction: row;
     font-size: 30px;
 }
+
+.SearchView {
+    background-color: aqua;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    margin: 72px 0px 0px 200px;
+}
+
+.restaurant {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+img {
+    height: auto;
+    width: auto;
+    max-width: 400px;
+    max-height: 400px;
+}
