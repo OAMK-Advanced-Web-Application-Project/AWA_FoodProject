@@ -5,12 +5,20 @@ export default function UserLogin() {
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
 
+  const [loginStatus, setLoginStatus] = useState("");
+
   const login = () => {
     Axios.post("http://localhost:3001/login", {
       username: usernameLog,
       password: passwordLog,
-    }).then(() => {
-      console.log("login successful");
+    }).then((response) => {
+      if (response.data.message) {
+        //must put a message that username does not exist, please create a acount.
+        setLoginStatus(response.data.message);
+      } else {
+        // must redirect to the mainpage of the user instead of message
+        setLoginStatus(response.data[0].username);
+      }
     });
   };
 
@@ -35,6 +43,7 @@ export default function UserLogin() {
       />
       <button onClick={login}> Login </button>
       <h2>If you have not registered yet please signup</h2>
+      <h1>{loginStatus}</h1>
     </div>
   );
 }

@@ -16,8 +16,8 @@ export default function UserSignup() {
       username: usernameReg,
       password: passwordReg,
       address: addressReg,
-    }).then(() => {
-      console.log("success");
+    }).then((response) => {
+      console.log(response);
     });
   };
 
