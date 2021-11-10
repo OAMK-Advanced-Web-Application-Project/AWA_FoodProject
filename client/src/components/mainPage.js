@@ -1,6 +1,7 @@
 import React from 'react'
 import NavbarNoSearch from './NavbarNoSearch'
 import "./mainPage.css"
+import "./searchView.css"
 import SearchResult from './searchResult'
 import placeholderData from './placeholderData.json'
 
