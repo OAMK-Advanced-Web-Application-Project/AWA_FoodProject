@@ -6,8 +6,7 @@ a {
 .loginButtons {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding-top: 120px;
+    padding-top: 100px;
 }
 
 .buttonCustomer {
