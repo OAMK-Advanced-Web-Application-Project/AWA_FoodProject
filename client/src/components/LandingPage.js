@@ -1,5 +1,7 @@
 import React from "react";
 import "./LandingPage.css";
+import { Link } from "react-router-dom";
+
 
 class LandingPage extends React.Component {
     render() {
@@ -9,8 +11,8 @@ class LandingPage extends React.Component {
                     <p>Exquisite flavors.</p>
                     <p>Simply delivered.</p>
             <div className="loginButtons">
-                <button className="buttonRestaurant">Log in as a bistro</button>
-                <button className="buttonCustomer">Log in as a customer</button>
+                <Link to="/restaurantlogin" className="buttonRestaurant">Log in as a bistro</Link>
+                <Link to ="/userlogin" className="buttonCustomer">Log in as a customer</Link>
             </div>
 
             </div>

@@ -1,27 +1,31 @@
+a {
+    color: black;
+    text-decoration: none; /* no underline */
+  }
+
 .loginButtons {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding-top: 120px;
+    padding-top: 100px;
 }
 
 .buttonCustomer {
     width: 60%;
-    height: 60px;
-    padding: 2px 2px 2px 2px;
     border-radius: 25px;
     background-color: #ffffff;
     border: 1px solid;
     padding: 15px;
+    font-size: 15px;
+    text-align: center;
 }
 .buttonRestaurant {
     width: 60%;
-    height: 60px;
-    padding: 2px 2px 2px 2px;
     border-radius: 25px;
     background-color: #ffffff;
     border: 1px solid;
     padding: 15px;
+    font-size: 15px;
+    text-align: center;
 }
 
 .buttonCustomer:hover {
