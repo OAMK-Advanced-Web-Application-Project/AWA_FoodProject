@@ -1,11 +1,10 @@
 const express = require("express");
+const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
 
-const app = express();
-
 app.use(express.json());
-app.use(cors({origin: true, credentials: true}));
+app.use(cors());
 
 const db = mysql.createConnection({
   user: "root",
@@ -14,7 +13,7 @@ const db = mysql.createConnection({
   database: "food",
 });
 
-app.post("/register", (req, res) => {
+app.post("/create", (req, res) => {
   const firstname = req.body.firstname;
   const lastname = req.body.lastname;
   const username = req.body.username;
@@ -25,7 +24,11 @@ app.post("/register", (req, res) => {
     "INSERT INTO user (firstname, lastname, username, password, address) VALUES (?,?,?,?,?)",
     [firstname, lastname, username, password, address],
     (err, result) => {
-      console.log(err);
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values Inserted");
+      }
     }
   );
 });

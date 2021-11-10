@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Axios from "axios";
 import "./signup.css";
 
 export default function UserSignup() {
-  const [firstnameReg, setFirstnameReg] = useState("");
-  const [lastnameReg, setLastnameReg] = useState("");
-  const [usernameReg, setUsernameReg] = useState("");
-  const [passwordReg, setPasswordReg] = useState("");
-  const [addressReg, setAddressReg] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
 
-  const register = () => {
-    Axios.post("http://localhost3001/register", {
-      firstname: firstnameReg,
-      lastname: lastnameReg,
-      username: usernameReg,
-      password: passwordReg,
-      address: addressReg,
-    }).then((response) => {
-      console.log(response);
+  const addUser = () => {
+    Axios.post("http://localhost:3001/create", {
+      firstname: firstname,
+      lastname: lastname,
+      username: username,
+      password: password,
+      address: address,
+    }).then(() => {
+      console.log("success");
     });
   };
 
@@ -27,39 +27,39 @@ export default function UserSignup() {
       <label>Firstname</label>
       <input
         type="text"
-        onChange={(e) => {
-          setFirstnameReg(e.target.value);
+        onChange={(event) => {
+          setFirstname(event.target.value);
         }}
       />
       <label>Lastname</label>
       <input
         type="text"
-        onChange={(e) => {
-          setLastnameReg(e.target.value);
+        onChange={(event) => {
+          setLastname(event.target.value);
         }}
       />
       <label>Username</label>
       <input
         type="text"
-        onChange={(e) => {
-          setUsernameReg(e.target.value);
+        onChange={(event) => {
+          setUsername(event.target.value);
         }}
       />
       <label>Password</label>
       <input
         type="text"
-        onChange={(e) => {
-          setPasswordReg(e.target.value);
+        onChange={(event) => {
+          setPassword(event.target.value);
         }}
       />
       <label>Address</label>
       <input
         type="text"
-        onChange={(e) => {
-          setAddressReg(e.target.value);
+        onChange={(event) => {
+          setAddress(event.target.value);
         }}
       />
-      <button onClick={register}> Register </button>
+      <button onClick={addUser}> Register </button>
     </div>
   );
 }
