@@ -13,13 +13,7 @@ export default function RestaurantLogin() {
       username: usernameLog,
       password: passwordLog,
     }).then((response) => {
-      if (response.data.message) {
-        //must put a message that username does not exist, please create a acount.
-        setLoginStatus(response.data.message);
-      } else {
-        // must redirect to the mainpage of the user instead of message
-        setLoginStatus(response.data[0].username);
-      }
+      console.log(response);
     });
   };
 
@@ -42,8 +36,9 @@ export default function RestaurantLogin() {
           setPasswordLog(event.target.value);
         }}
       />
-{/*       must be linked to restaurant mainpage
- */}      <Link to="/mainpage">
+      {/*       must be linked to restaurant mainpage
+       */}{" "}
+      <Link to="/restaurantMainpage">
         <button onClick={restaurantLogin}> Login </button>
       </Link>
       <h2>If you have not registered yet please</h2>
