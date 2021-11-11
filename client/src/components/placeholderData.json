@@ -1,0 +1,32 @@
+{
+    "restaurants": [
+        {
+            "id": 1,
+            "name": "Kauppuri 5",
+            "type": "Burger Bar",
+            "price": "$$",
+            "image": "burger1.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Istanbul Oriental",
+            "type": "Turkish",
+            "price": "$$$$",
+            "image": "burger1.jpg"
+        },
+        {
+            "id": 3,
+            "name": "McDonalds",
+            "type": "Fastfood",
+            "price": "$",
+            "image": "burger1.jpg"
+        },
+        {
+            "id": 4,
+            "name": "Pikku Thai",
+            "type": "Thai",
+            "price": "$$",
+            "image": "burger1.jpg"
+        }
+    ]
+}
