@@ -1,15 +1,13 @@
 .SearchView {
-    width: 80%;
-    height: auto;
     display: flex;
+    flex-wrap: wrap;
     margin: 70px 0px 0px 100px;
     
 }
 
 .restaurant {
     padding: 15px;
-    margin-right: 30px;
-    margin-left: 30px;
+    margin: 0px 30px 30px 30px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     border-color: lightgray;
     border-style: solid;

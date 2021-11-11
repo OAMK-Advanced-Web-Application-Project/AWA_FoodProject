@@ -27,6 +27,27 @@
             "type": "Thai",
             "price": "$$",
             "image": "burger1.jpg"
+        },
+        {
+            "id": 5,
+            "name": "Ravintola Pannu",
+            "type": "Italian",
+            "price": "$$",
+            "image": "burger1.jpg"
+        },
+        {
+            "id": 6,
+            "name": "Burger King",
+            "type": "Fastfood",
+            "price": "$",
+            "image": "burger1.jpg"
+        },
+        {
+            "id": 7,
+            "name": "Uleåborg",
+            "type": "Finnish",
+            "price": "$$$$",
+            "image": "burger1.jpg"
         }
     ]
 }

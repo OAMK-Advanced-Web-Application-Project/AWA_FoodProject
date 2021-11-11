@@ -1,8 +1,6 @@
-.mainPageSearch {
-    display: block;
-    align-items: center;
+.UserMainPageSearch {
     margin-left: 35%;
-    margin-top: 8%;
+    margin-top: 5%;
 }
 
 .SearchBox {
