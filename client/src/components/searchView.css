@@ -2,7 +2,6 @@
     display: flex;
     flex-wrap: wrap;
     margin: 70px 0px 0px 100px;
-    
 }
 
 .restaurant {
@@ -14,6 +13,10 @@
     border-width: 1px;
     box-shadow: 5px 3px 5px rgb(236, 236, 236);
     border-radius: 25px;
+}
+
+.restaurant:hover {
+    background-color: rgb(249, 249, 249);
 }
 
 img {
