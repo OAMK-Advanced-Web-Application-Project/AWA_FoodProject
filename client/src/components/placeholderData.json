@@ -5,7 +5,7 @@
             "name": "Kauppuri 5",
             "type": "Burger Bar",
             "price": "$$",
-            "image": "burger1.jpg"
+            "image": "burger2.jpg"
         },
         {
             "id": 2,
@@ -19,21 +19,21 @@
             "name": "McDonalds",
             "type": "Fastfood",
             "price": "$",
-            "image": "burger1.jpg"
+            "image": "burger3.jpg"
         },
         {
             "id": 4,
             "name": "Pikku Thai",
             "type": "Thai",
             "price": "$$",
-            "image": "burger1.jpg"
+            "image": "burger3.jpg"
         },
         {
             "id": 5,
             "name": "Ravintola Pannu",
             "type": "Italian",
             "price": "$$",
-            "image": "burger1.jpg"
+            "image": "burger2.jpg"
         },
         {
             "id": 6,
@@ -47,7 +47,7 @@
             "name": "Uleåborg",
             "type": "Finnish",
             "price": "$$$$",
-            "image": "burger1.jpg"
+            "image": "burger3.jpg"
         }
     ]
 }
