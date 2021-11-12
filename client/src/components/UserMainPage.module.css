@@ -1,9 +1,6 @@
-.UserMainPageSearch {
+.SearchBox {
     margin-left: 35%;
     margin-top: 5%;
-}
-
-.SearchBox {
     width: 500px;
     height: 72px;
     border-radius: 35px;

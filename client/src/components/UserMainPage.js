@@ -31,9 +31,7 @@ class UserMainPage extends React.Component {
     render() {
         return (
             <div>
-                <div className={styles1.UserMainPageSearch}>
-                    <input class="SearchBox" className={styles1.SearchBox} type="text" onChange={ this.onSearchChange } value={ this.state.SearchString } placeholder="Search for restaurants..." />
-                </div>
+                <input class="SearchBox" className={styles1.SearchBox} type="text" onChange={ this.onSearchChange } value={ this.state.SearchString } placeholder="Search for restaurants..." />
                 <div className={styles2.SearchView}>
                     <SearchView restaurants={ this.state.restaurants.filter((restaurant) => restaurant.name.includes(this.state.SearchString)) } />
                 </div>
