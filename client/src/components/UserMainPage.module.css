@@ -1,3 +1,10 @@
+.mainPageSearch {
+    display: block;
+    align-items: center;
+    margin-left: 35%;
+    margin-top: 8%;
+}
+
 .SearchBox {
     margin-left: 35%;
     margin-top: 5%;
