@@ -5,21 +5,21 @@
             "name": "Kauppuri 5",
             "type": "Burger Bar",
             "price": "$$",
-            "image": "burger2.jpg"
+            "image": "burger1.jpg"
         },
         {
             "id": 2,
             "name": "Istanbul Oriental",
             "type": "Turkish",
             "price": "$$$$",
-            "image": "burger3.jpg"
+            "image": "burger1.jpg"
         },
         {
             "id": 3,
             "name": "McDonalds",
             "type": "Fastfood",
             "price": "$",
-            "image": "burger3.jpg"
+            "image": "burger1.jpg"
         },
         {
             "id": 4,
