@@ -8,7 +8,7 @@ import UserSignup from './components/userSignup';
 import RestaurantSignup from './components/restaurantSignup';
 import Restaurant from "./components/restaurantPage";
 import Cart from "./components/Cart.js";
-import UserMainPage from './components/UserMainPage';
+import UserMainPage from "./components/userMainPage.js";
 
 function App() {
   return (
