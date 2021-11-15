@@ -6,6 +6,7 @@ import UserLogin from './components/userLogin.js';
 import RestaurantLogin from './components/restaurantLogin.js';
 import UserSignup from './components/userSignup';
 import RestaurantSignup from './components/restaurantSignup';
+import RestaurantMainPage from './components/restaurantMainPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/restaurantlogin" element={<RestaurantLogin/>} />
             <Route path="/usersignup" element={<UserSignup/>} />
             <Route path="/restaurantsignup" element={<RestaurantSignup/>} />
+            <Route path="/restaurantmainpage" element={<RestaurantMainPage/>} />
           </Routes>
       </Router>
     </div>

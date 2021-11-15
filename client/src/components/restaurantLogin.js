@@ -43,7 +43,7 @@ export default function RestaurantLogin() {
         }}
       />
 {/*       must be linked to restaurant mainpage
- */}      <Link to="/mainpage">
+ */}      <Link to="/restaurantMainPage">
         <button onClick={restaurantLogin}> Login </button>
       </Link>
       <h2>If you have not registered yet please</h2>
