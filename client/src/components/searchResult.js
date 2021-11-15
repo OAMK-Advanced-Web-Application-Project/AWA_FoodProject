@@ -1,4 +1,5 @@
 import React from 'react'
+import './mainpage.css'
 import styles from './searchView.module.css'
 
 export default function searchResult(props) {
