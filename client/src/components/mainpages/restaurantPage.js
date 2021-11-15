@@ -1,7 +1,7 @@
 import React from 'react'
-import MenuItem from './menuItem.js'
+import MenuItem from '../shoppingCart/menuItem.js'
 import placeholderData from './placeholderData.json'
-import CartProvider from './CartProvider';
+import CartProvider from '../shoppingCart/CartProvider';
 
 function MenuView(props){
     return(
