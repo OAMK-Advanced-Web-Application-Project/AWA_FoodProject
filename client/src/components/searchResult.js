@@ -4,6 +4,7 @@ import styles from './searchView.module.css'
 
 export default function searchResult(props) {
     return (
+        <div className="restaurant">
         <div className={styles.restaurant}>
             <div><img src={`./images/${props.image}`}/></div>
             <div><b>{ props.name }</b></div>
