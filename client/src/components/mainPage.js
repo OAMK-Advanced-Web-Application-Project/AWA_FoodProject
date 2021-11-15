@@ -5,6 +5,7 @@ import "./searchView.css"
 import SearchResult from './searchResult'
 import placeholderData from './placeholderData.json'
 
+
 function SearchView(props){
     return(
         <div className="SearchView">
@@ -29,7 +30,6 @@ class mainPage extends React.Component {
     render() {
         return (
             <div>
-                <NavbarNoSearch />
                 <div className="mainPageSearch">
                     <input class="SearchBox" type="text" placeholder="Search for restaurants..."/>
                 </div>

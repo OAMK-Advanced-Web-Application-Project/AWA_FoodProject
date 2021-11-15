@@ -28,5 +28,32 @@
             "price": "$$",
             "image": "burger1.jpg"
         }
+    ],
+
+    "menuItems":[
+        {
+            "id": 11,
+            "restaurantID": 1,
+            "name": "Burger_1",
+            "price": 2.99
+        },
+        {
+            "id": 12,
+            "restaurantID": 1,
+            "name": "Burger_2",
+            "price": 2.99
+        },
+        {
+            "id": 13,
+            "restaurantID": 1,
+            "name": "Burger_3",
+            "price": 2.99
+        },
+        {
+            "id": 14,
+            "restaurantID": 1,
+            "name": "Burger_4",
+            "price": 2.99
+        }
     ]
 }

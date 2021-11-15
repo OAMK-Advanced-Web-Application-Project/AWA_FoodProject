@@ -1,5 +1,8 @@
 import React from 'react'
 import './mainPage.css'
+import { Link } from "react-router-dom";
+import RestaurantPage from './restaurantPage';
+
 
 export default function searchResult(props) {
     return (
@@ -8,6 +11,7 @@ export default function searchResult(props) {
             <div><b>{ props.name }</b></div>
             <div>{ props.type }</div>
             <div>{ props.price }</div>
+            <Link to="/restaurantPage">To Restaurant</Link>
         </div>
     )
 }
