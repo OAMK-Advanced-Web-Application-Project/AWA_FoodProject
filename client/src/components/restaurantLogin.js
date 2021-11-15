@@ -36,9 +36,12 @@ export default function RestaurantLogin() {
           setPasswordLog(event.target.value);
         }}
       />
+{/*       must be linked to restaurant mainpage
+ */}      <Link to="/restaurantMainPage">
+
       {/*       must be linked to restaurant mainpage
        */}{" "}
-      <Link to="/restaurantMainpage">
+      <Link to="/restaurantSignup">
         <button onClick={restaurantLogin}> Login </button>
       </Link>
       <h2>If you have not registered yet please</h2>
