@@ -1,7 +1,5 @@
 import React from 'react'
-import './mainPage.css'
 import { Link } from "react-router-dom";
-import RestaurantPage from './restaurantPage';
 
 
 export default function searchResult(props) {
