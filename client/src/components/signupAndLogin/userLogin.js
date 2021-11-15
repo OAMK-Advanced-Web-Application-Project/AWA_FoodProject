@@ -19,13 +19,13 @@ export default function UserLogin() {
     });
   };
 
-  useEffect(() => {
+/*   useEffect(() => {
     Axios.get("http://localhost:3001/login").then((response) => {
       if (response.data.loggedIn == true) {
         setLoginStatus(response.data.user[0].username);
       }
     });
-  }, [input]);
+  }, [input]); */
 
   return (
     <div className="userSignupForm">
@@ -46,7 +46,7 @@ export default function UserLogin() {
           setPasswordLog(event.target.value);
         }}
       />
-      <Link to="/mainPage">
+      <Link to="../mainpages/userMainpage">
         <button onClick={userLogin}> Login </button>
       </Link>
       <h2>If you have not registered yet please</h2>

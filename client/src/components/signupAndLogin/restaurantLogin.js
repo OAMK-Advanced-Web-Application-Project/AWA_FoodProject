@@ -36,7 +36,7 @@ export default function RestaurantLogin() {
           setPasswordLog(event.target.value);
         }}
       />
-      <Link to="/restaurantMainPage">
+      <Link to="../mainpages/restaurantMainPage">
         <button onClick={restaurantLogin}> Login </button>
       </Link>
       <h2>If you have not registered yet please</h2>

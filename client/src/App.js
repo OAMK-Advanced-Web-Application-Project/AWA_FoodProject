@@ -1,14 +1,14 @@
-import NavbarNoSearch from "./components/NavbarNoSearch.js"
+import NavbarNoSearch from "./components/navbar/NavbarNoSearch.js"
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LandingPage from "./components/LandingPage.js";
-import UserLogin from './components/userLogin.js';
-import RestaurantLogin from './components/restaurantLogin.js';
-import UserSignup from './components/userSignup';
-import RestaurantSignup from './components/restaurantSignup';
-import Restaurant from "./components/restaurantPage";
-import Cart from "./components/Cart.js";
-import UserMainPage from "./components/userMainPage.js";
+import LandingPage from "./components/landingPage/LandingPage";
+import UserLogin from './components/signupAndLogin/userLogin.js';
+import RestaurantLogin from './components/signupAndLogin/restaurantLogin.js';
+import UserSignup from './components/signupAndLogin/userSignup';
+import RestaurantSignup from './components/signupAndLogin/restaurantSignup';
+import Restaurant from "./components/mainpages/restaurantPage";
+import Cart from "./components/shoppingCart/Cart.js";
+import UserMainPage from "./components/mainpages/userMainPage.js";
 
 function App() {
   return (
