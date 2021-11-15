@@ -9,6 +9,7 @@ import RestaurantSignup from './components/restaurantSignup';
 import MainPage from "./components/mainPage.js";
 import Restaurant from "./components/restaurantPage";
 import Cart from "./components/Cart.js";
+import UserMainPage from './components/UserMainPage';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/mainPage" element ={<MainPage/>}/>
             <Route path="/restaurant:id" element ={<Restaurant/>}/>
             <Route path="/cart" element={<Cart/>}/>
+            <Route path="/usermainpage" element={<UserMainPage/>} />
           </Routes>
       </Router>
     </div>
