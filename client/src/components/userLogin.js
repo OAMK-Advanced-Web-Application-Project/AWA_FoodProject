@@ -36,8 +36,7 @@ export default function UserLogin() {
           setPasswordLog(event.target.value);
         }}
       />
-      {/*       must be linked to user mainpage
-       */}{" "}
+
       <Link to="/userMainPage">
         <button onClick={userLogin}> Login </button>
       </Link>
