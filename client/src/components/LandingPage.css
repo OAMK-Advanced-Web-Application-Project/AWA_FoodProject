@@ -17,6 +17,7 @@ a {
     padding: 15px;
     font-size: 15px;
     text-align: center;
+    margin: 10px;
 }
 .buttonRestaurant {
     width: 60%;
@@ -26,6 +27,7 @@ a {
     padding: 15px;
     font-size: 15px;
     text-align: center;
+    margin: 10px;
 }
 
 .buttonCustomer:hover {
