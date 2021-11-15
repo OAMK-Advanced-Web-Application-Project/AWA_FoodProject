@@ -6,11 +6,9 @@ import UserLogin from './components/userLogin.js';
 import RestaurantLogin from './components/restaurantLogin.js';
 import UserSignup from './components/userSignup';
 import RestaurantSignup from './components/restaurantSignup';
-import MainPage from "./components/mainPage.js";
 import Restaurant from "./components/restaurantPage";
 import Cart from "./components/Cart.js";
 import UserMainPage from './components/UserMainPage';
-
 
 function App() {
   return (
@@ -23,7 +21,6 @@ function App() {
             <Route path="/restaurantlogin" element={<RestaurantLogin/>} />
             <Route path="/usersignup" element={<UserSignup/>} />
             <Route path="/restaurantsignup" element={<RestaurantSignup/>} />
-            <Route path="/mainPage" element ={<MainPage/>}/>
             <Route path="/restaurant:id" element ={<Restaurant/>}/>
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/usermainpage" element={<UserMainPage/>} />
