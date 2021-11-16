@@ -7,7 +7,7 @@ class NavbarNoSearch extends React.Component {
     return (
       <div className="NavbarBase">
         <div className="NavbarContent">
-          <img className="MainLogo" src="images/jolt_logo.png" alt="Logo" />
+          <img className="MainLogo" src="/images/jolt_logo.png" alt="Logo" />
           <Link to="/cart">Cart</Link>
         </div>
       </div>

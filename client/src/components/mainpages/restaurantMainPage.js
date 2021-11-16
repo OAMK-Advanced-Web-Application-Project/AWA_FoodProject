@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./restaurantMainPage.css";
-import Axios from "axios";
 
 
-class restaurantMainPage extends React.Component {
+
+class RestaurantMainPage extends React.Component {
     render() {
     return (
+
         <div>
             <div className="restaurantInfoContainer">
                 <div className="editableInfo">
@@ -23,11 +23,12 @@ class restaurantMainPage extends React.Component {
                 </div>
                 <img className="restaurantImage" src="images/maccas.jpg" alt="Logo" />
             </div>
-        </div>
+            </div>
+            
     );
     }
 }
 
 
-export default restaurantMainPage
+export default RestaurantMainPage;
 
