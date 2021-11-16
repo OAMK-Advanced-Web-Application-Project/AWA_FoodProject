@@ -14,3 +14,7 @@
 [1115/084334.656:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: KÃ¤yttÃ¶ estetty. (0x5)
 [1115/084334.736:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: KÃ¤yttÃ¶ estetty. (0x5)[1115/181045.020:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: Käyttö estetty. (0x5)
 [1115/181045.079:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: Käyttö estetty. (0x5)
+[1116/102411.977:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: Käyttö estetty. (0x5)
+[1116/102412.066:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: Käyttö estetty. (0x5)
+[1116/130317.475:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: Käyttö estetty. (0x5)
+[1116/130317.543:ERROR:file_io_win.cc(163)] CreateFile C:\Program Files (x86)\Google\Chrome\settings.dat: Käyttö estetty. (0x5)
