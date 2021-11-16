@@ -8,24 +8,19 @@ export default function UserLogin() {
 
   const [loginStatus, setLoginStatus] = useState("");
 
-  Axios.default.withCredentials = true;
-
   const userLogin = () => {
-    Axios.post("http://localhost:3001/loginUser", {
+    Axios.post("http://localhost:3001/UserLogin", {
       username: usernameLog,
       password: passwordLog,
     }).then((response) => {
       console.log(response);
-    });
-  };
-
-/*   useEffect(() => {
-    Axios.get("http://localhost:3001/login").then((response) => {
-      if (response.data.loggedIn == true) {
-        setLoginStatus(response.data.user[0].username);
+      if (response.data.message) {
+        setLoginStatus(response.data.message);
+      } else {
+        setLoginStatus(response.data[0].username);
       }
     });
-  }, [input]); */
+  };
 
   return (
     <div className="userSignupForm">
@@ -46,9 +41,9 @@ export default function UserLogin() {
           setPasswordLog(event.target.value);
         }}
       />
-      <Link to="../mainpages/userMainpage">
-        <button onClick={userLogin}> Login </button>
-      </Link>
+{/*       <Link to="../mainpages/userMainpage">
+ */}        <button onClick={userLogin}> Login </button>
+     {/*  </Link> */}
       <h2>If you have not registered yet please</h2>
       <Link to="/userSignup">Sign up</Link>
       <h1>{loginStatus}</h1>
