@@ -1,13 +1,13 @@
 import React from 'react';
-import "./Navbar.css";
+import styles from "./Navbar.module.css";
 
 class NavbarWithSearch extends React.Component {
   render() {
     return (
-      <div className="NavbarBase">
-        <div className="NavbarContent">
-          <img className="MainLogo" src="images/jolt_logo.png" alt="Logo" />
-          <input className="SearchBox" type="text" placeholder="Search"/>
+      <div className= { styles.NavbarBase }>
+        <div className= { styles.NavbarContent} >
+          <img className= { styles.MainLogo } src="images/jolt_logo.png" alt="Logo" />
+          <input className= { styles.SearchBox } type="text" placeholder="Search"/>
         </div>
       </div>
     );

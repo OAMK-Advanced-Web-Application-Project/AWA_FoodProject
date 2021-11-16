@@ -25,5 +25,15 @@
 
 .MainLogo {
     max-width: 90px;
-    padding-right: 35%;
+}
+
+.Wrapper {
+    margin-left: 55vw;
+}
+
+.Cart {
+    width: auto;
+    height: auto;
+    max-width: 74px;
+    max-height: 74px;
 }
