@@ -1,3 +1,26 @@
 .restaurantImage {
     height: 200px;
 }
+
+.restaurantInfoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+    min-width: 20%;
+    padding: 2px 2px 2px 2px;
+    border-radius: 25px;
+    margin-right: 20%;
+    margin-left: 20%;
+    border: 1px solid #797979;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.restaurantImage {
+    padding: 20px;
+}

@@ -11,17 +11,17 @@ class RestaurantMainPage extends React.Component {
             <div className="restaurantInfoContainer">
                 <div className="editableInfo">
                     <table>
-                        <tr>Restaurant name <input></input></tr>
-                        <tr>Username <input></input></tr>
-                        <tr>Password <input></input></tr>
-                        <tr>Address <input></input></tr>
-                        <tr>Operating hours <input></input></tr>
-                        <tr>Type <input></input></tr>
-                        <tr>Price level <input></input></tr>
+                        <tr>Restaurant name</tr> <tr><input></input></tr>
+                        <tr>Username</tr> <tr><input></input></tr>
+                        <tr>Password</tr> <tr><input></input></tr>
+                        <tr>Address</tr> <tr><input></input></tr>
+                        <tr>Operating hours</tr> <tr><input></input></tr>
+                        <tr>Type</tr> <tr><input></input></tr>
+                        <tr>Price level</tr> <tr><input></input></tr>
                     </table>
                     <button>Apply changes</button>
                 </div>
-                <img className="restaurantImage" src="images/maccas.jpg" alt="Logo" />
+                <img className="restaurantImage" src="/images/maccas.jpg" alt="Logo" />
             </div>
             </div>
             
