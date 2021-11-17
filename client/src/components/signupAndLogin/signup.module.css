@@ -37,6 +37,7 @@
 }
 
 .signupForm button:hover { 
+  cursor: pointer;
   background-color: #0d80e4;
   color: white;
 }

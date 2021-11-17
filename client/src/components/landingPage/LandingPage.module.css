@@ -1,51 +1,54 @@
 .background {
-  background-image: linear-gradient(to right,#439692 ,#98ccd3);
+  background-image: linear-gradient(to right, #439692, #98ccd3);
   padding: 80px;
 }
 
-.loginForm {
+.bothLandings {
+  display: flex;
+  flex-direction: row;
+}
+.landingContainer {
   width: 280px;
   min-height: 450px;
   display: flex;
-  flex-direction: column;
+  flex-direction: culumn;
   border-radius: 19px;
   background-color: rgb(177, 230, 236);
   box-shadow: 0 0 2px rgba(255, 6, 6, 0.28);
   border: solid;
   padding: 40px;
-  margin: 96px auto;
+  margin: 100px auto;
   font-size: 20px;
   font-family: "Times New Roman";
 }
 
-.loginForm h1 {
+.containerContent {
   font-size: 30px;
   text-align: center;
   padding: 20px;
 }
 
-.loginForm input[type="text"] {
-  font-size: 20px;
+a {
+  color: black;
+  text-decoration: none; /* no underline */
 }
 
-.loginForm button {
-  font-size: 20px;
+.loginButtons {
+  font-size: 25px;
   background-color: rgb(213, 146, 233);
-  padding: 5px;
-  margin-top: 20px;
+  padding: 50px;
+  margin: 20px;
   transition-duration: 0.4s;
   font-family: "Times New Roman";
   width: 80px;
   text-align: center;
+  border-radius: 25px;
+
 }
 
-.loginForm button:hover { 
+.loginButtons:hover {
   cursor: pointer;
   background-color: #0d80e4;
   color: white;
 }
 
-.loginForm h2 {
-  font-size: 22px;
-  margin-block-end: 0px;
-}
