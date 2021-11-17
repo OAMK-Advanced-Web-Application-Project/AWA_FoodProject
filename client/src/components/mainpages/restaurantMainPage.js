@@ -1,6 +1,6 @@
 import React from "react";
 import "./restaurantMainPage.css";
-
+import { Link } from "react-router-dom";
 
 
 class RestaurantMainPage extends React.Component {
@@ -22,11 +22,13 @@ class RestaurantMainPage extends React.Component {
                     <button>Apply changes</button>
                 </div>
                 <img className="restaurantImage" src="/images/maccas.jpg" alt="Logo" />
+                
             </div>
-            </div>
-            
+        </div>
+
     );
     }
+
 }
 
 
