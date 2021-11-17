@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-import "./signup.css";
+import styles from './signup.module.css';
 
 export default function RestaurantSignup() {
   const [restaurantnameReg, setRestaurantnameReg] = useState("");
@@ -21,8 +21,8 @@ export default function RestaurantSignup() {
   };
 
   return (
-    <div className="userSignupForm">
-      <h1 className="userSignupTitle">Signup</h1>
+    <div class={ styles.signupForm }>
+      <h1>Signup</h1>
       <label>RestaurantName</label>
       <input
         type="text"

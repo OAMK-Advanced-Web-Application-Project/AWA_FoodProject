@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
+import styles from "./login.module.css";
 
 export default function RestaurantLogin() {
   const [usernameLog, setUsernameLog] = useState("");
@@ -18,12 +19,11 @@ export default function RestaurantLogin() {
   };
 
   return (
-    <div className="userSignupForm">
-      <h1 className="userSignupTitle">login</h1>
+    <div class={styles.loginForm}>
+      <h1>login</h1>
       <label>Username</label>
       <input
         type="text"
-        placeholder="Username..."
         onChange={(event) => {
           setUsernameLog(event.target.value);
         }}
@@ -31,7 +31,6 @@ export default function RestaurantLogin() {
       <label>Password</label>
       <input
         type="text"
-        placeholder="Password..."
         onChange={(event) => {
           setPasswordLog(event.target.value);
         }}
@@ -40,7 +39,9 @@ export default function RestaurantLogin() {
         <button onClick={restaurantLogin}> Login </button>
       </Link>
       <h2>If you have not registered yet please</h2>
-      <Link to="/restaurantSignup">Sign up</Link>
+      <Link to="/restaurantSignup">
+        <button> Sign up </button>
+      </Link>
       <h1>{loginStatus}</h1>
     </div>
   );
