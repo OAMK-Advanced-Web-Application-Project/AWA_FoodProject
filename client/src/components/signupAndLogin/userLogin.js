@@ -24,31 +24,33 @@ export default function UserLogin() {
   };
 
   return (
-    <div class={styles.loginForm}>
-      <h1>login</h1>
-      <label>Username</label>
-      <input
-        type="text"
-        onChange={(event) => {
-          setUsernameLog(event.target.value);
-        }}
-      />
-      <label>Password</label>
-      <input
-        type="text"
-        onChange={(event) => {
-          setPasswordLog(event.target.value);
-        }}
-      />
-      {/*       <Link to="../mainpages/userMainpage">
-       */}{" "}
-      <button onClick={userLogin}> Login </button>
-      {/*  </Link> */}
-      <h2>If you have not registered yet,</h2>
-      <Link to="/userSignup">
-        <button> Sign up </button>
-      </Link>
-      <h1>{loginStatus}</h1>
+    <div class={styles.background}>
+      <div class={styles.loginForm}>
+        <h1>login</h1>
+        <label>Username</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setUsernameLog(event.target.value);
+          }}
+        />
+        <label>Password</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setPasswordLog(event.target.value);
+          }}
+        />
+        {/*       <Link to="../mainpages/userMainpage">
+         */}{" "}
+        <button onClick={userLogin}> Login </button>
+        {/*  </Link> */}
+        <h2>If you have not registered yet,</h2>
+        <Link to="/userSignup">
+          <button> Sign up </button>
+        </Link>
+        <h1>{loginStatus}</h1>
+      </div>
     </div>
   );
 }

@@ -1,3 +1,8 @@
+.background {
+  background-image: linear-gradient(to right,#439692 ,#98ccd3);
+  padding: 80px;
+}
+
 .signupForm {
   width: 280px;
   min-height: 450px;
