@@ -9,6 +9,7 @@ import RestaurantSignup from './components/signupAndLogin/restaurantSignup';
 import Restaurant from "./components/mainpages/restaurantPage";
 import Cart from "./components/shoppingCart/Cart.js";
 import UserMainPage from "./components/mainpages/userMainPage.js";
+import RestaurantMainPage from "./components/mainpages/restaurantMainPage.js";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/restaurant:id" element ={<Restaurant/>}/>
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/usermainpage" element={<UserMainPage/>} />
+            <Route path="mainpages/restaurantmainpage" element={<RestaurantMainPage/>} />
           </Routes>
       </Router>
     </div>
