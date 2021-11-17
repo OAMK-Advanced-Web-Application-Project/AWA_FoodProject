@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
-import "./signup.css";
+import styles from "./signup.module.css";
 
 export default function UserSignup() {
   const [firstnameReg, setFirstnameReg] = useState("");
@@ -23,46 +23,48 @@ export default function UserSignup() {
   };
 
   return (
-    <div className="userSignupForm">
-      <h1 className="userSignupTitle">Signup</h1>
-      <label>Firstname</label>
-      <input
-        type="text"
-        onChange={(event) => {
-          setFirstnameReg(event.target.value);
-        }}
-      />
-      <label>Lastname</label>
-      <input
-        type="text"
-        onChange={(event) => {
-          setLastnameReg(event.target.value);
-        }}
-      />
-      <label>Username</label>
-      <input
-        type="text"
-        onChange={(event) => {
-          setUsernameReg(event.target.value);
-        }}
-      />
-      <label>Password</label>
-      <input
-        type="text"
-        onChange={(event) => {
-          setPasswordReg(event.target.value);
-        }}
-      />
-      <label>Address</label>
-      <input
-        type="text"
-        onChange={(event) => {
-          setAddressReg(event.target.value);
-        }}
-      />
-      <Link to="/userlogin">
-        <button onClick={addUser}> Register </button>
-      </Link>
+    <div class ={styles.background}>
+      <div class={styles.signupForm}>
+        <h1>Signup</h1>
+        <label>Firstname</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setFirstnameReg(event.target.value);
+          }}
+        />
+        <label>Lastname</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setLastnameReg(event.target.value);
+          }}
+        />
+        <label>Username</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setUsernameReg(event.target.value);
+          }}
+        />
+        <label>Password</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setPasswordReg(event.target.value);
+          }}
+        />
+        <label>Address</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setAddressReg(event.target.value);
+          }}
+        />
+        <Link to="/userlogin">
+          <button onClick={addUser}> Register </button>
+        </Link>
+      </div>
     </div>
   );
 }
