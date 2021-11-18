@@ -37,7 +37,7 @@ function App() {
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/usermainpage" element={<UserMainPage/>} />
             <Route path="mainpages/restaurantmainpage" element={<RestaurantMainPage/>} />
-            <Route path="mainpages/restaurantmainpage/editmenu" element={ <MenuList menu={ menus }/> } >
+            <Route path="mainpages/restaurantmainpage/menu" element={ <MenuList menu={ menus }/> } >
             <Route path=":menuId" element={ <MenuDetailView menus={ menus } /> } />
             </Route>
           </Routes>
