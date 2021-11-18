@@ -10,8 +10,19 @@ import Restaurant from "./components/mainpages/restaurantPage";
 import Cart from "./components/shoppingCart/Cart.js";
 import UserMainPage from "./components/mainpages/userMainPage.js";
 import RestaurantMainPage from "./components/mainpages/restaurantMainPage.js";
+import MenuDetailView from "./components/mainpages/editableRestaurantInfo/MenuDetailView.js";
+import MenuList from "./components/mainpages/editableRestaurantInfo/MenuList.js";
+import menuData from "./components/mainpages/editableRestaurantInfo/menuData.json";
+import { v4 as uuidv4 } from 'uuid';
+
+
 
 function App() {
+
+  const menus = menuData.map(menu => {
+    return { ...menu, id: uuidv4() }
+  })
+
   return (
     <div>
       <Router>
@@ -26,8 +37,12 @@ function App() {
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/usermainpage" element={<UserMainPage/>} />
             <Route path="mainpages/restaurantmainpage" element={<RestaurantMainPage/>} />
+            <Route path="mainpages/restaurantmainpage/editmenu" element={ <MenuList menu={ menus }/> } >
+            <Route path=":menuId" element={ <MenuDetailView menus={ menus } /> } />
+            </Route>
           </Routes>
       </Router>
+
     </div>
   );
 }
