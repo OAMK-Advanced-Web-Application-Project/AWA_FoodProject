@@ -8,7 +8,7 @@ export default function MenuDetailView(props) {
 
   const menu = props.menus.find(menu => menu.id === result.menuId);
   if(menu == null) {
-    return <div>Click on a menu item</div>
+    return <div></div>
   }
 
   return (

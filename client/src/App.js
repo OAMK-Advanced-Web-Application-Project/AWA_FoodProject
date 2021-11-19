@@ -36,10 +36,11 @@ function App() {
             <Route path="/restaurant:id" element ={<Restaurant/>}/>
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/usermainpage" element={<UserMainPage/>} />
-            <Route path="mainpages/restaurantmainpage" element={<RestaurantMainPage/>} />
-            <Route path="mainpages/restaurantmainpage/menu" element={ <MenuList menu={ menus }/> } >
-            <Route path=":menuId" element={ <MenuDetailView menus={ menus } /> } />
+            
+            <Route path="mainpages/restaurantmainpage" element={ <RestaurantMainPage/> }>
+              <Route path=":menuId" element={ <MenuDetailView menus={ menus } /> } />
             </Route>
+
           </Routes>
       </Router>
 

@@ -24,3 +24,14 @@
 .restaurantImage {
     padding: 20px;
 }
+
+.editableMenu {
+    border: 1px solid #797979;
+    box-shadow: 5px 5px 5px 0px rgb(0 0 0 / 35%);
+    margin-right: 20%;
+    margin-left: 20%;
+    margin-top: 1%;
+    border-radius: 25px;
+    padding: 10px 10px 10px 10px;
+
+}
