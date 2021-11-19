@@ -18,5 +18,10 @@
   "plateName": "Noodles",
   "desc": "Delicious noodles etc...",
   "price": "5.95€"
- }
+ },
+ {
+    "plateName": "Pizza",
+    "desc": "Delicious pizza etc...",
+    "price": "5.95€"
+}
 ]
