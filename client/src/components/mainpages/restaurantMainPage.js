@@ -1,5 +1,5 @@
 import React from "react";
-import "./restaurantMainPage.css";
+import styles from "./restaurantMainPage.module.css";
 import "./editableRestaurantInfo/MenuList.js";
 import "./editableRestaurantInfo/MenuDetailView.js";
 import "./editableRestaurantInfo/MenuList.js";
@@ -20,8 +20,8 @@ class RestaurantMainPage extends React.Component {
     return (
 
         <div>
-            <div className="restaurantInfoContainer">
-                <div className="editableInfo">
+            <div className= {styles.restaurantInfoContainer}>
+                <div className={styles.editableInfo}>
                     <table>
                         <tr>Restaurant name</tr> <tr><input></input></tr>
                         <tr>Username</tr> <tr><input></input></tr>
@@ -33,10 +33,10 @@ class RestaurantMainPage extends React.Component {
                     </table>
                     <button>Apply changes</button>
                 </div>
-                <img className="restaurantImage" src="/images/maccas.jpg" alt="Logo" />                
+                <img className={styles.restaurantImage} src="/images/maccas.jpg" alt="Logo" />                
             </div>
 
-            <div className="editableMenu">
+            <div className={styles.editableMenu}>
                 <MenuList menu={ menus }/>
                 <MenuDetailView menus={ menus } />
             </div>

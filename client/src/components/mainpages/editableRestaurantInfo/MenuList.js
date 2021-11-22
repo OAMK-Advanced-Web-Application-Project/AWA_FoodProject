@@ -1,18 +1,18 @@
-import "./restaurantInfo.css";
+import styles from "./restaurantInfo.module.css"
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
 export default function menuList(props) {
   return (
-    <div className="menuListView">
-      <div className="menuList">
+    <div class={styles.menuListView}>
+      <div class={styles.menuList}>
       { props.menu.map(menu =>
         <Link to={ menu.id }>
-          <div className="menuListElement">{menu.plateName}</div>
+          <div class={styles.menuListElement}>{menu.plateName}</div>
         </Link>
       )}
       </div>
-      <div className="menuDetail">
+      <div class={styles.menuDetail}>
         <Outlet />
       </div>
     </div>

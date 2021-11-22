@@ -1,4 +1,4 @@
-import "./restaurantInfo.css";
+import styles from "./restaurantInfo.module.css";
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
