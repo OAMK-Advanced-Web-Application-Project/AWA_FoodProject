@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
 
-
 class NavbarNoSearch extends React.Component {
   render() {
     return (
