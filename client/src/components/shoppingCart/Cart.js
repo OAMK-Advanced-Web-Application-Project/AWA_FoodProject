@@ -6,10 +6,12 @@ export default function Cart({cart, setCart}) {
     }
 
     const removeFromCart = (productToRemove) =>{
+        console.log("bruh_2")
         setCart(cart.filter((product) => product !== productToRemove))
     }
 
     const clearCart = () =>{
+        console.log("bruh_1")
         setCart([]);
     }
 
@@ -21,23 +23,24 @@ export default function Cart({cart, setCart}) {
 
 
     return (
-        <div>
+        <>
             <h1>Cart</h1>
             {cart.length > 0 && (
                 <button onClick={clearCart}>Clear Cart</button>
             )}
             <div>
                 {cart.map((product, id) => (
-                    <div key={id}>
+                <div key={id}>
                     <h3>{product.name}</h3>
                     <h4>€{product.price}</h4>
+                    <h4> x{product.quantity} </h4>
                         {/*<input value={product.quantity} onChange={(e) =>
                         setQuantity(product, parseInt(e.target.value))}/>*/}
                     <button onClick={() => removeFromCart(product)}>Remove</button>
-                    </div>
+                </div>
                 ))}
             </div>
             <div>Total Cost: € {getTotalSum()}</div>
-        </div>
+        </>
     )
 }
