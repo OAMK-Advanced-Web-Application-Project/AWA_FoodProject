@@ -1,33 +1,37 @@
-import React from "react";
-import Product from './Product';
-import Placeholderdata from './placeholderData.json';
+import React, {useState} from "react";
 
-const ProductsView = (props)=>{
-    
-    return(
+import Placeholderdata from './placeholderData.json'
+
+
+export default function Products({setCart, cart}) {
+    const [products] = useState(Placeholderdata.menuItems)
+
+
+    const addToCart = (props) =>{
+        let itemInCart = cart.find((item) => props.id === item.id);
+        let newCart = [...cart];
+
+        if(itemInCart){
+            itemInCart.quantity++;
+        }else{
+            itemInCart ={
+                ...props,
+                quantity: 1,
+            }
+            newCart.push(itemInCart);
+        }
+        setCart(newCart)
+    }
+
+    return (
         <div>
-            {props.products.map(products => 
-            <Product key={products.id} {...products}/>)}
+            {products.map((product, id) =>(
+                <div key={id}>
+                    <h3>{product.name}</h3>
+                    <h4>€{product.price}</h4>
+                    <button onClick={() => addToCart(product)}>Add to Cart</button>
+                </div>
+            ))}
         </div>
     )
 }
-
-class Products extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            products: Placeholderdata.menuItems
-        }      
-    }
-    
-
-    render(){
-        return(
-            <div>
-                <ProductsView products={this.state.products}/>
-            </div>
-        )
-    }
-}
-
-export default Products;
