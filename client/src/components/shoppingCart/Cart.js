@@ -6,12 +6,10 @@ export default function Cart({cart, setCart}) {
     }
 
     const removeFromCart = (productToRemove) =>{
-        console.log("bruh_2")
         setCart(cart.filter((product) => product !== productToRemove))
     }
 
     const clearCart = () =>{
-        console.log("bruh_1")
         setCart([]);
     }
 

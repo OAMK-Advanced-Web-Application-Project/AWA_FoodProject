@@ -2,9 +2,10 @@ import React, {useState} from 'react'
 import { useEffect } from "react";
 import Products from './Products';
 
-const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]');
+
 
 export default function TestRestaurantPage() {
+  const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]');
     const [cart, setCart] = useState(cartFromLocalStorage);
     
   useEffect(() => {
