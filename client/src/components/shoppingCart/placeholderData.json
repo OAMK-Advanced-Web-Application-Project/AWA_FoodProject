@@ -76,5 +76,27 @@
             "name": "Burger_4",
             "price": 2.99
         }
-    ]
+    ],
+
+    "user":[
+        {
+            "id": 100,
+            "username": "Sara",
+            "city": "Chicago",
+            "adress": "Street 1"
+        },
+        {
+            "id": 200,
+            "username": "Aki",
+            "city": "Berlin",
+            "adress": "Street 2"
+        },
+        {
+            "id": 300,
+            "username": "Aleksi",
+            "city": "Vienna",
+            "adress": "Street 3"
+        }
+
+    ]  
 }
