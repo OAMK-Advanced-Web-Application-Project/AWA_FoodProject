@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import styles from "./signup.module.css";
+import Constants from "../Constants.json";
 
 export default function UserSignup() {
   const [firstnameReg, setFirstnameReg] = useState("");
@@ -11,7 +12,7 @@ export default function UserSignup() {
   const [addressReg, setAddressReg] = useState("");
 
   const addUser = () => {
-    Axios.post("http://localhost:3001/createUser", {
+    Axios.post(Constants.API_ADDRESS + "/createUser", {
       firstname: firstnameReg,
       lastname: lastnameReg,
       username: usernameReg,
