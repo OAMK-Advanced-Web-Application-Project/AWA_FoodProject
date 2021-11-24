@@ -1,13 +1,41 @@
 const express = require("express");
-const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
 const bcrypt = require("bcrypt");
 const saltRound = 10;
 
+const jwt = require("jsonwebtoken");
+
+const app = express();
+
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(
+  session({
+    key: "userId",
+    secret: "AWAgroup8",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60 * 60 * 24,
+    },
+  })
+);
 
 const db = mysql.createConnection({
   user: "root",
@@ -42,7 +70,27 @@ app.post("/createUser", (req, res) => {
   });
 });
 
-//user login
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+
+  if (!token) {
+    res.send("no token");
+  } else {
+    jtw.verify(token, "AWAgroup8", (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "fail to authenticate" });
+      } else {
+        req.userId = decoded.id;
+        next();
+      }
+    });
+  }
+};
+
+/* app.get("/isUserAuth", verifyJWT, (req, res) => {
+  res.send("you are authenticated");
+}); */
+
 app.post("/UserLogin", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -58,13 +106,18 @@ app.post("/UserLogin", (req, res) => {
       if (result.length > 0) {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if (response) {
-            res.send(result);
+            const id = result[0].id;
+            const token = jwt.sign({ id }, "AWAgroup8", {
+              expiresIn: 60 * 60 * 24,
+            });
+            req.session.user = result;
+            res.json({ auth: true, token: token, result: result });
           } else {
-            res.send({ message: "Wrong username or password" });
+            res.json({ auth: false, message: "wrong username/password"});
           }
         });
       } else {
-        res.send({ message: "User doesn't exist" });
+        res.json({ auth: false, message: "no user exists"});
       }
     }
   );
