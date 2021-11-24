@@ -1,11 +1,11 @@
-import NavbarNoSearch from "./components/navbar/NavbarNoSearch.js"
-import React from 'react';
+import NavbarNoSearch from "./components/navbar/NavbarNoSearch.js";
+import React, {useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/landingPage/LandingPage";
-import UserLogin from './components/signupAndLogin/userLogin.js';
-import RestaurantLogin from './components/signupAndLogin/restaurantLogin.js';
-import UserSignup from './components/signupAndLogin/userSignup';
-import RestaurantSignup from './components/signupAndLogin/restaurantSignup';
+import UserLogin from "./components/signupAndLogin/userLogin.js";
+import RestaurantLogin from "./components/signupAndLogin/restaurantLogin.js";
+import UserSignup from "./components/signupAndLogin/userSignup";
+import RestaurantSignup from "./components/signupAndLogin/restaurantSignup";
 import Cart from "./components/shoppingCart/TestCartPage.js";
 import TestRestaurantPage from "./components/shoppingCart/TestRestaurantPage";
 import UserMainPage from "./components/mainpages/userMainPage.js";
@@ -17,12 +17,13 @@ import Payment from "./components/mainpages/payment/Payment.js";
 import { v4 as uuidv4 } from 'uuid';
 
 
-
 function App() {
 
-  const menus = menuData.map(menu => {
-    return { ...menu, id: uuidv4() }
-  })
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  
+  const menus = menuData.map((menu) => {
+    return { ...menu, id: uuidv4() };
+  });
 
   return (
     <div>
@@ -44,7 +45,6 @@ function App() {
             </Route>
           </Routes>
       </Router>
-
     </div>
   );
 }

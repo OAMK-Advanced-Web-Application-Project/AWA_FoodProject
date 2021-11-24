@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import styles from "./signup.module.css";
+import Constants from "../Constants.json";
 
 export default function RestaurantSignup() {
   const [restaurantnameReg, setRestaurantnameReg] = useState("");
@@ -10,7 +11,7 @@ export default function RestaurantSignup() {
   const [addressReg, setAddressReg] = useState("");
 
   const addRestaurant = () => {
-    Axios.post("http://localhost:3001/createRestaurant", {
+    Axios.post(Constants.API_ADDRESS + "/createRestaurant", {
       restaurantName: restaurantnameReg,
       username: usernameReg,
       password: passwordReg,
