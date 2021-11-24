@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import styles from "./login.module.css";
 
 export default function UserLogin() {
+  
   Axios.defaults.withCredentials = true;
 
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
-
   const [loginStatus, setLoginStatus] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     Axios.get("http://localhost:3001/UserLogin").then((response) => {
@@ -29,6 +31,7 @@ export default function UserLogin() {
       } else {
         localStorage.setItem("token", response.data.token);
         setLoginStatus(true);
+        navigate('/usermainpage', {replace: true})
       }
     });
   };
@@ -46,7 +49,7 @@ export default function UserLogin() {
   return (
     <div class={styles.background}>
       <div class={styles.loginForm}>
-        <h1>login</h1>
+        <h1>Login</h1>
         <label>Username</label>
         <input
           type="text"
