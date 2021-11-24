@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Cart({cart, setCart}) {
     const getTotalSum = () =>{
@@ -26,6 +27,7 @@ export default function Cart({cart, setCart}) {
             {cart.length > 0 && (
                 <button onClick={clearCart}>Clear Cart</button>
             )}
+
             <div>
                 {cart.map((product, id) => (
                 <div key={id}>
@@ -38,7 +40,14 @@ export default function Cart({cart, setCart}) {
                 </div>
                 ))}
             </div>
-            <div>Total Cost: € {getTotalSum()}</div>
+            <div>Total Cost: € {getTotalSum()}
+
+            {cart.length > 0 && (
+                <button><Link to="/payment" className="payBtn">Confirm payment</Link></button>
+            )}
+            </div>
+
+
         </>
     )
 }
