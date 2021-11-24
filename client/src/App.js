@@ -6,8 +6,8 @@ import UserLogin from './components/signupAndLogin/userLogin.js';
 import RestaurantLogin from './components/signupAndLogin/restaurantLogin.js';
 import UserSignup from './components/signupAndLogin/userSignup';
 import RestaurantSignup from './components/signupAndLogin/restaurantSignup';
-import Restaurant from "./components/mainpages/restaurantPage";
-import Cart from "./components/shoppingCart/Cart.js";
+import Cart from "./components/shoppingCart/TestCartPage.js";
+import TestRestaurantPage from "./components/shoppingCart/TestRestaurantPage";
 import UserMainPage from "./components/mainpages/userMainPage.js";
 import RestaurantMainPage from "./components/mainpages/restaurantMainPage.js";
 import MenuDetailView from "./components/mainpages/editableRestaurantInfo/MenuDetailView.js";
@@ -33,13 +33,10 @@ function App() {
             <Route path="/restaurantlogin" element={<RestaurantLogin/>} />
             <Route path="/usersignup" element={<UserSignup/>} />
             <Route path="/restaurantsignup" element={<RestaurantSignup/>} />
-            <Route path="/restaurant:id" element ={<Restaurant/>}/>
             <Route path="/cart" element={<Cart/>}/>
             <Route path="/usermainpage" element={<UserMainPage/>} />
-            
-            <Route path="mainpages/restaurantmainpage" element={ <RestaurantMainPage/> }>
-              <Route path=":menuId" element={ <MenuDetailView menus={ menus } /> } />
-            </Route>
+            <Route path="/testRestaurantPage" element={<TestRestaurantPage/>}/>
+            <Route path=":menuId" element={ <MenuDetailView menus={ menus } /> } />
 
           </Routes>
       </Router>
