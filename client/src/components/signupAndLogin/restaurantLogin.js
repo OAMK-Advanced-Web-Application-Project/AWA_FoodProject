@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import styles from "./login.module.css";
+import Constants from "../Constants.json";
 
 export default function RestaurantLogin() {
   Axios.defaults.withCredentials = true;
@@ -14,7 +15,7 @@ export default function RestaurantLogin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/RestaurantLogin").then((response) => {
+    Axios.get(Constants.API_ADDRESS + "/RestaurantLogin").then((response) => {
       if (response.data.loggedIn === true) {
         setLoginStatus(response.data.user[0].username);
       }
@@ -23,7 +24,7 @@ export default function RestaurantLogin() {
 
   const restaurantLogin = async (event) => {
     event.preventDefault();
-    Axios.post("http://localhost:3001/RestaurantLogin", {
+    Axios.post(Constants.API_ADDRESS + "/RestaurantLogin", {
       username: usernameLog,
       password: passwordLog,
     }).then((response) => {

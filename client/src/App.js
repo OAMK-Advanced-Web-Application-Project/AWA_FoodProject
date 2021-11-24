@@ -1,5 +1,5 @@
 import NavbarNoSearch from "./components/navbar/NavbarNoSearch.js";
-import React from "react";
+import React, {useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/landingPage/LandingPage";
 import UserLogin from "./components/signupAndLogin/userLogin.js";
@@ -16,6 +16,9 @@ import menuData from "./components/mainpages/editableRestaurantInfo/menuData.jso
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
+
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  
   const menus = menuData.map((menu) => {
     return { ...menu, id: uuidv4() };
   });
@@ -33,10 +36,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/usermainpage" element={<UserMainPage />} />
           <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
-          <Route
-            path="restaurantmainpage"
-            element={<RestaurantMainPage />}
-          />
+          <Route path="restaurantmainpage" element={<RestaurantMainPage />} />
           <Route path=":menuId" element={<MenuDetailView menus={menus} />} />
         </Routes>
       </Router>
