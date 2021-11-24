@@ -34,7 +34,7 @@ function App() {
           <Route path="/usermainpage" element={<UserMainPage />} />
           <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
           <Route
-            path="mainpages/restaurantmainpage"
+            path="restaurantmainpage"
             element={<RestaurantMainPage />}
           />
           <Route path=":menuId" element={<MenuDetailView menus={menus} />} />

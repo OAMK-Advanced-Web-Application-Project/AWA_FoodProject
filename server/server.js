@@ -134,7 +134,6 @@ app.post("/createRestaurant", (req, res) => {
     if (err) {
       console.log(err);
     }
-
     db.query(
       "INSERT INTO restaurant (restaurantname, username, password, address) VALUES (?,?,?,?)",
       [restaurantname, username, hash, address],
@@ -150,7 +149,7 @@ app.post("/createRestaurant", (req, res) => {
 });
 
 //restaurant login
-app.post("/loginRestaurant", (req, res) => {
+app.post("/RestaurantLogin", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -165,13 +164,18 @@ app.post("/loginRestaurant", (req, res) => {
       if (result.length > 0) {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if (response) {
-            res.send(result);
+            const id = result[0].id;
+            const token = jwt.sign({ id }, "AWAgroup8", {
+              expiresIn: 60 * 60 * 24,
+            });
+            req.session.user = result;
+            res.json({ auth: true, token: token, result: result });
           } else {
-            res.send({ message: "Invalid" });
+            res.json({ auth: false, message: "wrong username/password"});
           }
         });
       } else {
-        res.send({ message: "User doesn't exist" });
+        res.json({ auth: false, message: "no user exists"});
       }
     }
   );

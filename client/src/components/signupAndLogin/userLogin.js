@@ -66,9 +66,6 @@ export default function UserLogin() {
           <Link to="/userSignup">
             <button> Sign up </button>
           </Link>
-          {/*         {loginStatus && (
-            <button onClick={userAuthenticated}> Check if authenticated </button>
-          )} */}
         </div>
       </form>
     </div>
