@@ -15,19 +15,21 @@ export default function UserLogin() {
 
   useEffect(() => {
     Axios.get("http://localhost:3001/UserLogin").then((response) => {
-      if (response.data.loggedIn == true) {
+      if (response.data.loggedIn === true) {
         setLoginStatus(response.data.user[0].username);
       }
     });
   }, []);
 
-  const userLogin = () => {
+  const userLogin = async (event) => {
+    event.preventDefault();
     Axios.post("http://localhost:3001/UserLogin", {
       username: usernameLog,
       password: passwordLog,
     }).then((response) => {
       if (!response.data.auth) {
         setLoginStatus(false);
+        console.log('login failed');
       } else {
         localStorage.setItem("token", response.data.token);
         setLoginStatus(true);
@@ -48,33 +50,27 @@ export default function UserLogin() {
 
   return (
     <div class={styles.background}>
-      <div class={styles.loginForm}>
-        <h1>Login</h1>
-        <label>Username</label>
-        <input
-          type="text"
-          onChange={(event) => {
-            setUsernameLog(event.target.value);
-          }}
-        />
-        <label>Password</label>
-        <input
-          type="text"
-          onChange={(event) => {
+      <form onSubmit={userLogin}>
+        <div class={styles.loginForm}>
+          <h1>Login</h1>
+          <label>Username</label>
+          <input type="text" onChange={(event) => {
+              setUsernameLog(event.target.value);
+          }} />
+          <label>Password</label>
+          <input type="text" onChange={(event) => {
             setPasswordLog(event.target.value);
-          }}
-        />
-        <Link to="../userMainpage">
-          <button onClick={userLogin}> Login </button>
-        </Link>
-        <h2>If you have not registered yet,</h2>
-        <Link to="/userSignup">
-          <button> Sign up </button>
-        </Link>
-        {/*         {loginStatus && (
-          <button onClick={userAuthenticated}> Check if authenticated </button>
-        )} */}
-      </div>
+          }} />
+          <button type="submit">Login</button>
+          <h2>If you have not registered yet, please sign up</h2>
+          <Link to="/userSignup">
+            <button> Sign up </button>
+          </Link>
+          {/*         {loginStatus && (
+            <button onClick={userAuthenticated}> Check if authenticated </button>
+          )} */}
+        </div>
+      </form>
     </div>
   );
 }
