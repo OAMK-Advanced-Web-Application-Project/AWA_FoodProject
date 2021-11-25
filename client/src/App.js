@@ -40,7 +40,7 @@ function App() {
             <Route path="/testRestaurantPage" element={<TestRestaurantPage/>}/>
             <Route path="/payment" element={<Payment/>}/>
 
-            <Route path="mainpages/restaurantmainpage" element={ <RestaurantMainPage/> }>
+            <Route path="restaurantmainpage" element={ <RestaurantMainPage/> }>
               <Route path=":menuId" element={ <MenuDetailView menus={ menus } /> } />
             </Route>
           </Routes>
