@@ -13,7 +13,9 @@ import RestaurantMainPage from "./components/mainpages/restaurantMainPage.js";
 import MenuDetailView from "./components/mainpages/editableRestaurantInfo/MenuDetailView.js";
 import MenuList from "./components/mainpages/editableRestaurantInfo/MenuList.js";
 import menuData from "./components/mainpages/editableRestaurantInfo/menuData.json";
-import { v4 as uuidv4 } from "uuid";
+import Payment from "./components/mainpages/payment/Payment.js";
+import { v4 as uuidv4 } from 'uuid';
+
 
 function App() {
 
@@ -26,19 +28,22 @@ function App() {
   return (
     <div>
       <Router>
-        <NavbarNoSearch />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/UserLogin" element={<UserLogin />} />
-          <Route path="/restaurantlogin" element={<RestaurantLogin />} />
-          <Route path="/usersignup" element={<UserSignup />} />
-          <Route path="/restaurantsignup" element={<RestaurantSignup />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/usermainpage" element={<UserMainPage />} />
-          <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
-          <Route path="restaurantmainpage" element={<RestaurantMainPage />} />
-          <Route path=":menuId" element={<MenuDetailView menus={menus} />} />
-        </Routes>
+          <NavbarNoSearch/>
+          <Routes>
+            <Route path="/" element={<LandingPage/>} />
+            <Route path="/userlogin" element={<UserLogin/>} />
+            <Route path="/restaurantlogin" element={<RestaurantLogin/>} />
+            <Route path="/usersignup" element={<UserSignup/>} />
+            <Route path="/restaurantsignup" element={<RestaurantSignup/>} />
+            <Route path="/cart" element={<Cart/>}/>
+            <Route path="/usermainpage" element={<UserMainPage/>} />
+            <Route path="/testRestaurantPage" element={<TestRestaurantPage/>}/>
+            <Route path="/payment" element={<Payment/>}/>
+
+            <Route path="mainpages/restaurantmainpage" element={ <RestaurantMainPage/> }>
+              <Route path=":menuId" element={ <MenuDetailView menus={ menus } /> } />
+            </Route>
+          </Routes>
       </Router>
     </div>
   );
