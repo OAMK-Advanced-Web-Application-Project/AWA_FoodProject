@@ -70,6 +70,29 @@ app.post("/createUser", (req, res) => {
   });
 });
 
+//food item creation
+app.post("/createMenuItem", (req, res) => {
+
+  const idrestaurant = req.body.idrestaurant;
+  const idorder = req.body.idorder;
+  const productname = req.body.productname;
+  const description = req.body.description;
+  const price = req.body.price;
+  const image = req.body.image;
+
+    db.query(
+      "INSERT INTO menu (idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
+      [idrestaurant, idorder, productname, description, price, image],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values Inserted");
+        }
+      }
+    );
+});
+
 const verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
 

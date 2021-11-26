@@ -7,6 +7,10 @@ import MenuList from "./editableRestaurantInfo/MenuList.js";
 import MenuDetailView from "./editableRestaurantInfo/MenuDetailView.js";
 import menuData from "./editableRestaurantInfo/menuData.json";
 import { v4 as uuidv4 } from 'uuid';
+import { useState } from "react";
+import Axios from "axios";
+import Constants from "../Constants.json";
+import AddMenuItem from "./editableRestaurantInfo/AddMenuItem.js";
 
 
 
@@ -37,13 +41,14 @@ class RestaurantMainPage extends React.Component {
             </div>
 
             <div className={styles.editableMenu}>
-                <MenuList menu={ menus }/>
-                <MenuDetailView menus={ menus } />
+                <MenuList menu={menus}/>
+                <MenuDetailView menus={menus} />
+                <AddMenuItem/>
             </div>
         </div>
     ); 
     }
-}
+} 
 
 
 
