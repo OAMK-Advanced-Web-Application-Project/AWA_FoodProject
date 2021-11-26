@@ -1,5 +1,5 @@
 import Navbar from "./components/navbar/Navbar.js";
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/landingPage/LandingPage";
 import UserLogin from "./components/signupAndLogin/userLogin.js";
@@ -9,19 +9,49 @@ import UserMainPage from "./components/mainpages/userMainPage.js";
 import Payment from "./components/mainpages/payment/Payment.js";
 
 function App() {
+  const [userJWT, setUserJWT] = useState(null);
+
+  let authRoutes = (
+    <>
+      <Route
+        path="/userlogin"
+        element={
+          <UserLogin
+            login={(newJWT) => {
+              setUserJWT(newJWT);
+            }}
+          />
+        }
+      />
+      <Route path="/usersignup" element={<UserSignup />} />
+    </>
+  );
+
+  if (userJWT != null) {
+    authRoutes = (
+      <>
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/usermainpage" element={<UserMainPage />} />
+        <Route path="/payment" element={<Payment />} />
+      </>
+    );
+  }
 
   return (
     <div>
       <Router>
-          <Navbar/>
-          <Routes>
-            <Route path="/" element={<LandingPage/>} />
-            <Route path="/userlogin" element={<UserLogin/>} />
-            <Route path="/usersignup" element={<UserSignup/>} />
-            <Route path="/cart" element={<Cart/>}/>
-            <Route path="/usermainpage" element={<UserMainPage/>} />
-            <Route path="/payment" element={<Payment/>}/>
-          </Routes>
+        <Navbar />
+        <Routes>
+          <Route
+            path="/"
+            element={<LandingPage userLoggedIn={userJWT != null} />}
+          />
+          {authRoutes}
+          <Route
+            path="*"
+            element={<LandingPage userLoggedIn={userJWT != null} />}
+          />
+        </Routes>
       </Router>
     </div>
   );

@@ -70,7 +70,7 @@ app.post("/createUser", (req, res) => {
   });
 });
 
-const verifyJWT = (req, res, next) => {
+/* const verifyJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
 
   if (!token) {
@@ -85,7 +85,7 @@ const verifyJWT = (req, res, next) => {
       }
     });
   }
-};
+}; */
 
 /* app.get("/isUserAuth", verifyJWT, (req, res) => {
   res.send("you are authenticated");
