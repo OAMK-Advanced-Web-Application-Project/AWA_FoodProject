@@ -6,6 +6,8 @@ import Constants from "../Constants.json";
 
 export default function UserLogin(props) {
   Axios.defaults.withCredentials = true;
+  const [usernameLog, setUsernameLog] = useState("");
+  const [passwordLog, setPasswordLog] = useState("");
 
   const navigate = useNavigate();
 
@@ -19,26 +21,18 @@ export default function UserLogin(props) {
 
   const userLogin = async (event) => {
     event.preventDefault();
-
-    try {
-      const result = await Axios.post(
-        Constants.API_ADDRESS + "/UserLogin",
-        null,
-        {
-          auth: {
-            username: event.target.username.value,
-            password: event.target.password.value,
-          }
-        }
-      );
-      console.log(result);
-      const receivedJWT = result.data.token;
-      props.login(receivedJWT);
-      navigate("/userMainPage", { replace: true });
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    Axios.post(Constants.API_ADDRESS + "/UserLogin", {
+      username: usernameLog,
+      password: passwordLog,
+    }).then((response) => {
+      if (!response.data.auth) {
+        console.log("login failed");
+      } else {
+        localStorage.setItem("token", response.data.token);
+        navigate("/restaurantmainpage", { replace: true });
+      }
+    });
+  };
 
   return (
     <div className={styles.background}>
