@@ -8,10 +8,9 @@ class LandingPage extends React.Component {
       <div class={styles.background}>
         <div class={styles.landingContainer}>
           <div class={styles.containerContent}>
-            <p>Hungry?</p>
-            <p>Your order is coming!</p>
+            <p>Expand your business and offer your delicious meals</p>
             <div class={styles.loginButtons}>
-              <Link to="/userlogin">Log in as a customer</Link>
+              <Link to="/restaurantlogin">Log in as a bistro</Link>
             </div>
           </div>
         </div>
