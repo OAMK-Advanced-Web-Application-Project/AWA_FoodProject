@@ -8,8 +8,10 @@ import Cart from "./components/shoppingCart/TestCartPage.js";
 import UserMainPage from "./components/mainpages/userMainPage.js";
 import Payment from "./components/mainpages/payment/Payment.js";
 
+const jwtStorage = localStorage.getItem("token");
+
 function App() {
-  const [userJWT, setUserJWT] = useState(null);
+  const [userJWT, setUserJWT] = useState(jwtStorage);
 
   let authRoutes = (
     <>
@@ -19,6 +21,7 @@ function App() {
           <UserLogin
             login={(newJWT) => {
               setUserJWT(newJWT);
+              //console.log(setUserJWT(newJWT));
             }}
           />
         }
@@ -28,6 +31,7 @@ function App() {
   );
 
   if (userJWT != null) {
+    console.log("no null" + userJWT);
     authRoutes = (
       <>
         <Route path="/cart" element={<Cart />} />
@@ -35,6 +39,8 @@ function App() {
         <Route path="/payment" element={<Payment />} />
       </>
     );
+  } else {
+    console.log("token is null")
   }
 
   return (

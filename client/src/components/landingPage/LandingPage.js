@@ -8,8 +8,8 @@ export default function LandingPage(props) {
       <div class={styles.landingContainer}>
         <div class={styles.containerContent}>
           <div>
-            User login status:{" "}
-            {props.userLoggedIn ? "is logged in" : "is not logged in"}
+            You are  {" "}
+            {props.userLoggedIn ? " logged in" : " not logged in"}
           </div>
           <div class={styles.loginButtons}>
             {props.userLoggedIn ? (
