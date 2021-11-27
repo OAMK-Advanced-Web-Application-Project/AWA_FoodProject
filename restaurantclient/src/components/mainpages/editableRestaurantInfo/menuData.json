@@ -1,0 +1,27 @@
+[
+ {
+  "plateName": "Burger",
+  "desc": "Delicious burger etc...",
+  "price": "5.95€"
+ },
+ {
+  "plateName": "Pizza",
+  "desc": "Delicious pizza etc...",
+  "price": "5.95€"
+ },
+ {
+  "plateName": "Pasta",
+  "desc": "Delicious pasta etc...",
+  "price": "5.95€"
+ },
+ {
+  "plateName": "Noodles",
+  "desc": "Delicious noodles etc...",
+  "price": "5.95€"
+ },
+ {
+    "plateName": "Pizza",
+    "desc": "Delicious pizza etc...",
+    "price": "5.95€"
+}
+]

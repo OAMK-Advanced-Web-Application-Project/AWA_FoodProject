@@ -1,0 +1,28 @@
+.navbar {
+  display: flex;
+  background-color: lightgrey;
+}
+
+.navbar > * {
+  margin-right: 10px;
+}
+
+.menuListElement {
+  padding: 5px;
+  border-top: 1px solid lightgrey;
+}
+
+.menuListElement:hover {
+  background-color: lightyellow;
+  color: red;
+}
+
+.menuListView {
+  display: flex;
+}
+
+.menuList {
+  width: 25%;
+  border-right: 1px solid lightgrey;
+}
+

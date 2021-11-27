@@ -70,6 +70,7 @@ app.post("/createUser", (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 //food item creation
 app.post("/createMenuItem", (req, res) => {
 
@@ -94,6 +95,9 @@ app.post("/createMenuItem", (req, res) => {
 });
 
 const verifyJWT = (req, res, next) => {
+=======
+/* const verifyJWT = (req, res, next) => {
+>>>>>>> 8997c98254582c542806cbbc23be283386daabc8
   const token = req.headers["x-access-token"];
 
   if (!token) {
@@ -108,7 +112,7 @@ const verifyJWT = (req, res, next) => {
       }
     });
   }
-};
+}; */
 
 /* app.get("/isUserAuth", verifyJWT, (req, res) => {
   res.send("you are authenticated");
