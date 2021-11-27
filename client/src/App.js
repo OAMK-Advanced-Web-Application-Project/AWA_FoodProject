@@ -35,7 +35,7 @@ function App() {
     authRoutes = (
       <>
         <Route path="/cart" element={<Cart />} />
-        <Route path="/usermainpage" element={<UserMainPage />} />
+        <Route path="/usermainpage" element={<UserMainPage />}/>
         <Route path="/payment" element={<Payment />} />
       </>
     );
