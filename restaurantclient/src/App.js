@@ -62,7 +62,7 @@ function App() {
           <Route
             path="*"
             element={<LandingPage userLoggedIn={userJWT != null} />}
-          />{" "}
+          />
         </Routes>
       </Router>
     </div>
