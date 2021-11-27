@@ -52,7 +52,13 @@ function App() {
   return (
     <div>
       <Router>
-        <Navbar userLoggedIn={userJWT != null} logout={ () => setUserJWT(null)}/>
+        <Navbar
+          userLoggedIn={userJWT != null}
+          logout={() => {
+            setUserJWT(null);
+            localStorage.removeItem("token")
+          }}
+        />
         <Routes>
           <Route
             path="/"

@@ -7,7 +7,7 @@ import UserSignup from "./components/signupAndLogin/userSignup";
 import Cart from "./components/shoppingCart/TestCartPage.js";
 import UserMainPage from "./components/mainpages/userMainPage.js";
 import Payment from "./components/mainpages/payment/Payment.js";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import AddMenuItem from "./components/mainpages/editableRestaurantInfo/AddMenuItem.js";
 
 const jwtStorage = localStorage.getItem("token");
@@ -44,7 +44,13 @@ function App() {
   return (
     <div>
       <Router>
-        <Navbar userLoggedIn={userJWT != null} logout={ () => setUserJWT(null)}/>
+        <Navbar
+          userLoggedIn={userJWT != null}
+          logout={() => {
+            setUserJWT(null);
+            localStorage.removeItem("token");
+          }}
+        />
         <Routes>
           <Route
             path="/"
@@ -55,7 +61,7 @@ function App() {
             path="*"
             element={<LandingPage userLoggedIn={userJWT != null} />}
           />
-          </Routes>
+        </Routes>
       </Router>
     </div>
   );
