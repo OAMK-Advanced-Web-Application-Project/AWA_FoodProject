@@ -52,7 +52,7 @@ function App() {
   return (
     <div>
       <Router>
-        <Navbar />
+        <Navbar userLoggedIn={userJWT != null} logout={ () => setUserJWT(null)}/>
         <Routes>
           <Route
             path="/"
