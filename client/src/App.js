@@ -21,7 +21,6 @@ function App() {
           <UserLogin
             login={(newJWT) => {
               setUserJWT(newJWT);
-              //console.log(setUserJWT(newJWT));
             }}
           />
         }
@@ -31,7 +30,6 @@ function App() {
   );
 
   if (userJWT != null) {
-    console.log("no null" + userJWT);
     authRoutes = (
       <>
         <Route path="/cart" element={<Cart />} />
@@ -39,8 +37,6 @@ function App() {
         <Route path="/payment" element={<Payment />} />
       </>
     );
-  } else {
-    console.log("token is null")
   }
 
   return (

@@ -1,42 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import styles from "./login.module.css";
 import Constants from "../Constants.json";
 
-export default function RestaurantLogin() {
+export default function RestaurantLogin(props) {
   Axios.defaults.withCredentials = true;
 
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
 
-  const [loginStatus, setLoginStatus] = useState("");
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    Axios.get(Constants.API_ADDRESS + "/RestaurantLogin").then((response) => {
-      if (response.data.loggedIn === true) {
-        setLoginStatus(response.data.user[0].username);
-      }
-    });
-  }, []);
 
   const restaurantLogin = async (event) => {
     event.preventDefault();
-    Axios.post(Constants.API_ADDRESS + "/RestaurantLogin", {
+    const result = await Axios.post(Constants.API_ADDRESS + "/RestaurantLogin", {
       username: usernameLog,
       password: passwordLog,
-    }).then((response) => {
-      if (!response.data.auth) {
-        setLoginStatus(false);
-        console.log("login failed");
-      } else {
-        localStorage.setItem("token", response.data.token);
-        setLoginStatus(true);
-        navigate("/restaurantmainpage", { replace: true });
-      }
     });
+
+    console.log(result);
+    localStorage.setItem("token", result.data.token);
+    const receivedJWT = result.data.token;
+    props.login(receivedJWT);
+    navigate("/restaurantmainpage", { replace: true });
   };
 
   return (
