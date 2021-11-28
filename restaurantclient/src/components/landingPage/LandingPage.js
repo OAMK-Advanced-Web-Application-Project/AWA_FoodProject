@@ -8,15 +8,14 @@ export default function LandingPage(props) {
       <div class={styles.landingContainer}>
         <div class={styles.containerContent}>
           <div>
-            You are  {" "}
-            {props.userLoggedIn ? " logged in" : " not logged in"}
+            You are {props.userLoggedIn ? " logged in" : " not logged in"}
           </div>
           <div class={styles.loginButtons}>
             {props.userLoggedIn ? (
-              <Link to="/userMainpage"> Go to mainpage </Link>
+              <Link to="/restaurantMainpage"> Go to mainpage </Link>
             ) : (
-              <Link to="/userlogin"> Log in </Link>
-            )}
+              <Link to="/restaurantlogin"> Log in </Link>
+            )}{" "}
           </div>
         </div>
       </div>

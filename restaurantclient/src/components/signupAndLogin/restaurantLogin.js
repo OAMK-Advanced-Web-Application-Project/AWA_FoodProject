@@ -4,7 +4,7 @@ import Axios from "axios";
 import styles from "./login.module.css";
 import Constants from "../Constants.json";
 
-export default function UserLogin(props) {
+export default function RestaurantLogin(props) {
   Axios.defaults.withCredentials = true;
 
   const [usernameLog, setUsernameLog] = useState("");
@@ -12,9 +12,9 @@ export default function UserLogin(props) {
 
   const navigate = useNavigate();
 
-  const userLogin = async (event) => {
+  const restaurantLogin = async (event) => {
     event.preventDefault();
-    const result = await Axios.post(Constants.API_ADDRESS + "/UserLogin", {
+    const result = await Axios.post(Constants.API_ADDRESS + "/RestaurantLogin", {
       username: usernameLog,
       password: passwordLog,
     });
@@ -23,14 +23,14 @@ export default function UserLogin(props) {
     localStorage.setItem("token", result.data.token);
     const receivedJWT = result.data.token;
     props.login(receivedJWT);
-    navigate("/usermainpage", { replace: true });
+    navigate("/restaurantmainpage", { replace: true });
   };
 
   return (
     <div class={styles.background}>
-      <form onSubmit={userLogin}>
+      <form onSubmit={restaurantLogin}>
         <div class={styles.loginForm}>
-          <h1>Login</h1>
+          <h1>login</h1>
           <label>Username</label>
           <input
             type="text"
@@ -45,9 +45,9 @@ export default function UserLogin(props) {
               setPasswordLog(event.target.value);
             }}
           />
-          <button type="submit">Login</button>
-          <h2>If you have not registered yet, please sign up</h2>
-          <Link to="/userSignup">
+          <button type="submit"> Login </button>
+          <h2>If you have not registered yet please</h2>
+          <Link to="/restaurantSignup">
             <button> Sign up </button>
           </Link>
         </div>

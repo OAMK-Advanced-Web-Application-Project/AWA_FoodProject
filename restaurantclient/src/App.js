@@ -2,46 +2,49 @@ import Navbar from "./components/navbar/Navbar.js";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/landingPage/LandingPage";
-import UserLogin from "./components/signupAndLogin/userLogin.js";
-import UserSignup from "./components/signupAndLogin/userSignup";
-import Cart from "./components/shoppingCart/TestCartPage.js";
-import UserMainPage from "./components/mainpages/userMainPage.js";
+import RestaurantLogin from "./components/signupAndLogin/restaurantLogin.js";
+import RestaurantSignup from "./components/signupAndLogin/restaurantSignup";
+import TestRestaurantPage from "./components/shoppingCart/TestRestaurantPage";
 import RestaurantMainPage from "./components/mainpages/restaurantMainPage.js";
 import MenuDetailView from "./components/mainpages/editableRestaurantInfo/MenuDetailView.js";
 import MenuList from "./components/mainpages/editableRestaurantInfo/MenuList.js";
 import menuData from "./components/mainpages/editableRestaurantInfo/menuData.json";
-import SetStatusTestPage from "./components/shoppingCart/SetStatusTestPage.js";
 import Payment from "./components/mainpages/payment/Payment.js";
 import { v4 as uuidv4 } from "uuid";
-import AddMenuItem from "./components/mainpages/editableRestaurantInfo/AddMenuItem.js";
 
 const jwtStorage = localStorage.getItem("token");
 
 function App() {
   const [userJWT, setUserJWT] = useState(jwtStorage);
 
+  const menus = menuData.map((menu) => {
+    return { ...menu, id: uuidv4() };
+  });
+
   let authRoutes = (
     <>
       <Route
-        path="/userlogin"
+        path="/restaurantLogin"
         element={
-          <UserLogin
+          <RestaurantLogin
             login={(newJWT) => {
               setUserJWT(newJWT);
             }}
           />
         }
       />
-      <Route path="/usersignup" element={<UserSignup />} />
+      <Route path="/restaurantSignup" element={<RestaurantSignup />} />
     </>
   );
 
   if (userJWT != null) {
     authRoutes = (
       <>
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/usermainpage" element={<UserMainPage />} />
+        <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="restaurantmainpage" element={<RestaurantMainPage />}>
+          <Route path=":menuId" element={<MenuDetailView menus={menus} />} />
+        </Route>
       </>
     );
   }
@@ -53,19 +56,10 @@ function App() {
           userLoggedIn={userJWT != null}
           logout={() => {
             setUserJWT(null);
-            localStorage.removeItem("token");
+            localStorage.removeItem("token")
           }}
         />
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/UserLogin" element={<UserLogin />} />
-          <Route path="/restaurantlogin" element={<RestaurantLogin />} />
-          <Route path="/usersignup" element={<UserSignup />} />
-          <Route path="/restaurantsignup" element={<RestaurantSignup />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/usermainpage" element={<UserMainPage />} />
-          <Route path="/setStatusTest" element={<SetStatusTestPage/>}/>
-          <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
           <Route
             path="/"
             element={<LandingPage userLoggedIn={userJWT != null} />}
