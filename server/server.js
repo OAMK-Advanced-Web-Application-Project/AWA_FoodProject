@@ -44,6 +44,23 @@ const db = mysql.createConnection({
   database: "food",
 });
 
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+
+  if (!token) {
+    res.send("no token");
+  } else {
+    jtw.verify(token, "AWAgroup8", (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "fail to authenticate" });
+      } else {
+        req.userId = decoded.id;
+        next();
+      }
+    });
+  }
+}; 
+
 //user signup
 app.post("/createUser", (req, res) => {
   const firstname = req.body.firstname;
@@ -70,54 +87,7 @@ app.post("/createUser", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
-//food item creation
-app.post("/createMenuItem", (req, res) => {
-
-  const idrestaurant = req.body.idrestaurant;
-  const idorder = req.body.idorder;
-  const productname = req.body.productname;
-  const description = req.body.description;
-  const price = req.body.price;
-  const image = req.body.image;
-
-    db.query(
-      "INSERT INTO menu (idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
-      [idrestaurant, idorder, productname, description, price, image],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send("Values Inserted");
-        }
-      }
-    );
-});
-
-const verifyJWT = (req, res, next) => {
-=======
-/* const verifyJWT = (req, res, next) => {
->>>>>>> 8997c98254582c542806cbbc23be283386daabc8
-  const token = req.headers["x-access-token"];
-
-  if (!token) {
-    res.send("no token");
-  } else {
-    jtw.verify(token, "AWAgroup8", (err, decoded) => {
-      if (err) {
-        res.json({ auth: false, message: "fail to authenticate" });
-      } else {
-        req.userId = decoded.id;
-        next();
-      }
-    });
-  }
-}; */
-
-/* app.get("/isUserAuth", verifyJWT, (req, res) => {
-  res.send("you are authenticated");
-}); */
-
+//userLogin
 app.post("/UserLogin", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -206,6 +176,29 @@ app.post("/RestaurantLogin", (req, res) => {
       }
     }
   );
+});
+
+//food item creation
+app.post("/createMenuItem", verifyJWT, (req, res) => {
+
+  const idrestaurant = req.body.idrestaurant;
+  const idorder = req.body.idorder;
+  const productname = req.body.productname;
+  const description = req.body.description;
+  const price = req.body.price;
+  const image = req.body.image;
+
+    db.query(
+      "INSERT INTO menu (idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
+      [idrestaurant, idorder, productname, description, price, image],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values Inserted");
+        }
+      }
+    );
 });
 
 app.listen(3001, () => {
