@@ -13,6 +13,7 @@ import RestaurantMainPage from "./components/mainpages/restaurantMainPage.js";
 import MenuDetailView from "./components/mainpages/editableRestaurantInfo/MenuDetailView.js";
 import MenuList from "./components/mainpages/editableRestaurantInfo/MenuList.js";
 import menuData from "./components/mainpages/editableRestaurantInfo/menuData.json";
+import SetStatusTestPage from "./components/shoppingCart/SetStatusTestPage.js";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/restaurantsignup" element={<RestaurantSignup />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/usermainpage" element={<UserMainPage />} />
+          <Route path="/setStatusTest" element={<SetStatusTestPage/>}/>
           <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
           <Route
             path="mainpages/restaurantmainpage"
