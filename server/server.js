@@ -201,6 +201,29 @@ app.post("/RestaurantLogin", (req, res) => {
   );
 });
 
+//food item creation
+app.post("/createMenuItem", verifyJWT, (req, res) => {
+
+  const idrestaurant = req.body.idrestaurant;
+  const idorder = req.body.idorder;
+  const productname = req.body.productname;
+  const description = req.body.description;
+  const price = req.body.price;
+  const image = req.body.image;
+
+    db.query(
+      "INSERT INTO menu (idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
+      [idrestaurant, idorder, productname, description, price, image],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values Inserted");
+        }
+      }
+    );
+});
+
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");
 });

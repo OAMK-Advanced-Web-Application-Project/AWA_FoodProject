@@ -4,6 +4,7 @@ import Cart from './Cart'
 import AdressInput from './AdressInput';
 
 
+
 export default function TestCartPage() {
     
     const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]');
