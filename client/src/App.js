@@ -9,6 +9,7 @@ import UserMainPage from "./components/mainpages/userMainPage.js";
 import Payment from "./components/mainpages/payment/Payment.js";
 import { v4 as uuidv4 } from "uuid";
 import AddMenuItem from "./components/mainpages/editableRestaurantInfo/AddMenuItem.js";
+import TestRestaurantPage from "./components/shoppingCart/TestRestaurantPage.js"
 
 const jwtStorage = localStorage.getItem("token");
 
@@ -35,6 +36,7 @@ function App() {
     authRoutes = (
       <>
         <Route path="/cart" element={<Cart />} />
+        <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
         <Route path="/usermainpage" element={<UserMainPage />} />
         <Route path="/payment" element={<Payment />} />
       </>

@@ -40,7 +40,6 @@ function App() {
   if (userJWT != null) {
     authRoutes = (
       <>
-        <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="restaurantmainpage" element={<RestaurantMainPage />}>
           <Route path=":menuId" element={<MenuDetailView menus={menus} />} />
