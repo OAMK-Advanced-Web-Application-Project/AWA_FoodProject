@@ -6,52 +6,78 @@ import "./editableRestaurantInfo/MenuList.js";
 import MenuList from "./editableRestaurantInfo/MenuList.js";
 import MenuDetailView from "./editableRestaurantInfo/MenuDetailView.js";
 import menuData from "./editableRestaurantInfo/menuData.json";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 import Axios from "axios";
 import Constants from "../Constants.json";
 import AddMenuItem from "./editableRestaurantInfo/AddMenuItem.js";
+import jwt from "jsonwebtoken";
 
 
+export default function RestaurantMainPage(props) {
+  const menus = menuData.map((menu) => {
+    return { ...menu, id: uuidv4() };
+  });
+  
+  const decodedToken = jwt.decode(props.newJWT)
+  console.log(decodedToken);
 
+  const userAuthenticated = () => {
+    const result = Axios.get(Constants.API_ADDRESS + "/isUserAuth", {
+      headers: { "accessToken" : localStorage.getItem("token") },
+    });
+    console.log(result);
+  };
 
-class RestaurantMainPage extends React.Component {
-    
-    render() {
-        const menus = menuData.map(menu => {
-            return { ...menu, id: uuidv4() }
-          })
-    return (
-
-        <div>
-            <div className= {styles.restaurantInfoContainer}>
-                <div className={styles.editableInfo}>
-                    <table>
-                        <tr>Restaurant name</tr> <tr><input></input></tr>
-                        <tr>Username</tr> <tr><input></input></tr>
-                        <tr>Password</tr> <tr><input></input></tr>
-                        <tr>Address</tr> <tr><input></input></tr>
-                        <tr>Operating hours</tr> <tr><input></input></tr>
-                        <tr>Type</tr> <tr><input></input></tr>
-                        <tr>Price level</tr> <tr><input></input></tr>
-                    </table>
-                    <button>Apply changes</button>
-                </div>
-                <img className={styles.restaurantImage} src="/images/maccas.jpg" alt="Logo" />                
-            </div>
-
-            <div className={styles.editableMenu}>
-                <MenuList menu={menus}/>
-                <MenuDetailView menus={menus} />
-                <AddMenuItem/>
-            </div>
+  return (
+    <div>
+      <button onClick={userAuthenticated}>check if authenticated</button>
+      <div className={styles.restaurantInfoContainer}>
+        <div className={styles.editableInfo}>
+          <table>
+            <tr>Restaurant name</tr>{" "}
+            <tr>
+              <input></input>
+            </tr>
+            <tr>Username</tr>{" "}
+            <tr>
+              <input></input>
+            </tr>
+            <tr>Password</tr>{" "}
+            <tr>
+              <input></input>
+            </tr>
+            <tr>Address</tr>{" "}
+            <tr>
+              <input></input>
+            </tr>
+            <tr>Operating hours</tr>{" "}
+            <tr>
+              <input></input>
+            </tr>
+            <tr>Type</tr>{" "}
+            <tr>
+              <input></input>
+            </tr>
+            <tr>Price level</tr>{" "}
+            <tr>
+              <input></input>
+            </tr>
+          </table>
+          <button>Apply changes</button>
         </div>
-    ); 
-    }
-} 
+        <img
+          className={styles.restaurantImage}
+          src="/images/maccas.jpg"
+          alt="Logo"
+        />
+      </div>
 
-
-
-
-export default RestaurantMainPage;
-
+      <div className={styles.editableMenu}>
+        <MenuList menu={menus} />
+        <MenuDetailView menus={menus} />
+        <AddMenuItem />
+      </div>
+    </div>
+  );
+}
