@@ -1,11 +1,13 @@
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
-
+const passport = require("passport");
+const BasicStrategy = require("passport-http").BasicStrategy;
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
-
+const JwtStrategy = require("passport-jwt").Strategy,
+  ExtractJwt = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 const saltRound = 10;
 
@@ -37,6 +39,11 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  console.log("demo middleware executing ...");
+  next();
+});
+
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
@@ -44,22 +51,57 @@ const db = mysql.createConnection({
   database: "food",
 });
 
-const verifyJWT = (req, res, next) => {
-  const token = req.headers["x-access-token"];
+passport.use(
+  new BasicStrategy(function (username, password, done, res) {
+    db.query(
+      "SELECT * FROM user WHERE username = ?",
+      username,
+      (err, result) => {
+        if (err) {
+          res.send({ err: err });
+        }
 
-  if (!token) {
-    res.send("no token");
-  } else {
-    jtw.verify(token, "AWAgroup8", (err, decoded) => {
-      if (err) {
-        res.json({ auth: false, message: "fail to authenticate" });
-      } else {
-        req.userId = decoded.id;
-        next();
+        if (result.length > 0) {
+          bcrypt.compare(password, result[0].password, (error, response) => {
+            if (response) {
+              done(null, response);
+              const payload = {
+                username: result[0].username,
+              };
+              const secretKey = "AWAgroup8";
+              const options = {
+                expiresIn: 60 * 60 * 24,
+              };
+              const token = jwt.sign(payload, secretKey, options);
+              console.log(token);
+            } else {
+              done(null, false);
+            }
+          });
+        } else {
+          done(null, false);
+        }
       }
-    });
-  }
-}; 
+    );
+  })
+);
+
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: "AWAgroup8",
+};
+
+passport.use(
+  new JwtStrategy(jwtOptions, function (jwt_payload, done) {
+    console.log("payload is as follows: " + jwt_payload);
+
+    done(null, jwt_payload);
+  })
+);
+
+app.get("/", (req, res) => {
+  res.send("Hello world");
+});
 
 //user signup
 app.post("/createUser", (req, res) => {
@@ -92,7 +134,7 @@ app.post("/UserLogin", (req, res) => {
   const password = req.body.password;
 
   db.query(
-    "SELECT * FROM user WHERE username = ?;",
+    "SELECT * FROM user WHERE username = ?",
     username,
     (err, result) => {
       if (err) {
@@ -102,22 +144,47 @@ app.post("/UserLogin", (req, res) => {
       if (result.length > 0) {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if (response) {
-            const id = result[0].id;
-            const token = jwt.sign({ id }, "AWAgroup8", {
+            const payload = {
+              id: result[0].id,
+              username: result[0].username
+            };
+            const secretKey = "AWAgroup8";
+            const options = {
               expiresIn: 60 * 60 * 24,
-            });
-            req.session.user = result;
+            };
+            const token = jwt.sign(payload, secretKey, options);
+
             res.json({ auth: true, token: token, result: result });
           } else {
-            res.json({ auth: false, message: "wrong username/password"});
+            res.json({ auth: false, message: "wrong username/password" });
           }
         });
       } else {
-        res.json({ auth: false, message: "no user exists"});
+        res.json({ auth: false, message: "no user exists" });
       }
     }
   );
 });
+
+app.get(
+  "/my-protected-resource",
+  passport.authenticate("basic", { session: false }),
+  (req, res) => {
+    console.log("protected resource accessed");
+
+    res.send("Hello protected world");
+  }
+);
+
+app.get(
+  "/jwt-protected-resource",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.user);
+    res.send(req.user);
+  }
+);
+
 
 //restaurant signup
 app.post("/createRestaurant", (req, res) => {
@@ -167,26 +234,28 @@ app.post("/RestaurantLogin", (req, res) => {
             req.session.user = result;
             res.json({ auth: true, token: token, result: result });
           } else {
-            res.json({ auth: false, message: "wrong username/password"});
+            res.json({ auth: false, message: "wrong username/password" });
           }
         });
       } else {
-        res.json({ auth: false, message: "no user exists"});
+        res.json({ auth: false, message: "no user exists" });
       }
     }
   );
 });
 
 //food item creation
-app.post("/createMenuItem", verifyJWT, (req, res) => {
-
-  const idmenu = req.body.idmenu;
-  const idrestaurant = req.body.idrestaurant;
-  const idorder = req.body.idorder;
-  const productname = req.body.productname;
-  const description = req.body.description;
-  const price = req.body.price;
-  const image = req.body.image;
+app.post(
+  "/createMenuItem",
+  passport.authenticate("basic", { session: false }),
+  (req, res) => {
+    const idmenu = req.body.idmenu;
+    const idrestaurant = req.body.idrestaurant;
+    const idorder = req.body.idorder;
+    const productname = req.body.productname;
+    const description = req.body.description;
+    const price = req.body.price;
+    const image = req.body.image;
 
     db.query(
       "INSERT INTO menu (idmenu, idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
@@ -199,7 +268,8 @@ app.post("/createMenuItem", verifyJWT, (req, res) => {
         }
       }
     );
-});
+  }
+);
 
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");

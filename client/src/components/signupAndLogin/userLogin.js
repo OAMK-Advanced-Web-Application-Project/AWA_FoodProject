@@ -50,6 +50,8 @@ export default function UserLogin(props) {
           <Link to="/userSignup">
             <button> Sign up </button>
           </Link>
+          <button> Sign up </button>
+
         </div>
       </form>
     </div>
