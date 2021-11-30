@@ -247,7 +247,7 @@ app.post("/RestaurantLogin", (req, res) => {
 //food item creation
 app.post(
   "/createMenuItem",
-  passport.authenticate("basic", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const idmenu = req.body.idmenu;
     const idrestaurant = req.body.idrestaurant;
