@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3002"],
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -80,6 +80,7 @@ app.post("/createUser", (req, res) => {
 });
 
 passport.use(
+  "auth1",
   new BasicStrategy(function (username, password, done, res) {
     db.query(
       "SELECT * FROM user WHERE username = ?",
@@ -167,7 +168,7 @@ app.post("/UserLogin", (req, res) => {
 
 app.get(
   "/my-protected-resource",
-  passport.authenticate("basic", { session: false }),
+  passport.authenticate("auth1", { session: false }),
   (req, res) => {
     console.log("protected resource accessed");
 
@@ -212,6 +213,7 @@ app.post("/createRestaurant", (req, res) => {
 });
 
 passport.use(
+  "auth2",
   new BasicStrategy(function (username, password, done, res) {
     db.query(
       "SELECT * FROM restaurant WHERE username = ?",
@@ -253,6 +255,25 @@ passport.use(
       }
     );
   })
+);
+
+app.get(
+  "/my-protected-resource-restaurant",
+  passport.authenticate("auth2", { session: false }),
+  (req, res) => {
+    console.log("protected resource accessed");
+
+    res.send("Hello protected world restaurant");
+  }
+);
+
+app.get(
+  "/jwt-protected-resource-restaurant",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.user);
+    res.send(req.user);
+  }
 );
 
 //restaurant login
