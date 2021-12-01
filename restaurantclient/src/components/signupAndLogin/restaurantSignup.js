@@ -9,13 +9,19 @@ export default function RestaurantSignup() {
   const [usernameReg, setUsernameReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
   const [addressReg, setAddressReg] = useState("");
+  const [operatinghoursReg, setOperatinghoursReg] = useState("");
+  const [typeReg, setTypeReg] = useState("");
+  const [pricelevelReg, setPriceLevel] = useState("");
 
   const addRestaurant = () => {
     Axios.post(Constants.API_ADDRESS + "/createRestaurant", {
-      restaurantName: restaurantnameReg,
+      restaurantname: restaurantnameReg,
       username: usernameReg,
       password: passwordReg,
       address: addressReg,
+      operatinghours: operatinghoursReg,
+      type: typeReg,
+      pricelevel: pricelevelReg,
     }).then((response) => {
       console.log("done");
     });
@@ -25,7 +31,7 @@ export default function RestaurantSignup() {
     <div class={styles.background}>
       <div class={styles.signupForm}>
         <h1>Signup</h1>
-        <label>RestaurantName</label>
+        <label>Restaurant name</label>
         <input
           type="text"
           onChange={(event) => {
@@ -51,6 +57,27 @@ export default function RestaurantSignup() {
           type="text"
           onChange={(event) => {
             setAddressReg(event.target.value);
+          }}
+        />
+        <label>operatinghours</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setOperatinghoursReg(event.target.value);
+          }}
+        />
+        <label>type</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setTypeReg(event.target.value);
+          }}
+        />
+        <label>pricelevel</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setPriceLevel(event.target.value);
           }}
         />
         <Link to="/restaurantlogin">

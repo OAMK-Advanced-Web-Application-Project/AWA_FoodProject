@@ -193,14 +193,17 @@ app.post("/createRestaurant", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const address = req.body.address;
+  const operatinghours = req.body.operatinghours;
+  const type = req.body.type;
+  const pricelevel = req.body.pricelevel;
 
   bcrypt.hash(password, saltRound, (err, hash) => {
     if (err) {
       console.log(err);
     }
     db.query(
-      "INSERT INTO restaurant (restaurantname, username, password, address) VALUES (?,?,?,?)",
-      [restaurantname, username, hash, address],
+      "INSERT INTO restaurant (restaurantname, username, password, address, operatinghours, type, pricelevel) VALUES (?,?,?,?,?,?,?)",
+      [restaurantname, username, hash, address, operatinghours, type, pricelevel],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -234,8 +237,8 @@ passport.use(
                 operatinghours: result[0].operatinghours,
                 type: result[0].type,
                 pricelevel: result[0].pricelevel,
-                sellhistory: result[0].sellhistory,
-              };
+/*                 sellhistory: result[0].sellhistory,
+ */              };
               const payload = {
                 user: body,
               };
