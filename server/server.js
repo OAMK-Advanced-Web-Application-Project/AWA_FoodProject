@@ -51,6 +51,8 @@ const db = mysql.createConnection({
   database: "food",
 });
 
+// ------------------------------------------------------------------
+
 //user signup
 app.post("/createUser", (req, res) => {
   const firstname = req.body.firstname;
