@@ -25,7 +25,7 @@ app.use(
 );
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.use(
   session({
@@ -92,24 +92,7 @@ passport.use(
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
-              done(null, response);
-              const body = {
-                iduser: result[0].iduser,
-                firstname: result[0].firstname,
-                lastname: result[0].lastname,
-                username: result[0].username,
-                address: result[0].address,
-                orderhistory: result[0].orderhistory,
-              };
-              const payload = {
-                user: body,
-              };
-              const secretKey = "AWAgroup8";
-              const options = {
-                expiresIn: 60 * 60 * 24,
-              };
-              const token = jwt.sign(payload, secretKey, options);
-              console.log(token);
+              done(null, result[0]);
             } else {
               done(null, false);
             }
@@ -135,44 +118,28 @@ passport.use(
   })
 );
 
-app.post("/UserLogin", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  db.query(
-    "SELECT * FROM user WHERE username = ?;",
-    username,
-    (err, result) => {
-      if (err) {
-        res.send({ err: err });
-      }
-
-      if (result.length > 0) {
-        bcrypt.compare(password, result[0].password, (error, response) => {
-          if (response) {
-            const id = result[0].id;
-            const token = jwt.sign({ id }, "AWAgroup8", {
-              expiresIn: 60 * 60 * 24,
-            });
-            res.json({ auth: true, token: token, result: result });
-          } else {
-            res.json({ auth: false, message: "wrong username/password" });
-          }
-        });
-      } else {
-        res.json({ auth: false, message: "no user exists" });
-      }
-    }
-  );
-});
-
-app.get(
-  "/my-protected-resource",
+app.post(
+  "/UserLogin",
   passport.authenticate("auth1", { session: false }),
   (req, res) => {
-    console.log("protected resource accessed");
-
-    res.send("Hello protected world");
+    console.log(req.user);
+    const body = {
+      iduser: req.user.iduser,
+      firstname: req.user.firstname,
+      lastname: req.user.lastname,
+      username: req.user.username,
+      address: req.user.address,
+    };
+    const payload = {
+      user: body,
+    };
+    const secretKey = "AWAgroup8";
+    const options = {
+      expiresIn: 60 * 60 * 24,
+    };
+    const token = jwt.sign(payload, secretKey, options);
+    console.log(token);
+    res.json({ auth: true, token: token });
   }
 );
 
@@ -203,7 +170,15 @@ app.post("/createRestaurant", (req, res) => {
     }
     db.query(
       "INSERT INTO restaurant (restaurantname, username, password, address, operatinghours, type, pricelevel) VALUES (?,?,?,?,?,?,?)",
-      [restaurantname, username, hash, address, operatinghours, type, pricelevel],
+      [
+        restaurantname,
+        username,
+        hash,
+        address,
+        operatinghours,
+        type,
+        pricelevel,
+      ],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -217,37 +192,18 @@ app.post("/createRestaurant", (req, res) => {
 
 passport.use(
   "auth2",
-  new BasicStrategy(function (username, password, done, res) {
+  new BasicStrategy(function (username, password, done) {
     db.query(
       "SELECT * FROM restaurant WHERE username = ?",
       username,
       (err, result) => {
         if (err) {
-          res.send({ err: err });
+          done({ err: err });
         }
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
-              done(null, response);
-              const body = {
-                idrestaurant: result[0].idrestaurant,
-                restaurantname: result[0].restaurantname,
-                username: result[0].username,
-                address: result[0].address,
-                operatinghours: result[0].operatinghours,
-                type: result[0].type,
-                pricelevel: result[0].pricelevel,
-/*                 sellhistory: result[0].sellhistory,
- */              };
-              const payload = {
-                user: body,
-              };
-              const secretKey = "AWAgroup8";
-              const options = {
-                expiresIn: 60 * 60 * 24,
-              };
-              const token = jwt.sign(payload, secretKey, options);
-              console.log(token);
+              done(null, result[0]);
             } else {
               done(null, false);
             }
@@ -261,16 +217,6 @@ passport.use(
 );
 
 app.get(
-  "/my-protected-resource-restaurant",
-  passport.authenticate("auth2", { session: false }),
-  (req, res) => {
-    console.log("protected resource accessed");
-
-    res.send("Hello protected world restaurant");
-  }
-);
-
-app.get(
   "/jwt-protected-resource-restaurant",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
@@ -280,36 +226,32 @@ app.get(
 );
 
 //restaurant login
-app.post("/RestaurantLogin", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  db.query(
-    "SELECT * FROM restaurant WHERE username = ?;",
-    username,
-    (err, result) => {
-      if (err) {
-        res.send({ err: err });
-      }
-
-      if (result.length > 0) {
-        bcrypt.compare(password, result[0].password, (error, response) => {
-          if (response) {
-            const id = result[0].id;
-            const token = jwt.sign({ id }, "AWAgroup8", {
-              expiresIn: 60 * 60 * 24,
-            });
-            res.json({ auth: true, token: token, result: result });
-          } else {
-            res.json({ auth: false, message: "wrong username/password" });
-          }
-        });
-      } else {
-        res.json({ auth: false, message: "no user exists" });
-      }
-    }
-  );
-});
+app.post(
+  "/RestaurantLogin",
+  passport.authenticate("auth2", { session: false }),
+  (req, res) => {
+    console.log(req.user);
+    const body = {
+      idrestaurant: req.user.idrestaurant,
+      restaurantname: req.user.restaurantname,
+      username: req.user.username,
+      address: req.user.address,
+      operatinghours: req.user.operatinghours,
+      type: req.user.type,
+      pricelevel: req.user.pricelevel,
+    };
+    const payload = {
+      user: body,
+    };
+    const secretKey = "AWAgroup8";
+    const options = {
+      expiresIn: 60 * 60 * 24,
+    };
+    const token = jwt.sign(payload, secretKey, options);
+    console.log(token);
+    res.json({ auth: true, token: token });
+  }
+);
 
 //------------------------------------------------------------------------------
 

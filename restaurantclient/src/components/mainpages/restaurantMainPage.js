@@ -7,9 +7,6 @@ import MenuList from "./editableRestaurantInfo/MenuList.js";
 import MenuDetailView from "./editableRestaurantInfo/MenuDetailView.js";
 import menuData from "./editableRestaurantInfo/menuData.json";
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
-import Axios from "axios";
-import Constants from "../Constants.json";
 import AddMenuItem from "./editableRestaurantInfo/AddMenuItem.js";
 import jwt from "jsonwebtoken";
 
@@ -26,37 +23,13 @@ export default function RestaurantMainPage(props) {
       <div className={styles.restaurantInfoContainer}>
         <div className={styles.editableInfo}>
           <table>
-            <tr>Restaurant name</tr>
-{/*             { decodedToken.restaurantname} */}
-            <tr>
-              <input></input>
-            </tr>
-            <tr>Username</tr>{" "}
-            <tr>
-              <input></input>
-            </tr>
-            <tr>Password</tr>{" "}
-            <tr>
-              <input></input>
-            </tr>
-            <tr>Address</tr>{" "}
-            <tr>
-              <input></input>
-            </tr>
-            <tr>Operating hours</tr>{" "}
-            <tr>
-              <input></input>
-            </tr>
-            <tr>Type</tr>{" "}
-            <tr>
-              <input></input>
-            </tr>
-            <tr>Price level</tr>{" "}
-            <tr>
-              <input></input>
-            </tr>
+            <tr>Restaurant name: {decodedToken.user.restaurantname}</tr>
+            <tr>Username: {decodedToken.user.username}</tr>
+            <tr>Address: {decodedToken.user.address}</tr>
+            <tr>Operating hours:  {decodedToken.user.operatinghours}</tr>
+            <tr>Type:  {decodedToken.user.type}</tr>
+            <tr>Price level:  {decodedToken.user.pricelevel}</tr>
           </table>
-          <button>Apply changes</button>
         </div>
         <img
           className={styles.restaurantImage}
