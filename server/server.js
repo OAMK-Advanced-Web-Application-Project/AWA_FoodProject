@@ -203,6 +203,7 @@ passport.use(
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
+              console.log(result[0])
               done(null, result[0]);
             } else {
               done(null, false);
@@ -214,15 +215,6 @@ passport.use(
       }
     );
   })
-);
-
-app.get(
-  "/jwt-protected-resource-restaurant",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log(req.user);
-    res.send(req.user);
-  }
 );
 
 //restaurant login
@@ -250,6 +242,15 @@ app.post(
     const token = jwt.sign(payload, secretKey, options);
     console.log(token);
     res.json({ auth: true, token: token });
+  }
+);
+
+app.get(
+  "/jwt-protected-resource-restaurant",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.user);
+    res.send(req.user);
   }
 );
 
