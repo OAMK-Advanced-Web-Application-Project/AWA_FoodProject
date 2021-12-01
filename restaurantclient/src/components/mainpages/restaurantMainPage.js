@@ -13,29 +13,21 @@ import Constants from "../Constants.json";
 import AddMenuItem from "./editableRestaurantInfo/AddMenuItem.js";
 import jwt from "jsonwebtoken";
 
-
 export default function RestaurantMainPage(props) {
   const menus = menuData.map((menu) => {
     return { ...menu, id: uuidv4() };
   });
-  
-  const decodedToken = jwt.decode(props.newJWT)
-  console.log(decodedToken);
 
-  const userAuthenticated = () => {
-    const result = Axios.get(Constants.API_ADDRESS + "/isUserAuth", {
-      headers: { "accessToken" : localStorage.getItem("token") },
-    });
-    console.log(result);
-  };
+  const decodedToken = jwt.decode(props.jwt);
+  console.log(decodedToken);
 
   return (
     <div>
-      <button onClick={userAuthenticated}>check if authenticated</button>
       <div className={styles.restaurantInfoContainer}>
         <div className={styles.editableInfo}>
           <table>
-            <tr>Restaurant name</tr>{" "}
+            <tr>Restaurant name</tr>
+{/*             { decodedToken.restaurantname} */}
             <tr>
               <input></input>
             </tr>
@@ -72,7 +64,6 @@ export default function RestaurantMainPage(props) {
           alt="Logo"
         />
       </div>
-
       <div className={styles.editableMenu}>
         <MenuList menu={menus} />
         <MenuDetailView menus={menus} />

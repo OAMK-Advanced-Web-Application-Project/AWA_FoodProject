@@ -128,10 +128,10 @@ const jwtOptions = {
 };
 
 passport.use(
-  new JwtStrategy(jwtOptions, function (jwt_payload, done) {
-    console.log("payload is as follows: " + jwt_payload);
+  new JwtStrategy(jwtOptions, function (jwtpayload, done) {
+    console.log("payload is as follows: " + jwtpayload);
 
-    done(null, jwt_payload);
+    done(null, jwtpayload);
   })
 );
 

@@ -41,7 +41,7 @@ function App() {
     authRoutes = (
       <>
         <Route path="/payment" element={<Payment />} />
-        <Route path="restaurantmainpage" element={<RestaurantMainPage />}>
+        <Route path="restaurantmainpage" element={<RestaurantMainPage jwt={userJWT} />} >
           <Route path=":menuId" element={<MenuDetailView menus={menus} />} />
         </Route>
       </>
