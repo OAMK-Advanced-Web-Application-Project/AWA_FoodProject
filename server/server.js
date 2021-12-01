@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3002"],
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -80,6 +80,7 @@ app.post("/createUser", (req, res) => {
 });
 
 passport.use(
+  "auth1",
   new BasicStrategy(function (username, password, done, res) {
     db.query(
       "SELECT * FROM user WHERE username = ?",
@@ -167,7 +168,7 @@ app.post("/UserLogin", (req, res) => {
 
 app.get(
   "/my-protected-resource",
-  passport.authenticate("basic", { session: false }),
+  passport.authenticate("auth1", { session: false }),
   (req, res) => {
     console.log("protected resource accessed");
 
@@ -192,14 +193,17 @@ app.post("/createRestaurant", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const address = req.body.address;
+  const operatinghours = req.body.operatinghours;
+  const type = req.body.type;
+  const pricelevel = req.body.pricelevel;
 
   bcrypt.hash(password, saltRound, (err, hash) => {
     if (err) {
       console.log(err);
     }
     db.query(
-      "INSERT INTO restaurant (restaurantname, username, password, address) VALUES (?,?,?,?)",
-      [restaurantname, username, hash, address],
+      "INSERT INTO restaurant (restaurantname, username, password, address, operatinghours, type, pricelevel) VALUES (?,?,?,?,?,?,?)",
+      [restaurantname, username, hash, address, operatinghours, type, pricelevel],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -212,6 +216,7 @@ app.post("/createRestaurant", (req, res) => {
 });
 
 passport.use(
+  "auth2",
   new BasicStrategy(function (username, password, done, res) {
     db.query(
       "SELECT * FROM restaurant WHERE username = ?",
@@ -232,8 +237,8 @@ passport.use(
                 operatinghours: result[0].operatinghours,
                 type: result[0].type,
                 pricelevel: result[0].pricelevel,
-                sellhistory: result[0].sellhistory,
-              };
+/*                 sellhistory: result[0].sellhistory,
+ */              };
               const payload = {
                 user: body,
               };
@@ -253,6 +258,25 @@ passport.use(
       }
     );
   })
+);
+
+app.get(
+  "/my-protected-resource-restaurant",
+  passport.authenticate("auth2", { session: false }),
+  (req, res) => {
+    console.log("protected resource accessed");
+
+    res.send("Hello protected world restaurant");
+  }
+);
+
+app.get(
+  "/jwt-protected-resource-restaurant",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.user);
+    res.send(req.user);
+  }
 );
 
 //restaurant login
