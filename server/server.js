@@ -51,6 +51,32 @@ const db = mysql.createConnection({
   database: "food",
 });
 
+//user signup
+app.post("/createUser", (req, res) => {
+  const firstname = req.body.firstname;
+  const lastname = req.body.lastname;
+  const username = req.body.username;
+  const password = req.body.password;
+  const address = req.body.address;
+
+  bcrypt.hash(password, saltRound, (err, hash) => {
+    if (err) {
+      console.log(err);
+    }
+    db.query(
+      "INSERT INTO user (firstname, lastname, username, password, address) VALUES (?,?,?,?,?)",
+      [firstname, lastname, username, hash, address],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values Inserted");
+        }
+      }
+    );
+  });
+});
+
 passport.use(
   new BasicStrategy(function (username, password, done, res) {
     db.query(
@@ -60,13 +86,20 @@ passport.use(
         if (err) {
           res.send({ err: err });
         }
-
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
               done(null, response);
-              const payload = {
+              const body = {
+                iduser: result[0].iduser,
+                firstname: result[0].firstname,
+                lastname: result[0].lastname,
                 username: result[0].username,
+                address: result[0].address,
+                orderhistory: result[0].orderhistory,
+              };
+              const payload = {
+                user: body,
               };
               const secretKey = "AWAgroup8";
               const options = {
@@ -99,42 +132,12 @@ passport.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.send("Hello world");
-});
-
-//user signup
-app.post("/createUser", (req, res) => {
-  const firstname = req.body.firstname;
-  const lastname = req.body.lastname;
-  const username = req.body.username;
-  const password = req.body.password;
-  const address = req.body.address;
-
-  bcrypt.hash(password, saltRound, (err, hash) => {
-    if (err) {
-      console.log(err);
-    }
-    db.query(
-      "INSERT INTO user (firstname, lastname, username, password, address) VALUES (?,?,?,?,?)",
-      [firstname, lastname, username, hash, address],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send("Values Inserted");
-        }
-      }
-    );
-  });
-});
-
 app.post("/UserLogin", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
   db.query(
-    "SELECT * FROM user WHERE username = ?",
+    "SELECT * FROM user WHERE username = ?;",
     username,
     (err, result) => {
       if (err) {
@@ -144,16 +147,10 @@ app.post("/UserLogin", (req, res) => {
       if (result.length > 0) {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if (response) {
-            const payload = {
-              id: result[0].id,
-              username: result[0].username
-            };
-            const secretKey = "AWAgroup8";
-            const options = {
+            const id = result[0].id;
+            const token = jwt.sign({ id }, "AWAgroup8", {
               expiresIn: 60 * 60 * 24,
-            };
-            const token = jwt.sign(payload, secretKey, options);
-
+            });
             res.json({ auth: true, token: token, result: result });
           } else {
             res.json({ auth: false, message: "wrong username/password" });
@@ -185,6 +182,7 @@ app.get(
   }
 );
 
+//------------------------------------------------------------------------------
 
 //restaurant signup
 app.post("/createRestaurant", (req, res) => {
@@ -211,6 +209,50 @@ app.post("/createRestaurant", (req, res) => {
   });
 });
 
+passport.use(
+  new BasicStrategy(function (username, password, done, res) {
+    db.query(
+      "SELECT * FROM restaurant WHERE username = ?",
+      username,
+      (err, result) => {
+        if (err) {
+          res.send({ err: err });
+        }
+        if (result.length > 0) {
+          bcrypt.compare(password, result[0].password, (error, response) => {
+            if (response) {
+              done(null, response);
+              const body = {
+                idrestaurant: result[0].idrestaurant,
+                restaurantname: result[0].restaurantname,
+                username: result[0].username,
+                address: result[0].address,
+                operatinghours: result[0].operatinghours,
+                type: result[0].type,
+                pricelevel: result[0].pricelevel,
+                sellhistory: result[0].sellhistory,
+              };
+              const payload = {
+                user: body,
+              };
+              const secretKey = "AWAgroup8";
+              const options = {
+                expiresIn: 60 * 60 * 24,
+              };
+              const token = jwt.sign(payload, secretKey, options);
+              console.log(token);
+            } else {
+              done(null, false);
+            }
+          });
+        } else {
+          done(null, false);
+        }
+      }
+    );
+  })
+);
+
 //restaurant login
 app.post("/RestaurantLogin", (req, res) => {
   const username = req.body.username;
@@ -231,7 +273,6 @@ app.post("/RestaurantLogin", (req, res) => {
             const token = jwt.sign({ id }, "AWAgroup8", {
               expiresIn: 60 * 60 * 24,
             });
-            req.session.user = result;
             res.json({ auth: true, token: token, result: result });
           } else {
             res.json({ auth: false, message: "wrong username/password" });
@@ -243,6 +284,8 @@ app.post("/RestaurantLogin", (req, res) => {
     }
   );
 });
+
+//------------------------------------------------------------------------------
 
 //food item creation
 app.post(
