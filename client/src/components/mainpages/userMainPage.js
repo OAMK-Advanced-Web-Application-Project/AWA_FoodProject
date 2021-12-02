@@ -41,7 +41,7 @@ class UserMainPage extends React.Component {
         <div className={styles2.SearchView}>
           <SearchView
             restaurants={this.state.restaurants.filter((restaurant) =>
-              restaurant.name.includes(this.state.SearchString)
+              restaurant.name.toLowerCase().includes(this.state.SearchString.toLowerCase())
             )}
           />
         </div>
