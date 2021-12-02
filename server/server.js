@@ -40,11 +40,6 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  console.log("demo middleware executing ...");
-  next();
-});
-
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
@@ -282,6 +277,26 @@ app.post(
     );
   }
 );
+
+//fetch all restaurant data
+app.get("/fetchData/restaurants", passport.authenticate("auth1", { session: false }), (req, res) => {
+
+  const restaurantname = req.body.restaurantname;
+  const type = req.body.type;
+  const pricelevel = req.body.pricelevel;
+
+    db.query(
+      "SELECT restaurantname, type, pricelevel FROM restaurant",
+      [restaurantname, type, pricelevel],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values read");
+        }
+      }
+    );
+});
 
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");

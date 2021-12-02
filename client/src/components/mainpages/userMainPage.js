@@ -3,6 +3,8 @@ import styles1 from "./userMainPage.module.css";
 import styles2 from "./searchView.module.css";
 import SearchResult from "./searchResult";
 import placeholderData from "./placeholderData.json";
+import jwt from "jsonwebtoken";
+import Axios from "axios";
 
 function SearchView(props) {
   return (
@@ -14,14 +16,22 @@ function SearchView(props) {
   );
 }
 
+
 class UserMainPage extends React.Component {
   constructor(props) {
+
+    const decodedToken = jwt.decode(props.jwt);
+    console.log(decodedToken);
+
+    Axios.defaults.withCredentials = true;
+    
     super(props);
     this.state = {
       restaurants: placeholderData.restaurants,
       SearchString: "",
     };
   }
+  
 
   onSearchChange = (event) => {
     this.setState({ SearchString: event.target.value });
@@ -41,7 +51,7 @@ class UserMainPage extends React.Component {
         <div className={styles2.SearchView}>
           <SearchView
             restaurants={this.state.restaurants.filter((restaurant) =>
-              restaurant.name.includes(this.state.SearchString)
+              restaurant.name.toLowerCase().includes(this.state.SearchString.toLowerCase())
             )}
           />
         </div>

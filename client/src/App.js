@@ -6,6 +6,7 @@ import UserLogin from "./components/signupAndLogin/userLogin.js";
 import UserSignup from "./components/signupAndLogin/userSignup";
 import Cart from "./components/shoppingCart/TestCartPage.js";
 import UserMainPage from "./components/mainpages/userMainPage.js";
+import SearchResult from "./components/mainpages/searchResult.js";
 import MenuDetailView from "./components/mainpages/editableRestaurantInfo/MenuDetailView.js";
 import MenuList from "./components/mainpages/editableRestaurantInfo/MenuList.js";
 import menuData from "./components/mainpages/editableRestaurantInfo/menuData.json";
@@ -41,6 +42,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
         <Route path="/usermainpage" element={<UserMainPage />} />
+        <Route path="/searchResult" element={<SearchResult />} />
         <Route path="/payment" element={<Payment />} />
       </>
     );
