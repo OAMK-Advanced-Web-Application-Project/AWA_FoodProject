@@ -10,22 +10,25 @@ const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 const saltRound = 10;
+const port = process.env.PORT || 3000;
 
 const jwt = require("jsonwebtoken");
 
 const app = express();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
+
+const corsOptions = {
+  origin: ["https://react-test-g8.herokuapp.com"],
+  methods: ["GET", "POST"],
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   session({
@@ -45,10 +48,10 @@ app.use((req, res, next) => {
 });
 
 const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "1216",
-  database: "food",
+  user: "bf28b792b022fb",
+  host: "eu-cdbr-west-01.cleardb.com",
+  password: "2473a415",
+  database: "heroku_8aefe58b9c0dd62",
 });
 
 // ------------------------------------------------------------------
@@ -203,7 +206,7 @@ passport.use(
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
-              console.log(result[0])
+              console.log(result[0]);
               done(null, result[0]);
             } else {
               done(null, false);
@@ -283,6 +286,4 @@ app.post(
   }
 );
 
-app.listen(3001, () => {
-  console.log("Your server is running on port 3001");
-});
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
