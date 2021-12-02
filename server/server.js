@@ -10,7 +10,7 @@ const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 const saltRound = 10;
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 const jwt = require("jsonwebtoken");
 
