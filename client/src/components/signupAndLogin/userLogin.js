@@ -14,9 +14,11 @@ export default function UserLogin(props) {
 
   const userLogin = async (event) => {
     event.preventDefault();
-    const result = await Axios.post(Constants.API_ADDRESS + "/UserLogin", {
-      username: usernameLog,
-      password: passwordLog,
+    const result = await Axios.post(Constants.API_ADDRESS + "/UserLogin", null, {
+      auth: {
+        username: usernameLog,
+        password: passwordLog,
+      }
     });
 
     console.log(result);

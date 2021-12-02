@@ -82,13 +82,13 @@ app.post("/createUser", (req, res) => {
 
 passport.use(
   "auth1",
-  new BasicStrategy(function (username, password, done, res) {
+  new BasicStrategy(function (username, password, done) {
     db.query(
       "SELECT * FROM user WHERE username = ?",
       username,
       (err, result) => {
         if (err) {
-          res.send({ err: err });
+          done({ err: err });
         }
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
@@ -204,7 +204,6 @@ passport.use(
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
             if (response) {
-              console.log(result[0]);
               done(null, result[0]);
             } else {
               done(null, false);

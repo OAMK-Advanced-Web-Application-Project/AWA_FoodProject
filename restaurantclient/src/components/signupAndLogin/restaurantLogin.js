@@ -13,10 +13,14 @@ export default function RestaurantLogin(props) {
   const navigate = useNavigate();
 
   const restaurantLogin = async (event) => {
+    debugger
     event.preventDefault();
-    const result = await Axios.post(Constants.API_ADDRESS + "/RestaurantLogin", {
-      username: usernameLog,
-      password: passwordLog,
+    const result = await Axios.post(Constants.API_ADDRESS + "/RestaurantLogin", null, {
+      auth: {
+        username: usernameLog,
+        password: passwordLog,
+      }
+
     });
 
     console.log(result);
