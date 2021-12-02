@@ -19,7 +19,7 @@ const app = express();
 app.use(express.json());
 
 const corsOptions = {
-  origin: ["https://react-test-g8.herokuapp.com"],
+  origin: ["https://localhost:3000"],
   methods: ["GET", "POST"],
   credentials: true,
   optionSuccessStatus: 200,
@@ -46,13 +46,13 @@ app.use((req, res, next) => {
   console.log("demo middleware executing ...");
   next();
 });
-
-const db = mysql.createConnection({
-  user: "bf28b792b022fb",
-  host: "eu-cdbr-west-01.cleardb.com",
-  password: "2473a415",
-  database: "heroku_8aefe58b9c0dd62",
-});
+ 
+ const db = mysql.createConnection({
+  user: "root",
+  host: "localhost",
+  password: "1216",
+  database: "food",
+}); 
 
 // ------------------------------------------------------------------
 
