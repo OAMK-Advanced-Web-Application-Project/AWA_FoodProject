@@ -10,7 +10,6 @@ const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 const saltRound = 10;
-const port = process.env.PORT || 3001;
 
 const jwt = require("jsonwebtoken");
 
@@ -18,14 +17,13 @@ const app = express();
 
 app.use(express.json());
 
-const corsOptions = {
-  origin: ["https://localhost:3000"],
-  methods: ["GET", "POST"],
-  credentials: true,
-  optionSuccessStatus: 200,
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,13 +44,13 @@ app.use((req, res, next) => {
   console.log("demo middleware executing ...");
   next();
 });
- 
- const db = mysql.createConnection({
+
+const db = mysql.createConnection({
   user: "root",
   host: "localhost",
   password: "1216",
   database: "food",
-}); 
+});
 
 // ------------------------------------------------------------------
 
@@ -286,4 +284,6 @@ app.post(
   }
 );
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(3001, () => {
+  console.log("Your server is running on port 3001");
+});
