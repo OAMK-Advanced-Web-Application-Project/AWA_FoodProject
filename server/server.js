@@ -298,6 +298,51 @@ app.get("/fetchData/restaurants", passport.authenticate("auth1", { session: fals
     );
 });
 
+
+
+//Order----------
+app.post(
+  "/createOrder", (req, res) =>{
+    const restaurantID = req.body.restaurantID;
+    const userID = req.body.userID;
+    const price = req.body.price;
+    const products = [req.body.products];
+    const status = "In Progress";
+
+    db.query(
+      "INSERT INTO order (iduser, products, price, status, idrestaurants) VALUES (?, ?, ?, ?, ?)",
+      [userID, products, price, status, restaurantID],
+      (err, result) =>{
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values read");
+        }
+      }
+    )
+  }
+)
+
+app.get("/getOrder", (req, res)=>{
+  const restaurantID = req.body.restaurantID;
+  const userID = req.body.userID;
+  const price = req.body.price;
+  const products = [req.body.products];
+
+  db.query(
+    "SELECT iduser, products, price, restaurantID FROM order",
+    [userID, products, price, restaurantID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values read");
+      }
+    }
+  );
+  
+})
+
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");
 });
