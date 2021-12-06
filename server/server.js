@@ -306,12 +306,11 @@ app.post(
     const restaurantID = req.body.restaurantID;
     const userID = req.body.userID;
     const price = req.body.price;
-    const products = [req.body.products];
     const status = "In Progress";
 
     db.query(
-      "INSERT INTO order (iduser, products, price, status, idrestaurants) VALUES (?, ?, ?, ?, ?)",
-      [userID, products, price, status, restaurantID],
+      "INSERT INTO food.order (iduser, price, status, idrestaurant) VALUES (?, ?, ?, ?)",
+      [userID, price, status, restaurantID],
       (err, result) =>{
         if (err) {
           console.log(err);
@@ -327,16 +326,15 @@ app.get("/getOrder", (req, res)=>{
   const restaurantID = req.body.restaurantID;
   const userID = req.body.userID;
   const price = req.body.price;
-  const products = [req.body.products];
 
   db.query(
-    "SELECT iduser, products, price, restaurantID FROM order",
-    [userID, products, price, restaurantID],
+    "SELECT iduser, price, idrestaurant FROM food.order",
+    [userID, price, restaurantID],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values read");
+        res.json(result);
       }
     }
   );

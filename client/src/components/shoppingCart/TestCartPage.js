@@ -8,9 +8,14 @@ import jwt from "jsonwebtoken";
 
 export default function TestCartPage() {
 
-    const decodedToken = jwt.decode(props.jwt);
-    console.log(decodedToken)
+    const jwtStorage = localStorage.getItem("token");
+
+    const decodedToken = jwt.decode(jwtStorage);
+
+    console.log(decodedToken);
+    console.log(decodedToken.user.iduser);
     
+
     const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]');
     const [cart, setCart] = useState(cartFromLocalStorage);
 
@@ -23,7 +28,8 @@ export default function TestCartPage() {
             <div>
             <Cart
             cart = {cart}
-            setCart = {setCart}/>
+            setCart = {setCart}
+            userID = {decodedToken.user.iduser}/>
             </div>
             <div>
             <AdressInput

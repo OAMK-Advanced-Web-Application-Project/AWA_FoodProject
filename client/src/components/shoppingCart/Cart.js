@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Axios from "axios";
-import Constants from '../../Constants.json';
+import Constants from '../Constants.json';
 
 export default function Cart({cart, setCart, userID}) {
     const getTotalSum = () =>{
@@ -23,14 +23,15 @@ export default function Cart({cart, setCart, userID}) {
     }
 
     const createOrder = () =>{
-        const products = cart.map((product)=>(product.name));
+        const [products] = cart.map((product)=>(product.name));
         Axios.post(Constants.API_ADDRESS + "/createOrder",{
-            restaurantID = cart[0].restaurantID,
-            userID = userID,
-            price = getTotalSum(),
-            products = products
+            restaurantID : cart[0].restaurantID,
+            userID : userID,
+            price : getTotalSum(),
+            [products] : products
         }).then((response) =>{
             console.log(response)
+            
         });
     }
 
