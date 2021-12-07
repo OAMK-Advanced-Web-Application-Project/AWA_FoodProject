@@ -101,19 +101,6 @@ passport.use(
   })
 );
 
-const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "AWAgroup8",
-};
-
-passport.use(
-  new JwtStrategy(jwtOptions, function (jwtpayload, done) {
-    console.log("payload is as follows: " + jwtpayload);
-
-    done(null, jwtpayload);
-  })
-);
-
 app.post(
   "/UserLogin",
   passport.authenticate("auth1", { session: false }),
@@ -139,9 +126,23 @@ app.post(
   }
 );
 
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: "AWAgroup8",
+};
+
+passport.use(
+  "jwt1",
+  new JwtStrategy(jwtOptions, function (jwt_payload, done) {
+    console.log("payload is as follows: " + jwt_payload);
+
+    done(null, jwt_payload);
+  })
+);
+
 app.get(
   "/jwt-protected-resource",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt1", { session: false }),
   (req, res) => {
     console.log(req.user);
     res.send(req.user);
@@ -240,9 +241,18 @@ app.post(
   }
 );
 
+passport.use(
+  "jwt2",
+  new JwtStrategy(jwtOptions, function (jwt_payload, done) {
+    console.log("payload is as follows: " + jwt_payload);
+
+    done(null, jwt_payload);
+  })
+);
+
 app.get(
   "/jwt-protected-resource-restaurant",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt2", { session: false }),
   (req, res) => {
     console.log(req.user);
     res.send(req.user);
@@ -279,7 +289,7 @@ app.post(
 );
 
 //fetch all restaurant data
-app.get("/fetchData/restaurants", passport.authenticate("auth1", { session: false }), (req, res) => {
+app.get("/fetchData/restaurants", passport.authenticate("jwt", { session: false }), (req, res) => {
 
   const restaurantname = req.body.restaurantname;
   const type = req.body.type;
@@ -292,7 +302,10 @@ app.get("/fetchData/restaurants", passport.authenticate("auth1", { session: fals
         if (err) {
           console.log(err);
         } else {
-          res.send("Values read");
+          res.send("valuse read + ")
+          res.send(req.body.restaurantname);
+          res.send(req.body.type);
+          res.send(req.body.pricelevel);
         }
       }
     );
