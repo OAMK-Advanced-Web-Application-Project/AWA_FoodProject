@@ -68,8 +68,8 @@ passport.use(
   })
 );
 
- // test URL for user jwt
- app.get(
+// test URL for user jwt
+app.get(
   "/authCheckUser",
   passport.authenticate("jwt1", { session: false }),
   (req, res) => {
@@ -156,7 +156,7 @@ app.post(
 
 //------------------------------------------------------------------------------
 
-// restaurant jwt 
+// restaurant jwt
 
 passport.use(
   "jwt2",
@@ -166,7 +166,7 @@ passport.use(
   })
 );
 
- // test URL for restuarant jwt
+// test URL for restuarant jwt
 app.get(
   "/authCheckRestaurant",
   passport.authenticate("jwt2", { session: false }),
@@ -269,19 +269,16 @@ app.post(
 //food item creation
 app.post(
   "/createMenuItem",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt2", { session: false }),
   (req, res) => {
     const idmenu = req.body.idmenu;
-    const idrestaurant = req.body.idrestaurant;
-    const idorder = req.body.idorder;
     const productname = req.body.productname;
     const description = req.body.description;
     const price = req.body.price;
-    const image = req.body.image;
 
     db.query(
-      "INSERT INTO menu (idmenu, idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
-      [idmenu, idrestaurant, idorder, productname, description, price, image],
+      "INSERT INTO menu (idmenu, productname, description, price) VALUES (?,?,?,?)",
+      [idmenu, productname, description, price],
       (err, result) => {
         if (err) {
           console.log(err);
