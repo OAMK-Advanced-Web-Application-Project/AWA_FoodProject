@@ -11,12 +11,12 @@ export default function AddMenuItem() {
     const [priceReg, setPriceReg] = useState("");
 
     const addProduct = () => {
-        Axios.post(Constants.API_ADDRESS + "/createMenuItem", null, {
-          data: {
+        Axios.post(Constants.API_ADDRESS + "/createMenuItem", {
+          
             productname: productnameReg,
             description: descriptionReg,
             price: priceReg,
-          }
+          
         }).then((response) => {
           console.log(response);
         });
