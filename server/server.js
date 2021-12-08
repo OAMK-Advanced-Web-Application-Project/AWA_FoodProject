@@ -54,6 +54,29 @@ app.use((req, res, next) => {
   next();
 });
 
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: "AWAgroup8",
+};
+
+// user jwt
+passport.use(
+  "jwt1",
+  new JwtStrategy(jwtOptions, function (payload, done) {
+    console.log("payload: " + JSON.stringify(payload));
+    done(null, JSON.stringify(payload));
+  })
+);
+
+// test URL for user jwt
+app.get(
+  "/authCheckUser",
+  passport.authenticate("jwt1", { session: false }),
+  (req, res) => {
+    res.send("you are authenticated!");
+  }
+);
+
 //user signup
 app.post("/createUser", (req, res) => {
   const firstname = req.body.firstname;
@@ -80,6 +103,7 @@ app.post("/createUser", (req, res) => {
   });
 });
 
+// user basic strategy
 passport.use(
   "auth1",
   new BasicStrategy(function (username, password, done) {
@@ -106,12 +130,13 @@ passport.use(
   })
 );
 
+// user login
 app.post(
   "/UserLogin",
   passport.authenticate("auth1", { session: false }),
   (req, res) => {
     const body = {
-      iduser: req.user.iduser,
+      iduser: req.user.id,
       firstname: req.user.firstname,
       lastname: req.user.lastname,
       username: req.user.username,
@@ -131,23 +156,24 @@ app.post(
 
 //------------------------------------------------------------------------------
 
-const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "AWAgroup8",
-}
+// restaurant jwt
 
 passport.use(
+  "jwt2",
   new JwtStrategy(jwtOptions, function (payload, done) {
-    
-    console.log("payload: " + payload.user);
-    done(null, payload.user.restaurantname);
+    console.log("payload: " + JSON.stringify(payload));
+    done(null, JSON.stringify(payload));
   })
 );
 
-app.get("/authCheck", passport.authenticate("jwt", { session: false}), (req, res) => {
-  console.log("restaurantname is: " + req.user.restaurantname)
-  res.send("you are authenticated!");
-});
+// test URL for restuarant jwt
+app.get(
+  "/authCheckRestaurant",
+  passport.authenticate("jwt2", { session: false }),
+  (req, res) => {
+    res.send("you are authenticated!");
+  }
+);
 
 //restaurant signup
 app.post("/createRestaurant", (req, res) => {
@@ -185,6 +211,7 @@ app.post("/createRestaurant", (req, res) => {
   });
 });
 
+// restaurant basic strategy
 passport.use(
   "auth2",
   new BasicStrategy(function (username, password, done) {
@@ -217,9 +244,9 @@ app.post(
   passport.authenticate("auth2", { session: false }),
   (req, res) => {
     const body = {
-      idrestaurant: req.user.idrestaurant,
+      id: req.user.id,
       restaurantname: req.user.restaurantname,
-      username: req.user.username,
+      username: req.user.restaurantname,
       address: req.user.address,
       operatinghours: req.user.operatinghours,
       type: req.user.type,
@@ -237,55 +264,31 @@ app.post(
   }
 );
 
-app.get("/authCheck", passport.authenticate("jwt", { session: false}), (req, res) => {
-  console.log("restaurantname is: " + req.user.restaurantname)
-  res.send("you are authenticated!");
-});
-
-/* 
-const validateToken = (req, res, next) => {
-  const token_payload = req.header("accessToken");
-  console.log(token_payload);
-
-  if (!token_payload) {
-    return res.json({ error: "User not logged in!" });
-  } else {
-    jwt.verify(token_payload, "AWAgroup8", (err, decoded) => {
-      if (err) {
-        res.json({ auth: false, message: "failed to authenticate" });
-      } else {
-        req.userId = decoded.id;
-        next();
-      }
-    });
-  }
-}; */
-
 //------------------------------------------------------------------------------
 
 //food item creation
+app.post(
+  "/createMenuItem",
+  passport.authenticate("jwt2", { session: false }),
+  (req, res) => {
+    const idmenu = req.body.idmenu;
+    const productname = req.body.productname;
+    const description = req.body.description;
+    const price = req.body.price;
 
-app.post("/createMenuItem", (req, res) => {
-  const idmenu = req.body.idmenu;
-  const idrestaurant = req.body.idrestaurant;
-  const idorder = req.body.idorder;
-  const productname = req.body.productname;
-  const description = req.body.description;
-  const price = req.body.price;
-  const image = req.body.image;
-
-  db.query(
-    "INSERT INTO menu (idmenu, idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?,?)",
-    [idmenu, idrestaurant, idorder, productname, description, price, image],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send("values sent");
+    db.query(
+      "INSERT INTO menu (idmenu, productname, description, price) VALUES (?,?,?,?)",
+      [idmenu, productname, description, price],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values Inserted");
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 //fetch all restaurant data
 app.get("/fetchData/restaurants", (req, res) => {
