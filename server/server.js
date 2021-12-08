@@ -303,7 +303,7 @@ app.get("/fetchData/restaurants", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("valuse read + ");
+        res.send("values read + ");
         res.send(req.body.restaurantname);
         res.send(req.body.type);
         res.send(req.body.pricelevel);
