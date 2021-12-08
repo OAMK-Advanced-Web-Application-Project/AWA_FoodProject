@@ -35,6 +35,7 @@ export default function RestaurantMainPage(props) {
       <div className={styles.restaurantInfoContainer}>
         <div className={styles.editableInfo}>
           <table>
+            <tr>Restaurant id: {decodedToken.user.idrestaurant}</tr>
             <tr>Restaurant name: {decodedToken.user.restaurantname}</tr>
             <tr>Username: {decodedToken.user.username}</tr>
             <tr>Address: {decodedToken.user.address}</tr>

@@ -164,7 +164,7 @@ app.post("/createRestaurant", (req, res) => {
       console.log(err);
     }
     db.query(
-      "INSERT INTO restaurants (restaurantname, username, password, address, operatinghours, type, pricelevel) VALUES (?,?,?,?,?,?,?)",
+      "INSERT INTO restaurant (restaurantname, username, password, address, operatinghours, type, pricelevel) VALUES (?,?,?,?,?,?,?)",
       [
         restaurantname,
         username,
@@ -189,7 +189,7 @@ passport.use(
   "auth2",
   new BasicStrategy(function (username, password, done) {
     db.query(
-      "SELECT * FROM restaurants WHERE username = ?",
+      "SELECT * FROM restaurant WHERE username = ?",
       username,
       (err, result) => {
         if (err) {
@@ -217,7 +217,7 @@ app.post(
   passport.authenticate("auth2", { session: false }),
   (req, res) => {
     const body = {
-      idrestaurant: req.user.id,
+      idrestaurant: req.user.idrestaurant,
       restaurantname: req.user.restaurantname,
       username: req.user.username,
       address: req.user.address,
@@ -274,13 +274,13 @@ app.post("/createMenuItem", (req, res) => {
   const image = req.body.image;
 
   db.query(
-    "INSERT INTO menu (idmenu, idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
+    "INSERT INTO menu (idmenu, idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?,?)",
     [idmenu, idrestaurant, idorder, productname, description, price, image],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted");
+        res.send("values sent");
       }
     }
   );
@@ -299,7 +299,7 @@ app.get("/fetchData/restaurants", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("valuse read + ");
+        res.send("values read + ");
         res.send(req.body.restaurantname);
         res.send(req.body.type);
         res.send(req.body.pricelevel);
