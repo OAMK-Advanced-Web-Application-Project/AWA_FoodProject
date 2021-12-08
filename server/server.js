@@ -49,6 +49,11 @@ const db = mysql.createConnection({
 
 // ------------------------------------------------------------------
 
+app.use((req, res, next) => {
+  console.log("middleware");
+  next();
+});
+
 //user signup
 app.post("/createUser", (req, res) => {
   const firstname = req.body.firstname;
@@ -105,7 +110,6 @@ app.post(
   "/UserLogin",
   passport.authenticate("auth1", { session: false }),
   (req, res) => {
-    console.log(req.user);
     const body = {
       iduser: req.user.iduser,
       firstname: req.user.firstname,
@@ -121,35 +125,29 @@ app.post(
       expiresIn: 60 * 60 * 24,
     };
     const token = jwt.sign(payload, secretKey, options);
-    console.log(token);
     res.json({ auth: true, token: token });
   }
 );
 
+//------------------------------------------------------------------------------
+
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: "AWAgroup8",
-};
+}
 
 passport.use(
-  "jwt1",
-  new JwtStrategy(jwtOptions, function (jwt_payload, done) {
-    console.log("payload is as follows: " + jwt_payload);
-
-    done(null, jwt_payload);
+  new JwtStrategy(jwtOptions, function (payload, done) {
+    
+    console.log("payload: " + payload.user);
+    done(null, payload.user.restaurantname);
   })
 );
 
-app.get(
-  "/jwt-protected-resource",
-  passport.authenticate("jwt1", { session: false }),
-  (req, res) => {
-    console.log(req.user);
-    res.send(req.user);
-  }
-);
-
-//------------------------------------------------------------------------------
+app.get("/authCheck", passport.authenticate("jwt", { session: false}), (req, res) => {
+  console.log("restaurantname is: " + req.user.restaurantname)
+  res.send("you are authenticated!");
+});
 
 //restaurant signup
 app.post("/createRestaurant", (req, res) => {
@@ -166,7 +164,7 @@ app.post("/createRestaurant", (req, res) => {
       console.log(err);
     }
     db.query(
-      "INSERT INTO restaurant (restaurantname, username, password, address, operatinghours, type, pricelevel) VALUES (?,?,?,?,?,?,?)",
+      "INSERT INTO restaurants (restaurantname, username, password, address, operatinghours, type, pricelevel) VALUES (?,?,?,?,?,?,?)",
       [
         restaurantname,
         username,
@@ -191,7 +189,7 @@ passport.use(
   "auth2",
   new BasicStrategy(function (username, password, done) {
     db.query(
-      "SELECT * FROM restaurant WHERE username = ?",
+      "SELECT * FROM restaurants WHERE username = ?",
       username,
       (err, result) => {
         if (err) {
@@ -218,9 +216,8 @@ app.post(
   "/RestaurantLogin",
   passport.authenticate("auth2", { session: false }),
   (req, res) => {
-    console.log(req.user);
     const body = {
-      idrestaurant: req.user.idrestaurant,
+      idrestaurant: req.user.id,
       restaurantname: req.user.restaurantname,
       username: req.user.username,
       address: req.user.address,
@@ -236,79 +233,79 @@ app.post(
       expiresIn: 60 * 60 * 24,
     };
     const token = jwt.sign(payload, secretKey, options);
-    console.log(token);
     res.json({ auth: true, token: token });
   }
 );
 
-passport.use(
-  "jwt2",
-  new JwtStrategy(jwtOptions, function (jwt_payload, done) {
-    console.log("payload is as follows: " + jwt_payload);
+app.get("/authCheck", passport.authenticate("jwt", { session: false}), (req, res) => {
+  console.log("restaurantname is: " + req.user.restaurantname)
+  res.send("you are authenticated!");
+});
 
-    done(null, jwt_payload);
-  })
-);
+/* 
+const validateToken = (req, res, next) => {
+  const token_payload = req.header("accessToken");
+  console.log(token_payload);
 
-app.get(
-  "/jwt-protected-resource-restaurant",
-  passport.authenticate("jwt2", { session: false }),
-  (req, res) => {
-    console.log(req.user);
-    res.send(req.user);
+  if (!token_payload) {
+    return res.json({ error: "User not logged in!" });
+  } else {
+    jwt.verify(token_payload, "AWAgroup8", (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "failed to authenticate" });
+      } else {
+        req.userId = decoded.id;
+        next();
+      }
+    });
   }
-);
+}; */
 
 //------------------------------------------------------------------------------
 
 //food item creation
-app.post(
-  "/createMenuItem",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const idmenu = req.body.idmenu;
-    const idrestaurant = req.body.idrestaurant;
-    const idorder = req.body.idorder;
-    const productname = req.body.productname;
-    const description = req.body.description;
-    const price = req.body.price;
-    const image = req.body.image;
+app.post("/createMenuItem", (req, res) => {
+  const idmenu = req.body.idmenu;
+  const idrestaurant = req.body.idrestaurant;
+  const idorder = req.body.idorder;
+  const productname = req.body.productname;
+  const description = req.body.description;
+  const price = req.body.price;
+  const image = req.body.image;
 
-    db.query(
-      "INSERT INTO menu (idmenu, idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
-      [idmenu, idrestaurant, idorder, productname, description, price, image],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send("Values Inserted");
-        }
+  db.query(
+    "INSERT INTO menu (idmenu, idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
+    [idmenu, idrestaurant, idorder, productname, description, price, image],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values Inserted");
       }
-    );
-  }
-);
+    }
+  );
+});
 
 //fetch all restaurant data
-app.get("/fetchData/restaurants", passport.authenticate("jwt", { session: false }), (req, res) => {
-
+app.get("/fetchData/restaurants", (req, res) => {
   const restaurantname = req.body.restaurantname;
   const type = req.body.type;
   const pricelevel = req.body.pricelevel;
 
-    db.query(
-      "SELECT restaurantname, type, pricelevel FROM restaurant",
-      [restaurantname, type, pricelevel],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send("valuse read + ")
-          res.send(req.body.restaurantname);
-          res.send(req.body.type);
-          res.send(req.body.pricelevel);
-        }
+  db.query(
+    "SELECT restaurantname, type, pricelevel FROM restaurant",
+    [restaurantname, type, pricelevel],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("valuse read + ");
+        res.send(req.body.restaurantname);
+        res.send(req.body.type);
+        res.send(req.body.pricelevel);
       }
-    );
+    }
+  );
 });
 
 app.listen(3001, () => {
