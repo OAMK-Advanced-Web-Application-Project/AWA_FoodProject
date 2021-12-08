@@ -20,7 +20,7 @@ export default function RestaurantMainPage(props) {
   const decodedToken = jwt.decode(props.jwt);
   console.log(decodedToken);
 
-  const userAuthenticated = async () => {
+/*   const userAuthenticated = async () => {
     await Axios.get(Constants.API_ADDRESS + "/authCheck", {
       header: {
         accesstoken: localStorage.getItem("token"),
@@ -28,7 +28,7 @@ export default function RestaurantMainPage(props) {
     }).then((response) => {
       console.log("ok" + response);
     });
-  };
+  }; */
 
   return (
     <div>
@@ -42,9 +42,6 @@ export default function RestaurantMainPage(props) {
             <tr>Type: {decodedToken.user.type}</tr>
             <tr>Price level: {decodedToken.user.pricelevel}</tr>
           </table>
-        </div>
-        <div>
-          <button onClick={userAuthenticated}></button>
         </div>
         <img
           className={styles.restaurantImage}
