@@ -35,7 +35,6 @@ export default function Cart({cart, setCart, userID}) {
         });
     }
 
-
     return (
         <>
             <h1>Cart</h1>

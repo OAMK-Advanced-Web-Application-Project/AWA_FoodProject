@@ -326,10 +326,11 @@ app.get("/getOrder", (req, res)=>{
   const restaurantID = req.body.restaurantID;
   const userID = req.body.userID;
   const price = req.body.price;
+  const status = req.body.status;
 
   db.query(
-    "SELECT iduser, price, idrestaurant FROM food.order",
-    [userID, price, restaurantID],
+    "SELECT iduser, price, status, idrestaurant FROM food.order",
+    [userID, price, status, restaurantID],
     (err, result) => {
       if (err) {
         console.log(err);

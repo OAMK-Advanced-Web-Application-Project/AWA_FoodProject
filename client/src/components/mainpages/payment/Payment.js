@@ -4,35 +4,31 @@ import jwt from "jsonwebtoken";
 
 
 export default function Payment(){
-    const [orderData, setOrderData] = useState([]);
+    const [orderStatus, setOrderStatus] = useState();
 
     const jwtStorage = localStorage.getItem("token");
-
     const decodedToken = jwt.decode(jwtStorage);
-
-    
+    const loggedInUserId = decodedToken.user.iduser;
 
     const getOrder = async(event) =>{
         event.preventDefault();
-        const result = await Axios.get("http://localhost:3001/getOrder")
-        setOrderData(result.data);    
+        const result = await Axios.get("http://localhost:3001/getOrder");
+        const orderStatus = result.data.map(result =>(
+            result.status
+        ))
+         
+
+        setOrderStatus(orderStatus);
     };
 
     return (
         <div>
             <h1>Payment Confirmed!</h1>
-            <div><button onClick={getOrder}>See Order</button></div>
             <div>
-                <table>
-                    <tbody>
-                        {orderData.map(t=>
-                            <tr>
-                                <td>{t.iduser}</td>
-                                <td>{t.price}</td>
-                                <td>{t.idrestaurant}</td>
-                            </tr>)}
-                    </tbody>
-                </table>
+            <div>
+                <button onClick={getOrder}>Check Order Status</button>
+            </div>
+            <h2>Order Status: {orderStatus}</h2>
             </div>
         </div>
     )
