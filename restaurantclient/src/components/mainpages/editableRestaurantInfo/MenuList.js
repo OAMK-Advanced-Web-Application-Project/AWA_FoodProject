@@ -5,14 +5,16 @@ import { Axios } from "axios";
 import Constants from "../../Constants.json";
 
 export default function MenuList(props) {
-/*      let {id} = useParams();
+/*   let { id } = useParams();
   const [menuItems, setMenuItems] = useState([]);
 
   useEffect(() => {
-    Axios.get(Constants.API_ADDRESS + `/getMenuItems/${id}`).then((response) => {
-      setMenuItems(response.data)
-    })
-  })  */ 
+    Axios.get(Constants.API_ADDRESS + `/getMenuItems/${id}`).then(
+      (response) => {
+        setMenuItems(response.data);
+      }
+    );
+  }); */
 
   return (
     <div class={styles.menuListView}>

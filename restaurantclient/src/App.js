@@ -41,7 +41,10 @@ function App() {
     authRoutes = (
       <>
         <Route path="/payment" element={<Payment />} />
-        <Route path="restaurantmainpage" element={<RestaurantMainPage jwt={userJWT} />} >
+        <Route
+          path="restaurantmainpage"
+          element={<RestaurantMainPage jwt={userJWT} />}
+        >
           <Route path=":menuId" element={<MenuDetailView menus={menus} />} />
         </Route>
       </>
@@ -55,7 +58,7 @@ function App() {
           userLoggedIn={userJWT != null}
           logout={() => {
             setUserJWT(null);
-            localStorage.removeItem("token")
+            localStorage.removeItem("token");
           }}
         />
         <Routes>
