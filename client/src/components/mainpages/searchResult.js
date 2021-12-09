@@ -1,30 +1,46 @@
-import Axios from 'axios'
-import React from 'react'
-import styles from './searchView.module.css'
+import Axios from "axios";
+import React, { useState } from "react";
+import styles from "./searchView.module.css";
 import Constants from "../Constants.json";
-import jwt from "jsonwebtoken";
 
-export default function SearchResult(props) {
+export default function SearchResult() {
+  const [restaurantShow, setRestaurantShow] = useState();
 
-    Axios.defaults.withCredentials = true;
+  const Idata = async (event) => {
+    event.preventDefault();
+    const result = await Axios.get(
+      Constants.API_ADDRESS + "/fetchData/restaurants",
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    );
+    const restaurantArray = result.data;
+    console.log(restaurantArray);
+    const restaurantShow = restaurantArray.map((elem) => ({
+      id: elem.idrestaurant,
+      restaurantname: elem.restaurantname,
+      type: elem.type,
+      pricelevel: elem.pricelevel,
+    }));
+    setRestaurantShow(restaurantShow);
+  };
 
-    const decodedToken = jwt.decode(props.jwt);
-    console.log(decodedToken);
-    
-    const Idata= async (event) => {
-        event.preventDefault();
-        const result = await Axios.get(Constants.API_ADDRESS + "/fetchData/restaurants");
-        console.log(result);
-      };
-            
+  window.addEventListener("load", Idata);
 
-    return (
-        <div className={styles.restaurant}>
-            <button onClick={Idata}>Click</button>
-            <div><img src={`./images/${props.image}`} alt={"restaurant"}/></div>
-            <div className={styles.name}> { props.name } </div>
-            <div className={styles.type}> { props.type } </div>
-            <div className={styles.price}> { props.price } </div>
-        </div>
-    )
+  return (
+    <div className={styles.restaurant}>
+      {" "}
+      <div>
+        {restaurantShow.map((show, id) => (
+          <div key={id}>
+            <h3>{show.restaurantname}</h3>
+            <h4>€{show.type}</h4>
+            <h4>€{show.pricelevel}</h4>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

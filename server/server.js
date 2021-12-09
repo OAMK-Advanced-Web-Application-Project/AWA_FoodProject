@@ -290,8 +290,8 @@ app.post(
   }
 );
 
-// getting resturant menu in the restaurant mainpage 
-app.get("/fetchData/restaurants", (req, res) => {
+// getting resturant menu in the restaurant mainpage
+app.get("/restaurantMenu", (req, res) => {
   const restaurantname = req.body.restaurantname;
   const type = req.body.type;
   const pricelevel = req.body.pricelevel;
@@ -304,35 +304,30 @@ app.get("/fetchData/restaurants", (req, res) => {
         console.log(err);
       } else {
         res.send("values read + ");
-        res.send(req.body.restaurantname);
-        res.send(req.body.type);
-        res.send(req.body.pricelevel);
+
       }
     }
   );
 });
 
 //fetch all restaurant data
-app.get("/fetchData/restaurants", (req, res) => {
-  const restaurantname = req.body.restaurantname;
-  const type = req.body.type;
-  const pricelevel = req.body.pricelevel;
-
-  db.query(
-    "SELECT restaurantname, type, pricelevel FROM restaurant",
-    [restaurantname, type, pricelevel],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send("values read + ");
-        res.send(req.body.restaurantname);
-        res.send(req.body.type);
-        res.send(req.body.pricelevel);
+app.get(
+  "/fetchData/restaurants",
+  passport.authenticate("jwt1", { session: false }),
+  (req, res) => {
+    db.query(
+      "SELECT idrestaurant, restaurantname, type, pricelevel FROM restaurant",
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+          console.log(result);
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");
