@@ -42,13 +42,15 @@ export default function SearchResult() {
         } else if (show.restaurantname.toLowerCase().includes(searchTerm.toLowerCase())) {
           return show
         }
-        }).map((show, id) => (
+      }).map((show, id) => {
+          return (
           <div className={styles.restaurant} key={id}>
             <div className={styles.name}>{show.restaurantname}</div>
             <div className={styles.type}>{show.type}</div>
             <div className={styles.pricelevel}>{show.pricelevel}</div>
           </div>
-        ))}
+        )})
+      }
       </div>
   );
 }
