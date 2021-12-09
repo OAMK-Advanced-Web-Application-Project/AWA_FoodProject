@@ -136,7 +136,7 @@ app.post(
   passport.authenticate("auth1", { session: false }),
   (req, res) => {
     const body = {
-      iduser: req.user.id,
+      iduser: req.user.iduser,
       firstname: req.user.firstname,
       lastname: req.user.lastname,
       username: req.user.username,
@@ -244,7 +244,7 @@ app.post(
   passport.authenticate("auth2", { session: false }),
   (req, res) => {
     const body = {
-      id: req.user.id,
+      id: req.user.idrestaurant,
       restaurantname: req.user.restaurantname,
       username: req.user.restaurantname,
       address: req.user.address,
@@ -289,6 +289,28 @@ app.post(
     );
   }
 );
+
+// getting resturant menu in the restaurant mainpage 
+app.get("/fetchData/restaurants", (req, res) => {
+  const restaurantname = req.body.restaurantname;
+  const type = req.body.type;
+  const pricelevel = req.body.pricelevel;
+
+  db.query(
+    "SELECT restaurantname, type, pricelevel FROM restaurant",
+    [restaurantname, type, pricelevel],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("values read + ");
+        res.send(req.body.restaurantname);
+        res.send(req.body.type);
+        res.send(req.body.pricelevel);
+      }
+    }
+  );
+});
 
 //fetch all restaurant data
 app.get("/fetchData/restaurants", (req, res) => {

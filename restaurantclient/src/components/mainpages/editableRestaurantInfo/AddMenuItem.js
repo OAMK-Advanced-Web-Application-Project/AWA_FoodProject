@@ -6,6 +6,7 @@ import Constants from "../../Constants.json";
 import styles from "./AddMenuItem.module.css";
 
 export default function AddMenuItem() {
+  const restaurantId = localStorage.getItem("restaurantid")
   const [productnameReg, setProductnameReg] = useState("");
   const [descriptionReg, setDescriptionReg] = useState("");
   const [priceReg, setPriceReg] = useState("");
@@ -14,7 +15,8 @@ export default function AddMenuItem() {
     Axios.post(
       Constants.API_ADDRESS + "/createMenuItem",
       {
-        productname: productnameReg,
+/*         idrestaurant: restaurantId,
+ */        productname: productnameReg,
         description: descriptionReg,
         price: priceReg,
       },
@@ -45,7 +47,7 @@ export default function AddMenuItem() {
           setDescriptionReg(event.target.value);
         }}
       />
-      <label>Price</label>
+      <label>Price €</label>
       <input
         type="text"
         onChange={(event) => {
