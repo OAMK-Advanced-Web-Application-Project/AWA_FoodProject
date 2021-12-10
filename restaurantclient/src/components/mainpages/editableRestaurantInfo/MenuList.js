@@ -1,31 +1,31 @@
 import styles from "./restaurantInfo.module.css";
-import React, { useState, useParams, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
-import { Axios } from "axios";
+import React, { useState, useEffect } from "react";
+import { Link, Outlet, useParams } from "react-router-dom";
+import Axios from "axios";
 import Constants from "../../Constants.json";
 
-export default function MenuList(props) {
-/*   let { id } = useParams();
-  const [menuItems, setMenuItems] = useState([]);
+export default function MenuList() {
+  let { idrestaurant } = useParams();
+  const [listOfMenus, setListOfMenus] = useState([]);
 
   useEffect(() => {
-    Axios.get(Constants.API_ADDRESS + `/getMenuItems/${id}`).then(
+    Axios.get(Constants.API_ADDRESS + `/getMenuItems/${idrestaurant}`).then(
       (response) => {
-        const menuItems = response.data;
-        setMenuItems(menuItems);
         console.log(response);
+        setListOfMenus(response.data);
       }
     );
-  }); */
+  },[]);
 
   return (
-    <div class={styles.menuListView}>
+    <div className={styles.menuListView}>
+      <div>{console.log(listOfMenus)}</div>
       <div>
-        {menuItems.map((menu,key) => {
-          return <div key={key}>{menu.body}</div>
+        { listOfMenus && listOfMenus.map((menu, key) => {
+          return <div key={key}>{menu.productname}</div>;
         })}
       </div>
-      <div class={styles.menuList}>
+{/*       <div class={styles.menuList}>
         {props.menu.map((menu) => (
           <Link to={menu.id}>
             <div class={styles.menuListElement}>{menu.plateName}</div>
@@ -34,7 +34,7 @@ export default function MenuList(props) {
       </div>
       <div class={styles.menuDetail}>
         <Outlet />
-      </div>
+      </div> */}
     </div>
   );
 }
