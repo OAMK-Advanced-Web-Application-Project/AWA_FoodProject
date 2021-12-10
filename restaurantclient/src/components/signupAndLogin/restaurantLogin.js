@@ -30,7 +30,7 @@ export default function RestaurantLogin(props) {
     localStorage.setItem("token", result.data.token);
     const receivedJWT = result.data.token;
     props.login(receivedJWT);
-    navigate(`/restaurantmainpage/${id}`, { replace: true });
+    navigate(`/restaurantmainpage`, { replace: true });
   };
 
   return (
