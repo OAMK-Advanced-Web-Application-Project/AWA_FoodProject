@@ -136,7 +136,7 @@ app.post(
   passport.authenticate("auth1", { session: false }),
   (req, res) => {
     const body = {
-      iduser: req.user.id,
+      iduser: req.user.iduser,
       firstname: req.user.firstname,
       lastname: req.user.lastname,
       username: req.user.username,
@@ -244,7 +244,7 @@ app.post(
   passport.authenticate("auth2", { session: false }),
   (req, res) => {
     const body = {
-      id: req.user.id,
+      id: req.user.idrestaurant,
       restaurantname: req.user.restaurantname,
       username: req.user.restaurantname,
       address: req.user.address,
@@ -272,13 +272,14 @@ app.post(
   passport.authenticate("jwt2", { session: false }),
   (req, res) => {
     const idmenu = req.body.idmenu;
+    const idrestaurant = req.body.idrestaurant;
     const productname = req.body.productname;
     const description = req.body.description;
     const price = req.body.price;
 
     db.query(
-      "INSERT INTO menu (idmenu, productname, description, price) VALUES (?,?,?,?)",
-      [idmenu, productname, description, price],
+      "INSERT INTO menu (idmenu, idrestaurant, productname, description, price) VALUES (?,?,?,?,?)",
+      [idmenu, idrestaurant, productname, description, price],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -290,23 +291,53 @@ app.post(
   }
 );
 
-//fetch all restaurant data
-app.get("/fetchData/restaurants", (req, res) => {
-  const restaurantname = req.body.restaurantname;
-  const type = req.body.type;
-  const pricelevel = req.body.pricelevel;
+// getting resturant menu in the restaurant mainpage
+app.get(
+  "/getMenuItems/:idrestaurant",
+  (req, res) => {
+    db.query(
+      `SELECT idrestaurant, productname, description, price FROM menu WHERE idrestaurant =${req.params.idrestaurant}`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(result);
+          res.send(result);
+        }
+      }
+    );
+  }
+);
 
+//fetch all restaurant data
+app.get(
+  "/fetchData/restaurants",
+  passport.authenticate("jwt1", { session: false }),
+  (req, res) => {
+    db.query(
+      "SELECT idrestaurant, restaurantname, type, pricelevel FROM restaurant",
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+          console.log(result);
+        }
+      }
+    );
+  }
+);
+
+//restaurant menu on user side
+app.get("/restaurantById/:idrestaurant", async (req, res) => {
   db.query(
-    "SELECT restaurantname, type, pricelevel FROM restaurant",
-    [restaurantname, type, pricelevel],
+    `SELECT productname, description, price FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("values read + ");
-        res.send(req.body.restaurantname);
-        res.send(req.body.type);
-        res.send(req.body.pricelevel);
+        res.send(result);
+        console.log(result);
       }
     }
   );

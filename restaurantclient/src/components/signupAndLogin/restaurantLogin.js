@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import styles from "./login.module.css";
 import Constants from "../Constants.json";
+import jwt from "jsonwebtoken";
 
 export default function RestaurantLogin(props) {
   Axios.defaults.withCredentials = true;
@@ -11,6 +12,8 @@ export default function RestaurantLogin(props) {
   const [passwordLog, setPasswordLog] = useState("");
 
   const navigate = useNavigate();
+
+  const id = localStorage.getItem("restaurantID");
 
   const restaurantLogin = async (event) => {
     event.preventDefault();
@@ -27,7 +30,7 @@ export default function RestaurantLogin(props) {
     localStorage.setItem("token", result.data.token);
     const receivedJWT = result.data.token;
     props.login(receivedJWT);
-    navigate("/restaurantmainpage", { replace: true });
+    navigate(`/restaurantmainpage`, { replace: true });
   };
 
   return (
@@ -51,7 +54,7 @@ export default function RestaurantLogin(props) {
           />
           <button type="submit"> Login </button>
           <h2>If you have not registered yet please</h2>
-          <Link to="/restaurantSignup">
+          <Link to="/restaurantSignup/">
             <button> Sign up </button>
           </Link>
         </div>

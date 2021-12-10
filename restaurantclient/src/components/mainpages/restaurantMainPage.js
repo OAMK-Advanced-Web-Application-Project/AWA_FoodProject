@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./restaurantMainPage.module.css";
 import "./editableRestaurantInfo/MenuList.js";
 import "./editableRestaurantInfo/MenuDetailView.js";
@@ -9,8 +9,6 @@ import menuData from "./editableRestaurantInfo/menuData.json";
 import { v4 as uuidv4 } from "uuid";
 import AddMenuItem from "./editableRestaurantInfo/AddMenuItem.js";
 import jwt from "jsonwebtoken";
-import Axios from "axios";
-import Constants from "../Constants.json";
 
 export default function RestaurantMainPage(props) {
   const menus = menuData.map((menu) => {
@@ -18,24 +16,14 @@ export default function RestaurantMainPage(props) {
   });
 
   const decodedToken = jwt.decode(props.jwt);
-  console.log(decodedToken);
-
-/*   const userAuthenticated = async () => {
-    await Axios.get(Constants.API_ADDRESS + "/authCheck", {
-      header: {
-        accesstoken: localStorage.getItem("token"),
-      },
-    }).then((response) => {
-      console.log("ok" + response);
-    });
-  }; */
+  const [userJWT] = useState(props.jwt);
+  localStorage.setItem("restaurantID", decodedToken.user.id);
 
   return (
     <div>
       <div className={styles.restaurantInfoContainer}>
         <div className={styles.editableInfo}>
           <table>
-            <tr>Restaurant id: {decodedToken.user.idrestaurant}</tr>
             <tr>Restaurant name: {decodedToken.user.restaurantname}</tr>
             <tr>Username: {decodedToken.user.username}</tr>
             <tr>Address: {decodedToken.user.address}</tr>
@@ -53,7 +41,9 @@ export default function RestaurantMainPage(props) {
       <div className={styles.editableMenu}>
         <MenuList menu={menus} />
         <MenuDetailView menus={menus} />
-        <AddMenuItem />
+      </div>
+      <div className={styles.editableMenu}>
+      <AddMenuItem jwt={userJWT} />
       </div>
     </div>
   );
