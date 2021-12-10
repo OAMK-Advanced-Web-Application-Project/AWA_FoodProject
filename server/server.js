@@ -325,6 +325,26 @@ app.get(
   }
 );
 
+/* 
+//restaurant menu on user side 
+app.get(
+  "/",
+  passport.authenticate("jwt1", { session: false }),
+  (req, res) => {
+    db.query(
+      "SELECT idrestaurant, restaurantname, type, pricelevel FROM restaurant",
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+          console.log(result);
+        }
+      }
+    );
+  }
+); */
+
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");
 });

@@ -11,14 +11,20 @@ export default function MenuList(props) {
   useEffect(() => {
     Axios.get(Constants.API_ADDRESS + `/getMenuItems/${id}`).then(
       (response) => {
-        setMenuItems(response.data);
+        const menuItems = response.data;
+        setMenuItems(menuItems);
+        console.log(response);
       }
     );
   }); */
 
   return (
     <div class={styles.menuListView}>
-      <div></div>
+      <div>
+        {menuItems.map((menu,key) => {
+          return <div key={key}>{menu.body}</div>
+        })}
+      </div>
       <div class={styles.menuList}>
         {props.menu.map((menu) => (
           <Link to={menu.id}>
