@@ -20,6 +20,7 @@ function App() {
   const menus = menuData.map((menu) => {
     return { ...menu, id: uuidv4() };
   });
+  const id = localStorage.getItem("restaurantID");
 
   let authRoutes = (
     <>
@@ -59,17 +60,30 @@ function App() {
           logout={() => {
             setUserJWT(null);
             localStorage.removeItem("token");
+            localStorage.removeItem("restaurantID");
           }}
         />
         <Routes>
           <Route
             path="/"
-            element={<LandingPage userLoggedIn={userJWT != null} jwt={userJWT}/>}
+            element={
+              <LandingPage
+                userLoggedIn={userJWT != null}
+                jwt={userJWT}
+                id={id}
+              />
+            }
           />
           {authRoutes}
           <Route
             path="*"
-            element={<LandingPage userLoggedIn={userJWT != null} jwt={userJWT}/>}
+            element={
+              <LandingPage
+                userLoggedIn={userJWT != null}
+                jwt={userJWT}
+                id={id}
+              />
+            }
           />
         </Routes>
       </Router>

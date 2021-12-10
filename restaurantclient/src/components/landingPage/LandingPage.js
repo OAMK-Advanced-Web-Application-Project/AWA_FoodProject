@@ -1,12 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./LandingPage.module.css";
-import jwt from "jsonwebtoken";
 
 export default function LandingPage(props) {
-  const jwtStorage = localStorage.getItem("token");
-  const decodedToken = jwt.decode(jwtStorage);
-  const id = decodedToken.user.id;
+  const id = localStorage.getItem("restaurantID");
 
   return (
     <div className={styles.background}>
