@@ -6,7 +6,7 @@ import Constants from "../../Constants.json";
 import jwt from "jsonwebtoken";
 
 export default function MenuList() {
- 
+
   let { id } = useParams();
   const [listOfMenus, setListOfMenus] = useState([]);
 
@@ -17,26 +17,17 @@ export default function MenuList() {
         setListOfMenus(response.data);
       }
     );
-  },[]);
+  }, []);
 
   return (
     <div className={styles.menuListView}>
       <div>{console.log(listOfMenus)}</div>
       <div>
-        { listOfMenus && listOfMenus.map((menu, key) => {
-          return <div key={key}>{menu.productname}</div>;
-        })}
+        {listOfMenus &&
+          listOfMenus.map((menu, key) => {
+            return <div key={key}>{menu.productname}</div>;
+          })}
       </div>
-{/*       <div class={styles.menuList}>
-        {props.menu.map((menu) => (
-          <Link to={menu.id}>
-            <div class={styles.menuListElement}>{menu.plateName}</div>
-          </Link>
-        ))}
-      </div>
-      <div class={styles.menuDetail}>
-        <Outlet />
-      </div> */}
     </div>
   );
 }

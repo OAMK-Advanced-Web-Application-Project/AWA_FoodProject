@@ -296,7 +296,7 @@ app.get(
   "/getMenuItems/:idrestaurant",
   (req, res) => {
     db.query(
-      `SELECT productname, description, price FROM menu where idrestaurant=${req.params.idrestaurant}`,
+      `SELECT idrestaurant, productname, description, price FROM menu WHERE idrestaurant =${req.params.idrestaurant}`,
       (err, result) => {
         if (err) {
           console.log(err);
