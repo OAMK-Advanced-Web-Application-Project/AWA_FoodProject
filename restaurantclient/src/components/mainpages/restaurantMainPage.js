@@ -40,7 +40,9 @@ export default function RestaurantMainPage(props) {
       <div className={styles.editableMenu}>
         <MenuList menu={menus} />
         <MenuDetailView menus={menus} />
-        <AddMenuItem jwt={userJWT} />
+      </div>
+      <div className={styles.editableMenu}>
+      <AddMenuItem jwt={userJWT} />
       </div>
     </div>
   );

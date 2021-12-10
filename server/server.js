@@ -292,19 +292,22 @@ app.post(
 );
 
 // getting resturant menu in the restaurant mainpage
-app.get("/getMenuItems/${id}", (req, res) => {
-  db.query(
-    `SELECT productname, description, price FROM menu where idrestaurant=${id}`,
-    [restaurantname, type, pricelevel],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send("menu shown");
+app.get(
+  "/getMenuItems/:idrestaurant",
+  (req, res) => {
+    db.query(
+      `SELECT productname, description, price FROM menu where idrestaurant=${req.params.idrestaurant}`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(result);
+          res.send(result);
+        }
       }
-    }
-  );
-});
+    );
+  }
+);
 
 //fetch all restaurant data
 app.get(
@@ -325,24 +328,20 @@ app.get(
   }
 );
 
-
-//restaurant menu on user side 
-app.get(
-  "/restaurantById/:idrestaurant",
-  async (req, res) => {
-    db.query(
-      `SELECT productname, description, price FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-          console.log(result);
-        }
+//restaurant menu on user side
+app.get("/restaurantById/:idrestaurant", async (req, res) => {
+  db.query(
+    `SELECT productname, description, price FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+        console.log(result);
       }
-    );
-  }
-); 
+    }
+  );
+});
 
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");

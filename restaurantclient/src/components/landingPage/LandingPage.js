@@ -4,13 +4,13 @@ import styles from "./LandingPage.module.css";
 
 export default function LandingPage(props) {
   return (
-    <div class={styles.background}>
-      <div class={styles.landingContainer}>
-        <div class={styles.containerContent}>
+    <div className={styles.background}>
+      <div className={styles.landingContainer}>
+        <div className={styles.containerContent}>
           <div>
             You are {props.userLoggedIn ? " logged in" : " not logged in"}
           </div>
-          <div class={styles.loginButtons}>
+          <div className={styles.loginButtons}>
             {props.userLoggedIn ? (
               <Link to="/restaurantMainpage"> Go to mainpage </Link>
             ) : (
