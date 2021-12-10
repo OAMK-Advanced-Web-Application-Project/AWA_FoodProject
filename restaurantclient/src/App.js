@@ -42,7 +42,7 @@ function App() {
       <>
         <Route path="/payment" element={<Payment />} />
         <Route
-          path="restaurantmainpage"
+          path="restaurantmainpage/:id"
           element={<RestaurantMainPage jwt={userJWT} />}
         >
           <Route path=":menuId" element={<MenuDetailView menus={menus} />} />
@@ -64,12 +64,12 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<LandingPage userLoggedIn={userJWT != null} />}
+            element={<LandingPage userLoggedIn={userJWT != null} jwt={userJWT}/>}
           />
           {authRoutes}
           <Route
             path="*"
-            element={<LandingPage userLoggedIn={userJWT != null} />}
+            element={<LandingPage userLoggedIn={userJWT != null} jwt={userJWT}/>}
           />
         </Routes>
       </Router>
