@@ -3,9 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import styles from "./login.module.css";
 import Constants from "../Constants.json";
+import jwt from "jsonwebtoken";
 
 export default function RestaurantLogin(props) {
   Axios.defaults.withCredentials = true;
+
+  const decodedToken = jwt.decode(props.jwt);
+
 
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
@@ -13,22 +17,24 @@ export default function RestaurantLogin(props) {
   const navigate = useNavigate();
 
   const restaurantLogin = async (event) => {
-    debugger
     event.preventDefault();
-    const result = await Axios.post(Constants.API_ADDRESS + "/RestaurantLogin", null, {
-      auth: {
-        username: usernameLog,
-        password: passwordLog,
+    const result = await Axios.post(
+      Constants.API_ADDRESS + "/RestaurantLogin",
+      null,
+      {
+        auth: {
+          username: usernameLog,
+          password: passwordLog,
+        },
       }
-
-    });
-
-    console.log(result);
+    );
     localStorage.setItem("token", result.data.token);
     const receivedJWT = result.data.token;
     props.login(receivedJWT);
     navigate("/restaurantmainpage", { replace: true });
   };
+
+
 
   return (
     <div class={styles.background}>
@@ -51,7 +57,7 @@ export default function RestaurantLogin(props) {
           />
           <button type="submit"> Login </button>
           <h2>If you have not registered yet please</h2>
-          <Link to="/restaurantSignup">
+          <Link to="/restaurantSignup/">
             <button> Sign up </button>
           </Link>
         </div>

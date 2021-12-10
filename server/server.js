@@ -49,6 +49,34 @@ const db = mysql.createConnection({
 
 // ------------------------------------------------------------------
 
+app.use((req, res, next) => {
+  console.log("middleware");
+  next();
+});
+
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: "AWAgroup8",
+};
+
+// user jwt
+passport.use(
+  "jwt1",
+  new JwtStrategy(jwtOptions, function (payload, done) {
+    console.log("payload: " + JSON.stringify(payload));
+    done(null, JSON.stringify(payload));
+  })
+);
+
+// test URL for user jwt
+app.get(
+  "/authCheckUser",
+  passport.authenticate("jwt1", { session: false }),
+  (req, res) => {
+    res.send("you are authenticated!");
+  }
+);
+
 //user signup
 app.post("/createUser", (req, res) => {
   const firstname = req.body.firstname;
@@ -75,6 +103,7 @@ app.post("/createUser", (req, res) => {
   });
 });
 
+// user basic strategy
 passport.use(
   "auth1",
   new BasicStrategy(function (username, password, done) {
@@ -101,24 +130,11 @@ passport.use(
   })
 );
 
-const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: "AWAgroup8",
-};
-
-passport.use(
-  new JwtStrategy(jwtOptions, function (jwtpayload, done) {
-    console.log("payload is as follows: " + jwtpayload);
-
-    done(null, jwtpayload);
-  })
-);
-
+// user login
 app.post(
   "/UserLogin",
   passport.authenticate("auth1", { session: false }),
   (req, res) => {
-    console.log(req.user);
     const body = {
       iduser: req.user.iduser,
       firstname: req.user.firstname,
@@ -134,21 +150,30 @@ app.post(
       expiresIn: 60 * 60 * 24,
     };
     const token = jwt.sign(payload, secretKey, options);
-    console.log(token);
     res.json({ auth: true, token: token });
   }
 );
 
-app.get(
-  "/jwt-protected-resource",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log(req.user);
-    res.send(req.user);
-  }
+//------------------------------------------------------------------------------
+
+// restaurant jwt
+
+passport.use(
+  "jwt2",
+  new JwtStrategy(jwtOptions, function (payload, done) {
+    console.log("payload: " + JSON.stringify(payload));
+    done(null, JSON.stringify(payload));
+  })
 );
 
-//------------------------------------------------------------------------------
+// test URL for restuarant jwt
+app.get(
+  "/authCheckRestaurant",
+  passport.authenticate("jwt2", { session: false }),
+  (req, res) => {
+    res.send("you are authenticated!");
+  }
+);
 
 //restaurant signup
 app.post("/createRestaurant", (req, res) => {
@@ -186,6 +211,7 @@ app.post("/createRestaurant", (req, res) => {
   });
 });
 
+// restaurant basic strategy
 passport.use(
   "auth2",
   new BasicStrategy(function (username, password, done) {
@@ -217,11 +243,10 @@ app.post(
   "/RestaurantLogin",
   passport.authenticate("auth2", { session: false }),
   (req, res) => {
-    console.log(req.user);
     const body = {
-      idrestaurant: req.user.idrestaurant,
+      id: req.user.idrestaurant,
       restaurantname: req.user.restaurantname,
-      username: req.user.username,
+      username: req.user.restaurantname,
       address: req.user.address,
       operatinghours: req.user.operatinghours,
       type: req.user.type,
@@ -235,17 +260,7 @@ app.post(
       expiresIn: 60 * 60 * 24,
     };
     const token = jwt.sign(payload, secretKey, options);
-    console.log(token);
     res.json({ auth: true, token: token });
-  }
-);
-
-app.get(
-  "/jwt-protected-resource-restaurant",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    console.log(req.user);
-    res.send(req.user);
   }
 );
 
@@ -254,19 +269,17 @@ app.get(
 //food item creation
 app.post(
   "/createMenuItem",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt2", { session: false }),
   (req, res) => {
     const idmenu = req.body.idmenu;
     const idrestaurant = req.body.idrestaurant;
-    const idorder = req.body.idorder;
     const productname = req.body.productname;
     const description = req.body.description;
     const price = req.body.price;
-    const image = req.body.image;
 
     db.query(
-      "INSERT INTO menu (idmenu, idrestaurant, idorder, productname, description, price, image) VALUES (?,?,?,?,?,?)",
-      [idmenu, idrestaurant, idorder, productname, description, price, image],
+      "INSERT INTO menu (idmenu, idrestaurant, productname, description, price) VALUES (?,?,?,?,?)",
+      [idmenu, idrestaurant, productname, description, price],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -278,24 +291,56 @@ app.post(
   }
 );
 
-//fetch all restaurant data
-app.get("/fetchData/restaurants", passport.authenticate("auth1", { session: false }), (req, res) => {
-
-  const restaurantname = req.body.restaurantname;
-  const type = req.body.type;
-  const pricelevel = req.body.pricelevel;
-
+// getting resturant menu in the restaurant mainpage
+app.get(
+  "/getMenuItems/:idrestaurant",
+  (req, res) => {
     db.query(
-      "SELECT restaurantname, type, pricelevel FROM restaurant",
-      [restaurantname, type, pricelevel],
+      `SELECT productname, description, price FROM menu where idrestaurant=${req.params.idrestaurant}`,
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
-          res.send("Values read");
+          console.log(result);
+          res.send(result);
         }
       }
     );
+  }
+);
+
+//fetch all restaurant data
+app.get(
+  "/fetchData/restaurants",
+  passport.authenticate("jwt1", { session: false }),
+  (req, res) => {
+    db.query(
+      "SELECT idrestaurant, restaurantname, type, pricelevel FROM restaurant",
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+          console.log(result);
+        }
+      }
+    );
+  }
+);
+
+//restaurant menu on user side
+app.get("/restaurantById/:idrestaurant", async (req, res) => {
+  db.query(
+    `SELECT productname, description, price FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+        console.log(result);
+      }
+    }
+  );
 });
 
 

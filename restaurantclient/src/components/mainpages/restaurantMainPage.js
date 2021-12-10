@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./restaurantMainPage.module.css";
 import "./editableRestaurantInfo/MenuList.js";
 import "./editableRestaurantInfo/MenuDetailView.js";
@@ -16,7 +16,7 @@ export default function RestaurantMainPage(props) {
   });
 
   const decodedToken = jwt.decode(props.jwt);
-  console.log(decodedToken);
+  const [userJWT] = useState(props.jwt);
 
   return (
     <div>
@@ -26,9 +26,9 @@ export default function RestaurantMainPage(props) {
             <tr>Restaurant name: {decodedToken.user.restaurantname}</tr>
             <tr>Username: {decodedToken.user.username}</tr>
             <tr>Address: {decodedToken.user.address}</tr>
-            <tr>Operating hours:  {decodedToken.user.operatinghours}</tr>
-            <tr>Type:  {decodedToken.user.type}</tr>
-            <tr>Price level:  {decodedToken.user.pricelevel}</tr>
+            <tr>Operating hours: {decodedToken.user.operatinghours}</tr>
+            <tr>Type: {decodedToken.user.type}</tr>
+            <tr>Price level: {decodedToken.user.pricelevel}</tr>
           </table>
         </div>
         <img
@@ -40,7 +40,9 @@ export default function RestaurantMainPage(props) {
       <div className={styles.editableMenu}>
         <MenuList menu={menus} />
         <MenuDetailView menus={menus} />
-        <AddMenuItem />
+      </div>
+      <div className={styles.editableMenu}>
+      <AddMenuItem jwt={userJWT} />
       </div>
     </div>
   );
