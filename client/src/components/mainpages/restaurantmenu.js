@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
 import Constants from "../Constants.json";
-import styles from "./searchView.module.css";
+import styles from "./userMainPage.module.css";
 
 export default function Restaurantmenu() {
   let { idrestaurant } = useParams();

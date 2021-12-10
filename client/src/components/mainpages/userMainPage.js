@@ -47,22 +47,24 @@ export default function SearchResult() {
           }
         })
         .map((show, idrestaurant) => {
-      <div>
-        {restaurantShow &&
-          restaurantShow.map((show, idrestaurant) => {
-            return (
-              <div
-                className={styles.restaurant}
-                key={idrestaurant}
-                onClick={() => {
-                  navigate(`/restaurantmenu/${show.idrestaurant}`);
-                }}>
-                  <div className={styles.name}>{show.restaurantname}</div>
-                  <div className={styles.type}>{show.type}</div>
-                  <div className={styles.price}>{show.pricelevel}</div>
-              </div>
-            );
-          })}
+        <div>
+          {restaurantShow &&
+            restaurantShow.map((show, idrestaurant) => {
+              return (
+                <div
+                  className={styles.restaurant}
+                  key={idrestaurant}
+                  onClick={() => {
+                    navigate(`/restaurantmenu/${show.idrestaurant}`);
+                  }}>
+                    <div className={styles.name}>{show.restaurantname}</div>
+                    <div className={styles.type}>{show.type}</div>
+                    <div className={styles.price}>{show.pricelevel}</div>
+                </div>
+              );
+            })}
+        </div>
+        })}
       </div>
     </div>
   );
