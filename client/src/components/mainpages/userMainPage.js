@@ -37,7 +37,7 @@ export default function SearchResult() {
         }}
         placeholder="Search for restaurants..."
       />
-      <div>
+      <div className={styles.SearchView}>
         {restaurantShow &&
           restaurantShow
             .filter((show) => {
@@ -60,6 +60,7 @@ export default function SearchResult() {
                     navigate(`/restaurantmenu/${show.idrestaurant}`);
                   }}
                 >
+                  <div><img src={`../images/burger${idrestaurant}.jpg`} alt={"restaurant"}/></div>
                   <div className={styles.name}>{show.restaurantname}</div>
                   <div className={styles.type}>{show.type}</div>
                   <div className={styles.price}>{show.pricelevel}</div>
