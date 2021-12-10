@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import styles from "./LandingPage.module.css";
+import jwt from "jsonwebtoken";
 
 export default function LandingPage(props) {
-  const id = localStorage.getItem("restaurantID");
+
+  const jwtStorage = localStorage.getItem("token");
+  const decodedToken = jwt.decode(jwtStorage);
 
   return (
     <div className={styles.background}>
@@ -14,7 +17,7 @@ export default function LandingPage(props) {
           </div>
           <div className={styles.loginButtons}>
             {props.userLoggedIn ? (
-              <Link to={`/restaurantMainpage/${id}`}> Go to mainpage </Link>
+              <Link to={`/restaurantMainpage/${decodedToken.user.id}`}> Go to mainpage </Link>
             ) : (
               <Link to="/restaurantlogin"> Log in </Link>
             )}{" "}

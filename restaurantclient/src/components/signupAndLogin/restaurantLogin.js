@@ -54,7 +54,7 @@ export default function RestaurantLogin(props) {
           />
           <button type="submit"> Login </button>
           <h2>If you have not registered yet please</h2>
-          <Link to="/restaurantSignup">
+          <Link to="/restaurantSignup/">
             <button> Sign up </button>
           </Link>
         </div>
