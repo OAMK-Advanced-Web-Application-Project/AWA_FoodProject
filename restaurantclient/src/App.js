@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const jwtStorage = localStorage.getItem("token");
 
+
 function App() {
   const [userJWT, setUserJWT] = useState(jwtStorage);
 
@@ -42,7 +43,7 @@ function App() {
       <>
         <Route path="/payment" element={<Payment />} />
         <Route
-          path="restaurantmainpage"
+          path="restaurantmainpage/:id"
           element={<RestaurantMainPage jwt={userJWT} />}
         >
           <Route path=":menuId" element={<MenuDetailView menus={menus} />} />

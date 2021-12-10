@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import Axios from "axios";
 import Constants from "../../Constants.json";
+import jwt from "jsonwebtoken";
 
 export default function MenuList() {
-  let { idrestaurant } = useParams();
+ 
+  let { id } = useParams();
   const [listOfMenus, setListOfMenus] = useState([]);
 
   useEffect(() => {
-    Axios.get(Constants.API_ADDRESS + `/getMenuItems/${idrestaurant}`).then(
+    Axios.get(Constants.API_ADDRESS + `/getMenuItems/${id}`).then(
       (response) => {
         console.log(response);
         setListOfMenus(response.data);
