@@ -64,30 +64,3 @@ export default function SearchResult() {
     </div>
   );
 }
-
-// <div>
-    //   <input
-    //       class="SearchBox"
-    //       className={styles.SearchBox}
-    //       type="text"
-    //       onChange={(event) => {
-    //         setsearchTerm(event.target.value);
-    //       }}
-    //       placeholder="Search for restaurants..."
-    //     />
-    //   {restaurantShow.filter((show) => {
-    //     if(searchTerm == "") {
-    //       return show
-    //     } else if (show.restaurantname.toLowerCase().includes(searchTerm.toLowerCase())) {
-    //       return show
-    //     }
-    //   }).map((show, id) => {
-    //       return (
-    //       <div className={styles.restaurant} key={id}>
-    //         <div className={styles.name}>{show.restaurantname}</div>
-    //         <div className={styles.type}>{show.type}</div>
-    //         <div className={styles.pricelevel}>{show.pricelevel}</div>
-    //       </div>
-    //     )})
-    //   }
-    //   </div>
