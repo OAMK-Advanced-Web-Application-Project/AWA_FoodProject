@@ -29,42 +29,43 @@ export default function SearchResult() {
   return (
     <div>
       <input
-          class="SearchBox"
-          className={styles.SearchBox}
-          type="text"
-          onChange={(event) => {
-            setsearchTerm(event.target.value);
-          }}
-          placeholder="Search for restaurants..."
-        />
+        class="SearchBox"
+        className={styles.SearchBox}
+        type="text"
+        onChange={(event) => {
+          setsearchTerm(event.target.value);
+        }}
+        placeholder="Search for restaurants..."
+      />
       <div>
-        {restaurantShow && restaurantShow.filter((show) => {
-          if (searchTerm == "") {
-            return show
-          }
-          else if (show.restaurantname.toLowerCase().includes(searchTerm.toLowerCase())) {
-            return show
-          }
-        })
-        .map((show, idrestaurant) => {
-        <div>
-          {restaurantShow &&
-            restaurantShow.map((show, idrestaurant) => {
+        {restaurantShow &&
+          restaurantShow
+            .filter((show) => {
+              if (searchTerm == "") {
+                return show;
+              } else if (
+                show.restaurantname
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase())
+              ) {
+                return show;
+              }
+            })
+            .map((show, idrestaurant) => {
               return (
                 <div
                   className={styles.restaurant}
                   key={idrestaurant}
                   onClick={() => {
                     navigate(`/restaurantmenu/${show.idrestaurant}`);
-                  }}>
-                    <div className={styles.name}>{show.restaurantname}</div>
-                    <div className={styles.type}>{show.type}</div>
-                    <div className={styles.price}>{show.pricelevel}</div>
+                  }}
+                >
+                  <div className={styles.name}>{show.restaurantname}</div>
+                  <div className={styles.type}>{show.type}</div>
+                  <div className={styles.price}>{show.pricelevel}</div>
                 </div>
               );
             })}
-        </div>
-        })}
       </div>
     </div>
   );
