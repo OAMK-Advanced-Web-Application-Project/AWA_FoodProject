@@ -4,25 +4,26 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import Constants from "../../Constants.json";
 import styles from "./AddMenuItem.module.css";
+import jwt from "jsonwebtoken";
 
-export default function AddMenuItem() {
-  const restaurantId = localStorage.getItem("restaurantid")
+export default function AddMenuItem(props) {
   const [productnameReg, setProductnameReg] = useState("");
   const [descriptionReg, setDescriptionReg] = useState("");
   const [priceReg, setPriceReg] = useState("");
 
+  const decodedToken = jwt.decode(props.jwt);
   const addProduct = () => {
     Axios.post(
       Constants.API_ADDRESS + "/createMenuItem",
       {
-/*         idrestaurant: restaurantId,
- */        productname: productnameReg,
+        idrestaurant: decodedToken.user.id,
+        productname: productnameReg,
         description: descriptionReg,
         price: priceReg,
       },
       {
         headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       }
     ).then((response) => {

@@ -272,13 +272,14 @@ app.post(
   passport.authenticate("jwt2", { session: false }),
   (req, res) => {
     const idmenu = req.body.idmenu;
+    const idrestaurant = req.body.idrestaurant;
     const productname = req.body.productname;
     const description = req.body.description;
     const price = req.body.price;
 
     db.query(
-      "INSERT INTO menu (idmenu, productname, description, price) VALUES (?,?,?,?)",
-      [idmenu, productname, description, price],
+      "INSERT INTO menu (idmenu, idrestaurant, productname, description, price) VALUES (?,?,?,?,?)",
+      [idmenu, idrestaurant, productname, description, price],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -291,20 +292,15 @@ app.post(
 );
 
 // getting resturant menu in the restaurant mainpage
-app.get("/restaurantMenu", (req, res) => {
-  const restaurantname = req.body.restaurantname;
-  const type = req.body.type;
-  const pricelevel = req.body.pricelevel;
-
+app.get("/getMenuItems/${id}", (req, res) => {
   db.query(
-    "SELECT restaurantname, type, pricelevel FROM restaurant",
+    `SELECT productname, description, price FROM menu where idrestaurant=${id}`,
     [restaurantname, type, pricelevel],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("values read + ");
-
+        res.send("menu shown");
       }
     }
   );
@@ -328,6 +324,25 @@ app.get(
     );
   }
 );
+
+
+//restaurant menu on user side 
+app.get(
+  "/restaurantById/:idrestaurant",
+  async (req, res) => {
+    db.query(
+      `SELECT productname, description, price FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+          console.log(result);
+        }
+      }
+    );
+  }
+); 
 
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");

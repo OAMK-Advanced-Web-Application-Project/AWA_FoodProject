@@ -47,6 +47,9 @@ export default function SearchResult() {
           }
         })
         .map((show, idrestaurant) => {
+      <div>
+        {restaurantShow &&
+          restaurantShow.map((show, idrestaurant) => {
             return (
               <div
                 className={styles.restaurant}
