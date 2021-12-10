@@ -343,6 +343,50 @@ app.get("/restaurantById/:idrestaurant", async (req, res) => {
   );
 });
 
+
+
+//Order----------
+app.post(
+  "/createOrder", (req, res) =>{
+    const restaurantID = req.body.restaurantID;
+    const userID = req.body.userID;
+    const price = req.body.price;
+    const status = "In Progress";
+
+    db.query(
+      "INSERT INTO food.order (iduser, price, status, idrestaurant) VALUES (?, ?, ?, ?)",
+      [userID, price, status, restaurantID],
+      (err, result) =>{
+        if (err) {
+          console.log(err);
+        } else {
+          res.send("Values read");
+        }
+      }
+    )
+  }
+)
+
+app.get("/getOrder", (req, res)=>{
+  const restaurantID = req.body.restaurantID;
+  const userID = req.body.userID;
+  const price = req.body.price;
+  const status = req.body.status;
+
+  db.query(
+    "SELECT iduser, price, status, idrestaurant FROM food.order",
+    [userID, price, status, restaurantID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+      }
+    }
+  );
+  
+})
+
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");
 });
