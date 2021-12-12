@@ -11,8 +11,12 @@ export default function Navbar(props) {
       <div className= { styles.Wrapper }>
       {props.userLoggedIn ? ( <>
           <Link to="/cart"> <img className= { styles.Cart} src={`./images/cart.png`} alt={"cart"}/> </Link>
-          <Link to="/orderhistory"> Order History </Link>
-          <Link to="/"  onClick={props.logout}> Log Out </Link>         
+          <div className={styles.OrderHistory}>
+            <Link to="/orderhistory">  Order History </Link>
+          </div>
+          <div className={styles.LogOut}>
+            <Link to="/"  onClick={props.logout}> Log Out </Link>   
+          </div>
         </> )
           :
           ( <>
