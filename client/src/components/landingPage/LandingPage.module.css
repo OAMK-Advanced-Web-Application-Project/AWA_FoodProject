@@ -1,31 +1,40 @@
 .background {
-  background-image: linear-gradient(to right, #439692, #98ccd3);
-  padding: 80px;
+  background-color: #ffffff;
+  /* background-image: linear-gradient(45deg,  #a1f4fa 0%, #ffffff 70%); */
+  
 }
 
 .bothLandings {
   display: flex;
   flex-direction: row;
 }
+
 .landingContainer {
   width: 280px;
-  min-height: 450px;
+  height: 250px;
   display: flex;
-  flex-direction: culumn;
-  border-radius: 19px;
-  background-color: rgb(177, 230, 236);
-  box-shadow: 0 0 2px rgba(255, 6, 6, 0.28);
-  border: solid;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-color: lightgray;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 5px 3px 5px rgb(202, 202, 202);
+  border-radius: 25px;
   padding: 40px;
   margin: 100px auto;
   font-size: 20px;
-  font-family: "Times New Roman";
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .containerContent {
   font-size: 30px;
   text-align: center;
-  padding: 20px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 a {
@@ -35,12 +44,17 @@ a {
 
 .loginButtons {
   font-size: 25px;
-  background-color: rgb(213, 146, 233);
-  padding: 50px;
-  margin: 20px;
+  background-color: rgb(255, 255, 255);
+  border-color: lightgray;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 5px 3px 5px rgb(202, 202, 202);
+  border-radius: 25px;
+  padding: 25px;
+  margin-top: 40px;
   transition-duration: 0.4s;
-  font-family: "Times New Roman";
-  width: 80px;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 70px;
   text-align: center;
   border-radius: 25px;
 
@@ -48,7 +62,7 @@ a {
 
 .loginButtons:hover {
   cursor: pointer;
-  background-color: #0d80e4;
+  background-color: rgb(245, 245, 245);
   color: white;
 }
 
