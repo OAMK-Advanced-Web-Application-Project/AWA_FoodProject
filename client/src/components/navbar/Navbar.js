@@ -19,9 +19,9 @@ export default function Navbar(props) {
           </div>
         </> )
           :
-          ( <>
+          ( <div className={ styles.NavbarText}>
             Welcome to jolt! Enjoy ordering food from the comfort of your homes!
-          </> )}
+          </div> )}
       </div>
     </div>
   </div>
