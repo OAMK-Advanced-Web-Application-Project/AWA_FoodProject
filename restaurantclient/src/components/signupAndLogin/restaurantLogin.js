@@ -8,12 +8,12 @@ import jwt from "jsonwebtoken";
 export default function RestaurantLogin(props) {
   Axios.defaults.withCredentials = true;
 
-  const decodedToken = jwt.decode(props.jwt);
-
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
 
   const navigate = useNavigate();
+
+  const id = localStorage.getItem("restaurantID");
 
   const restaurantLogin = async (event) => {
     event.preventDefault();
@@ -30,10 +30,8 @@ export default function RestaurantLogin(props) {
     localStorage.setItem("token", result.data.token);
     const receivedJWT = result.data.token;
     props.login(receivedJWT);
-    navigate("/restaurantmainpage", { replace: true });
+    navigate(`/restaurantmainpage`, { replace: true });
   };
-
-
 
   return (
     <div class={styles.background}>
@@ -56,7 +54,7 @@ export default function RestaurantLogin(props) {
           />
           <button type="submit"> Login </button>
           <h2>If you have not registered yet please</h2>
-          <Link to="/restaurantSignup">
+          <Link to="/restaurantSignup/">
             <button> Sign up </button>
           </Link>
         </div>

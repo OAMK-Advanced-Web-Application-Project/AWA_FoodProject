@@ -17,6 +17,7 @@ export default function RestaurantMainPage(props) {
 
   const decodedToken = jwt.decode(props.jwt);
   const [userJWT] = useState(props.jwt);
+  localStorage.setItem("restaurantID", decodedToken.user.id);
 
   return (
     <div>
@@ -40,7 +41,9 @@ export default function RestaurantMainPage(props) {
       <div className={styles.editableMenu}>
         <MenuList menu={menus} />
         <MenuDetailView menus={menus} />
-        <AddMenuItem jwt={userJWT} />
+      </div>
+      <div className={styles.editableMenu}>
+      <AddMenuItem jwt={userJWT} />
       </div>
     </div>
   );
