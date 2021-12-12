@@ -7,7 +7,7 @@ export default function Navbar(props) {
   return (
   <div className= { styles.NavbarBase }>
     <div className= { styles.NavbarContent} >
-      <img className= { styles.MainLogo } src="images/jolt_logo.png" alt="Logo" />
+      <Link to="/"> <img className= { styles.MainLogo } src="images/jolt_logo.png" alt="Logo" /> </Link>
       <div className= { styles.Wrapper }>
       {props.userLoggedIn ? ( <>
           <Link to="/cart"> <img className= { styles.Cart} src={`./images/cart.png`} alt={"cart"}/> </Link>
