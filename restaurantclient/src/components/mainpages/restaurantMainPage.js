@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import styles from "./restaurantMainPage.module.css";
 import "./editableRestaurantInfo/MenuList.js";
 import MenuList from "./editableRestaurantInfo/MenuList.js";
@@ -11,45 +12,15 @@ import { Image } from "cloudinary-react";
 import Constants from "../Constants.json";
 import OrdersList from "./editableRestaurantInfo/OrdersList";
 
-
 export default function RestaurantMainPage(props) {
   const menus = menuData.map((menu) => {
     return { ...menu, id: uuidv4() };
   });
 
   const decodedToken = jwt.decode(props.jwt);
+  console.log(decodedToken);
   const [userJWT] = useState(props.jwt);
   localStorage.setItem("restaurantID", decodedToken.user.id);
-
-  const [imageSelected, setImageSelected] = useState("");
-  const [showImage, setShowImage] = useState("");
-
-  const uploadImage = () => {
-    const formData = new FormData();
-    formData.append("file", imageSelected);
-    formData.append("upload_preset", "ujyz5zuo");
-
-    Axios.post(
-      "https://api.cloudinary.com/v1_1/dwbi2ichj/image/upload",
-      formData
-    ).then((response) => {
-      setShowImage(response.data.url);
-    }, []);
-  };
-
-  Axios.put(Constants.API_ADDRESS + "/restaurantImage", {
-    image: showImage,
-    idrestaurant: decodedToken.user.id,
-  }).then((response) => {
-    console.log("Image uploaded");
-  }, []);
-
-  let imageURL = ""
-  Axios.get(Constants.API_ADDRESS + "/getImage").then((response) => {
-    const imageURL = response
-    console.log(imageURL);
-    return imageURL;
-  });
 
   return (
     <div>
@@ -64,16 +35,7 @@ export default function RestaurantMainPage(props) {
             <tr>Price level: {decodedToken.user.pricelevel}</tr>
           </table>
         </div>
-        <div>
-          <input
-            type="file"
-            onChange={(event) => {
-              setImageSelected(event.target.files[0]);
-            }}
-          />
-          <button onClick={uploadImage}> Upload Image</button>
-          <Image cloudName="dwbi2ichj" publicId={imageURL}></Image>
-        </div>
+        <Image cloudName="dwbi2ichj" publicId={decodedToken.user.image}></Image>
       </div>
       <div className={styles.editableMenu}>
         <MenuList menu={menus} />
@@ -82,7 +44,7 @@ export default function RestaurantMainPage(props) {
         <AddMenuItem jwt={userJWT} />
       </div>
       <div>
-      <OrdersList/>
+        <OrdersList />
       </div>
     </div>
   );
