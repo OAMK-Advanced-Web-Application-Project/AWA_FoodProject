@@ -17,18 +17,17 @@ export default function RestaurantSignup() {
   const [showImage, setShowImage] = useState("");
 
   const uploadImage = () => {
-    Axios.defaults.withCredentials = true;
-
     const formData = new FormData();
     formData.append("file", imageSelected);
     formData.append("upload_preset", "ujyz5zuo");
 
     Axios.post(
       "https://api.cloudinary.com/v1_1/dwbi2ichj/image/upload",
-      formData, {
+      formData,
+      {
         headers: {
-          "Content-Type": "multipart/form-data",
-        }
+          'Content-Type': 'application/json',
+        },
       }
     ).then((response) => {
       console.log(response.data.url);
@@ -37,16 +36,24 @@ export default function RestaurantSignup() {
   };
 
   const addRestaurant = () => {
-    Axios.post(Constants.API_ADDRESS + "/createRestaurant", {
-      restaurantname: restaurantnameReg,
-      username: usernameReg,
-      password: passwordReg,
-      address: addressReg,
-      operatinghours: operatinghoursReg,
-      type: typeReg,
-      pricelevel: pricelevelReg,
-      image: showImage,
-    }).then((response) => {
+    Axios.post(
+      Constants.API_ADDRESS + "/createRestaurant",
+      {
+        restaurantname: restaurantnameReg,
+        username: usernameReg,
+        password: passwordReg,
+        address: addressReg,
+        operatinghours: operatinghoursReg,
+        type: typeReg,
+        pricelevel: pricelevelReg,
+        image: showImage,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    ).then((response) => {
       console.log("done");
     });
   };

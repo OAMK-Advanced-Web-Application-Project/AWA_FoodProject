@@ -18,7 +18,6 @@ export default function RestaurantMainPage(props) {
   });
 
   const decodedToken = jwt.decode(props.jwt);
-  console.log(decodedToken);
   const [userJWT] = useState(props.jwt);
   localStorage.setItem("restaurantID", decodedToken.user.id);
 

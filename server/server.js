@@ -12,18 +12,17 @@ const bcrypt = require("bcrypt");
 const saltRound = 10;
 const jwt = require("jsonwebtoken");
 const PORT = process.env.PORT || 3001;
-
 const app = express();
 
-app.use(express.json());
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "https://jolt-restaurant.netlify.app");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST");
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+})
 
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "PUT"],
-    credentials: true,
-  })
-);
+app.use(express.json());
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,10 +46,6 @@ const db = mysql.createConnection({
   database: "heroku_7e3fd4e2b55ba77",
 });
 // ------------------------------------------------------------------
-app.use((req, res, next) => {
-  console.log("middleware");
-  next();
-});
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -270,7 +265,7 @@ app.post(
 //food item creation
 app.post(
   "/createMenuItem",
-  passport.authenticate("jwt2", { session: false }),
+  //passport.authenticate("jwt2", { session: false }),
   (req, res) => {
     const idmenu = req.body.idmenu;
     const idrestaurant = req.body.idrestaurant;
@@ -388,38 +383,6 @@ app.get("/getOrderRestaurant/:id", (req, res) => {
         console.log(err);
       } else {
         res.json(result);
-      }
-    }
-  );
-});
-
-//restaurant image
-app.put("/restaurantImage", (req, res) => {
-  const image = req.body.image;
-  const idrestaurant = req.body.idrestaurant;
-  db.query(
-    "UPDATE restaurant SET image = ? WHERE idrestaurant = ?",
-    [image, idrestaurant],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-        console.log(result);
-      }
-    }
-  );
-});
-
-app.get("/getImage/:id", async (req, res) => {
-  db.query(
-    `SELECT image FROM restaurant WHERE idrestaurant=${req.params.id}`,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(result);
-        console.log(result);
       }
     }
   );
