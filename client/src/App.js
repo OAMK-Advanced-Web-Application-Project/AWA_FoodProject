@@ -18,6 +18,8 @@ import Restaurantmenu from "./components/mainpages/restaurantmenu.js";
 
 const jwtStorage = localStorage.getItem("token");
 
+
+
 function App() {
   const [userJWT, setUserJWT] = useState(jwtStorage);
 
@@ -40,11 +42,11 @@ function App() {
   if (userJWT != null) {
     authRoutes = (
       <>
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart/" element={<Cart />} />
         <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
         <Route path="/usermainpage" element={<UserMainPage />} />
         <Route path="/restaurantmenu/:idrestaurant" element={<Restaurantmenu />} />
-        <Route path="/payment" element={<Payment />} />
+        <Route path="/payment/:id" element={<Payment />} />
       </>
     );
   }

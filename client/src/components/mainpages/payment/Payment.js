@@ -1,33 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect} from 'react';
+import {useParams} from "react-router-dom";
 import Axios from "axios";
-import jwt from "jsonwebtoken";
-
+import Constants from "../../Constants.json";
 
 export default function Payment(){
+
+    let { id } = useParams();
     const [orderStatus, setOrderStatus] = useState();
 
-    const jwtStorage = localStorage.getItem("token");
-    const decodedToken = jwt.decode(jwtStorage);
-    const loggedInUserId = decodedToken.user.iduser;
-
-    const getOrder = async(event) =>{
-        event.preventDefault();
-        const result = await Axios.get("http://localhost:3001/getOrder");
-        const orderStatus = result.data.map(result =>(
-            result.status
-        ))
-         
-
-        setOrderStatus(orderStatus);
-    };
+    useEffect(()=>{
+        Axios.get(Constants.API_ADDRESS + `/getOrder/${id}`).then(
+            (response) =>{
+            response.data.map(e =>{
+                setOrderStatus(e.status);
+            }) 
+            }
+        );
+    }, []);
 
     return (
         <div>
             <h1>Payment Confirmed!</h1>
             <div>
-            <div>
-                <button onClick={getOrder}>Check Order Status</button>
-            </div>
             <h2>Order Status: {orderStatus}</h2>
             </div>
         </div>

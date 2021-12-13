@@ -9,6 +9,7 @@ import menuData from "./editableRestaurantInfo/menuData.json";
 import { v4 as uuidv4 } from "uuid";
 import AddMenuItem from "./editableRestaurantInfo/AddMenuItem.js";
 import jwt from "jsonwebtoken";
+import OrdersList from "./editableRestaurantInfo/OrdersList";
 
 export default function RestaurantMainPage(props) {
   const menus = menuData.map((menu) => {
@@ -44,6 +45,9 @@ export default function RestaurantMainPage(props) {
       </div>
       <div className={styles.editableMenu}>
       <AddMenuItem jwt={userJWT} />
+      </div>
+      <div>
+      <OrdersList/>
       </div>
     </div>
   );

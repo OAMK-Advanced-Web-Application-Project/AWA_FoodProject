@@ -347,7 +347,7 @@ app.get("/restaurantById/:idrestaurant", async (req, res) => {
 
 //Order----------
 app.post(
-  "/createOrder", (req, res) =>{
+  "/createOrder", (req, res) => {
     const restaurantID = req.body.restaurantID;
     const userID = req.body.userID;
     const price = req.body.price;
@@ -356,7 +356,7 @@ app.post(
     db.query(
       "INSERT INTO food.order (iduser, price, status, idrestaurant) VALUES (?, ?, ?, ?)",
       [userID, price, status, restaurantID],
-      (err, result) =>{
+      (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -367,15 +367,12 @@ app.post(
   }
 )
 
-app.get("/getOrder", (req, res)=>{
-  const restaurantID = req.body.restaurantID;
-  const userID = req.body.userID;
-  const price = req.body.price;
-  const status = req.body.status;
+app.get("/getOrder/:id", (req, res) => {
 
   db.query(
-    "SELECT iduser, price, status, idrestaurant FROM food.order",
-    [userID, price, status, restaurantID],
+    `SELECT iduser, price, status, idrestaurant FROM food.order 
+    where iduser = ${req.params.id} AND
+    status = "In Progress"`,
     (err, result) => {
       if (err) {
         console.log(err);
@@ -384,7 +381,43 @@ app.get("/getOrder", (req, res)=>{
       }
     }
   );
-  
+
+})
+
+app.get("/getOrderRestaurant/:id", (req, res) => {
+
+  db.query(
+    `Select food.order.idorder, food.order.iduser, food.user.firstname,
+    food.user.lastname, food.user.address, food.order.status
+    from food.order
+    inner join food.user on
+    food.order.iduser = food.user.iduser
+    where food.order.idrestaurant = ${req.params.id} AND
+    food.order.status != "Done";`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+      }
+    }
+  );
+
+})
+
+app.post("/confirmOrder", (req, res) => {
+  const orderid = req.body.orderid;
+
+  db.query("UPDATE food.order SET status = 'Order Confirmed' WHERE idorder = ?",
+    [orderid],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values read");
+      }
+    }
+  )
 })
 
 app.listen(3001, () => {
