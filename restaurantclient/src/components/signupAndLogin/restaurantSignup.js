@@ -6,7 +6,6 @@ import Constants from "../Constants.json";
 import { Image } from "cloudinary-react";
 
 export default function RestaurantSignup() {
-
   const [restaurantnameReg, setRestaurantnameReg] = useState("");
   const [usernameReg, setUsernameReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
@@ -18,16 +17,23 @@ export default function RestaurantSignup() {
   const [showImage, setShowImage] = useState("");
 
   const uploadImage = () => {
+    Axios.defaults.withCredentials = true;
+
     const formData = new FormData();
     formData.append("file", imageSelected);
     formData.append("upload_preset", "ujyz5zuo");
 
     Axios.post(
       "https://api.cloudinary.com/v1_1/dwbi2ichj/image/upload",
-      formData
+      formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      }
     ).then((response) => {
+      console.log(response.data.url);
       setShowImage(response.data.url);
-    }, []);
+    });
   };
 
   const addRestaurant = () => {

@@ -11,6 +11,7 @@ const JwtStrategy = require("passport-jwt").Strategy,
 const bcrypt = require("bcrypt");
 const saltRound = 10;
 const jwt = require("jsonwebtoken");
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -21,7 +22,6 @@ app.use(
     origin: ["http://localhost:3000"],
     methods: ["GET", "POST", "PUT"],
     credentials: true,
-    optionSuccessStatus: 200,
   })
 );
 
@@ -41,14 +41,12 @@ app.use(
 );
 
 const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "1216",
-  database: "food",
+  user: "b22e663f52465c",
+  host: "eu-cdbr-west-02.cleardb.net",
+  password: "d7518bd1",
+  database: "heroku_7e3fd4e2b55ba77",
 });
-
 // ------------------------------------------------------------------
-
 app.use((req, res, next) => {
   console.log("middleware");
   next();
@@ -263,7 +261,6 @@ app.post(
       expiresIn: 60 * 60 * 24,
     };
     const token = jwt.sign(payload, secretKey, options);
-    console.log(token);
     res.json({ auth: true, token: token });
   }
 );
@@ -445,6 +442,6 @@ app.post("/confirmOrder", (req, res) => {
   );
 });
 
-app.listen(3001, () => {
-  console.log("Your server is running on port 3001");
+app.listen(PORT, () => {
+  console.log(`Your server is running on port ${PORT}`);
 });
