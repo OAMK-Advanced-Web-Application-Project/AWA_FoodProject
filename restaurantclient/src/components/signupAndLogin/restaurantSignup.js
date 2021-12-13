@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import styles from "./signup.module.css";
 import Constants from "../Constants.json";
+import { Image } from "cloudinary-react";
 
 export default function RestaurantSignup() {
   const [restaurantnameReg, setRestaurantnameReg] = useState("");
@@ -12,6 +13,28 @@ export default function RestaurantSignup() {
   const [operatinghoursReg, setOperatinghoursReg] = useState("");
   const [typeReg, setTypeReg] = useState("");
   const [pricelevelReg, setPriceLevel] = useState("");
+  const [imageSelected, setImageSelected] = useState("");
+  const [showImage, setShowImage] = useState("");
+
+  const uploadImage = () => {
+    Axios.defaults.withCredentials = true;
+
+    const formData = new FormData();
+    formData.append("file", imageSelected);
+    formData.append("upload_preset", "ujyz5zuo");
+
+    Axios.post(
+      "https://api.cloudinary.com/v1_1/dwbi2ichj/image/upload",
+      formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
+      }
+    ).then((response) => {
+      console.log(response.data.url);
+      setShowImage(response.data.url);
+    });
+  };
 
   const addRestaurant = () => {
     Axios.post(Constants.API_ADDRESS + "/createRestaurant", {
@@ -22,6 +45,7 @@ export default function RestaurantSignup() {
       operatinghours: operatinghoursReg,
       type: typeReg,
       pricelevel: pricelevelReg,
+      image: showImage,
     }).then((response) => {
       console.log("done");
     });
@@ -80,6 +104,13 @@ export default function RestaurantSignup() {
             setPriceLevel(event.target.value);
           }}
         />
+        <input
+          type="file"
+          onChange={(event) => {
+            setImageSelected(event.target.files[0]);
+          }}
+        />
+        <button onClick={uploadImage}> Upload Image</button>
         <Link to="/restaurantlogin">
           <button onClick={addRestaurant}> Register </button>
         </Link>
