@@ -35,7 +35,7 @@ export default function RestaurantLogin(props) {
     <div class={styles.background}>
       <form onSubmit={restaurantLogin}>
         <div class={styles.loginForm}>
-          <h1>login</h1>
+          <div className={styles.Login}>Login</div>
           <label>Username</label>
           <input
             type="text"
@@ -51,8 +51,8 @@ export default function RestaurantLogin(props) {
             }}
           />
           <button type="submit"> Login </button>
-          <h2>If you have not registered yet please</h2>
-          <Link to="/restaurantSignup/">
+          <div className={styles.SignupText}>If you have not registered yet, please sign up below</div>
+          <Link to="/restaurantSignup/" className={styles.Signup}>
             <button> Sign up </button>
           </Link>
         </div>

@@ -30,7 +30,7 @@ export default function RestaurantSignup() {
   return (
     <div class={styles.background}>
       <div class={styles.signupForm}>
-        <h1>Signup</h1>
+        <div className={styles.Signup}>Signup</div>
         <label>Restaurant name</label>
         <input
           type="text"
@@ -59,21 +59,21 @@ export default function RestaurantSignup() {
             setAddressReg(event.target.value);
           }}
         />
-        <label>operatinghours</label>
+        <label>Operating hours</label>
         <input
           type="text"
           onChange={(event) => {
             setOperatinghoursReg(event.target.value);
           }}
         />
-        <label>type</label>
+        <label>Restaurant type</label>
         <input
           type="text"
           onChange={(event) => {
             setTypeReg(event.target.value);
           }}
         />
-        <label>pricelevel</label>
+        <label>Price level</label>
         <input
           type="text"
           onChange={(event) => {

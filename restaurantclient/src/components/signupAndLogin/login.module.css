@@ -1,41 +1,45 @@
 .background {
-  background-image: linear-gradient(to right,#439692 ,#98ccd3);
-  padding: 80px;
+  background-color: #ffffff;
 }
 
 .loginForm {
-  width: 280px;
-  min-height: 450px;
   display: flex;
   flex-direction: column;
-  border-radius: 19px;
-  background-color: rgb(177, 230, 236);
-  box-shadow: 0 0 2px rgba(255, 6, 6, 0.28);
+  justify-content: center;
+  align-items: center;
+  width: 280px;
+  min-height: 450px;
+  background-color: #ffffff;
+  border-color: gray;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 5px 3px 5px rgb(202, 202, 202);
+  border-radius: 25px;
   border: solid;
   padding: 40px;
   margin: 96px auto;
   font-size: 20px;
-  font-family: "Times New Roman";
-}
-
-.loginForm h1 {
-  font-size: 30px;
-  text-align: center;
-  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .loginForm input[type="text"] {
   font-size: 20px;
+  margin: 10px;
 }
 
 .loginForm button {
-  font-size: 20px;
-  background-color: rgb(213, 146, 233);
-  padding: 5px;
-  margin-top: 20px;
+  font-size: 25px;
+  background-color: rgb(255, 255, 255);
+  border-color: lightgray;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 5px 3px 5px rgb(202, 202, 202);
+  border-radius: 25px;
+  padding: 15px;
+  margin: 20px;
   transition-duration: 0.4s;
-  font-family: "Times New Roman";
-  width: 80px;
+  font-family: Arial, Helvetica, sans-serif;
+  width: fit-content;
   text-align: center;
 }
 
@@ -45,7 +49,15 @@
   color: white;
 }
 
-.loginForm h2 {
-  font-size: 22px;
-  margin-block-end: 0px;
+.Login {
+  margin-bottom: 40px;
+  font-size: 30px;
+}
+
+label {
+  margin-top: 15px;
+}
+
+.SignupText {
+  text-align: center;
 }

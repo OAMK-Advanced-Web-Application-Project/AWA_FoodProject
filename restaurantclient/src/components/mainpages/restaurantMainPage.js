@@ -52,7 +52,7 @@ export default function RestaurantMainPage(props) {
   });
 
   return (
-    <div>
+    <div className={styles.mainWrapper}>
       <div className={styles.restaurantInfoContainer}>
         <div className={styles.editableInfo}>
           <table>
@@ -71,10 +71,11 @@ export default function RestaurantMainPage(props) {
               setImageSelected(event.target.files[0]);
             }}
           />
-          <button onClick={uploadImage}> Upload Image</button>
+          <button onClick={uploadImage}>Upload Image</button>
           <Image cloudName="dwbi2ichj" publicId={imageURL}></Image>
         </div>
       </div>
+      
       <div className={styles.editableMenu}>
         <MenuList menu={menus} />
       </div>
@@ -84,6 +85,7 @@ export default function RestaurantMainPage(props) {
       <div>
       <OrdersList/>
       </div>
+
     </div>
   );
 }
