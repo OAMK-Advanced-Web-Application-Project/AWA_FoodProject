@@ -37,6 +37,28 @@
   align-items: center;
 }
 
+.LoginText {
+  font-size: 25px;
+  background-color: rgb(255, 255, 255);
+  border-color: lightgray;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 5px 3px 5px rgb(202, 202, 202);
+  border-radius: 25px;
+  padding: 25px;
+  margin-top: 40px;
+  transition-duration: 0.4s;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 70px;
+  text-align: center;
+  border-radius: 25px;
+}
+.LoginText:hover{
+  cursor: pointer;
+  background-color: #0d80e4;
+  color: white;
+}
+
 a {
   color: black;
   text-decoration: none; /* no underline */
@@ -62,7 +84,7 @@ a {
 
 .loginButtons:hover {
   cursor: pointer;
-  background-color: rgb(245, 245, 245);
+  background-color: #0d80e4;
   color: white;
 }
 
