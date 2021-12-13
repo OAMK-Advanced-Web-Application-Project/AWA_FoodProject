@@ -1,0 +1,39 @@
+.AddressContent {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
+    margin: 30px 30px 30px 30px;
+    text-align: left;
+    border-color: lightgray;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 5px 3px 5px rgb(236, 236, 236);
+    border-radius: 25px;
+}
+
+.Address{
+    margin-bottom: 10px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    
+}
+
+.City {
+    margin-top: 10px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 25px;
+}
+
+.TextBox {
+    margin-top: 10px;
+    border-radius: 35px;
+    border: 1px solid;
+    text-align: center;
+    font-size: 22px;
+    border-style: solid;
+    box-shadow: 0px 4px 6px rgb(236, 236, 236);
+}

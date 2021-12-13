@@ -54,7 +54,7 @@ export default function AddMenuItem(props) {
 
   return (
     <div className={styles.addMenuItem}>
-      <h1>Add menu item</h1>
+      <div className={styles.title}>Add menu item</div>
       <label>Product name</label>
       <input
         type="text"
@@ -83,8 +83,8 @@ export default function AddMenuItem(props) {
         }}
       />
       <button onClick={uploadImage}> Upload Image</button>
-      <div>
-        <button onClick={addProduct}> Add product </button>
+      <div className={styles.productButton}>
+        <button  onClick={addProduct}> Add product </button>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import Placeholderdata from './placeholderData.json'
+import styles from './ShoppingCart.module.css'
 
 export default function AdressInput({id}) {
     const [userData] = useState(Placeholderdata.user);
@@ -28,15 +29,17 @@ export default function AdressInput({id}) {
     const [city, setCity] = useState(userCity(id));     
 
      return (
-        <div>
-            <h2>Adress</h2>
+        <div className={styles.AddressContent}>
+            <div className={styles.Address}>Address</div>
             <input type="text"
+            className={styles.TextBox}
             placeholder = {adress}
             onChange={(event)=>{
                 setAdress(event.target.value);
             }}/>
-            <h2>City</h2>
+            <div className={styles.City}>City</div>
             <input type="text"
+            className={styles.TextBox}
             placeholder = {city}
             onChange={(event)=>{
                 setCity(event.target.value);
