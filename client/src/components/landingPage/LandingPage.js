@@ -13,7 +13,7 @@ export default function LandingPage(props) {
           </div>
           <div className={styles.LoginText}>
             {props.userLoggedIn ? (
-              <Link to="/userMainpage"> Go to mainpage </Link>
+              <Link to="/userMainpage"> Go to main </Link>
             ) : (
               <Link to="/userlogin"> Log in </Link>
             )}
