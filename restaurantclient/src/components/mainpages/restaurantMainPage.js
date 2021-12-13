@@ -9,6 +9,8 @@ import jwt from "jsonwebtoken";
 import Axios from "axios";
 import { Image } from "cloudinary-react";
 import Constants from "../Constants.json";
+import OrdersList from "./editableRestaurantInfo/OrdersList";
+
 
 export default function RestaurantMainPage(props) {
   const menus = menuData.map((menu) => {
@@ -78,6 +80,9 @@ export default function RestaurantMainPage(props) {
       </div>
       <div className={styles.editableMenu}>
         <AddMenuItem jwt={userJWT} />
+      </div>
+      <div>
+      <OrdersList/>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import Navbar from "./components/navbar/Navbar.js";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/landingPage/LandingPage";
 import UserLogin from "./components/signupAndLogin/userLogin.js";
@@ -17,6 +17,8 @@ import Restaurantmenu from "./components/mainpages/restaurantmenu.js";
 
 
 const jwtStorage = localStorage.getItem("token");
+
+
 
 function App() {
   const [userJWT, setUserJWT] = useState(jwtStorage);
@@ -40,14 +42,18 @@ function App() {
   if (userJWT != null) {
     authRoutes = (
       <>
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart/" element={<Cart />} />
         <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
         <Route path="/usermainpage" element={<UserMainPage />} />
         <Route path="/restaurantmenu/:idrestaurant" element={<Restaurantmenu />} />
-        <Route path="/payment" element={<Payment />} />
+        <Route path="/payment/:id" element={<Payment />} />
       </>
     );
   }
+
+  useEffect(() => {
+    document.title = "Jolt - You've earned it"
+  }, [])
 
   return (
     <div>
