@@ -22,7 +22,7 @@ export default function RestaurantMainPage(props) {
   localStorage.setItem("restaurantID", decodedToken.user.id);
 
   return (
-    <div>
+    <div className={styles.mainWrapper}>
       <div className={styles.restaurantInfoContainer}>
         <div className={styles.editableInfo}>
           <table>
@@ -36,6 +36,7 @@ export default function RestaurantMainPage(props) {
         </div>
         <Image cloudName="dwbi2ichj" publicId={decodedToken.user.image}></Image>
       </div>
+      
       <div className={styles.editableMenu}>
         <MenuList menu={menus} />
       </div>
@@ -45,6 +46,7 @@ export default function RestaurantMainPage(props) {
       <div>
         <OrdersList />
       </div>
+
     </div>
   );
 }

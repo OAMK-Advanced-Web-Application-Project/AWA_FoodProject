@@ -1,5 +1,5 @@
 import Navbar from "./components/navbar/Navbar.js";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/landingPage/LandingPage";
 import RestaurantLogin from "./components/signupAndLogin/restaurantLogin.js";
@@ -52,6 +52,10 @@ function App() {
       </>
     );
   }
+
+  useEffect(() => {
+    document.title = "Jolt - Modernize your restaurant"
+  }, [])
 
   return (
     <div>
