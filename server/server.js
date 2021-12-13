@@ -295,7 +295,7 @@ app.post(
 // getting resturant menu in the restaurant mainpage
 app.get("/getMenuItems/:idrestaurant", (req, res) => {
   db.query(
-    `SELECT idrestaurant, productname, description, price FROM menu WHERE idrestaurant =${req.params.idrestaurant}`,
+    `SELECT idrestaurant, productname, description, price, image FROM menu WHERE idrestaurant =${req.params.idrestaurant}`,
     (err, result) => {
       if (err) {
         console.log(err);
@@ -396,17 +396,14 @@ app.put("/restaurantImage", (req, res) => {
 });
 
 app.get("/getImage", (req, res) => {
-  db.query(
-    "SELECT image FROM restaurant",
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-        console.log(result);
-      }
+  db.query("SELECT image FROM restaurant", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+      console.log(result);
     }
-  );
+  });
 });
 
 app.listen(3001, () => {

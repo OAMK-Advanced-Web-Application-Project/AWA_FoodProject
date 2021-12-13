@@ -12,6 +12,7 @@ export default function MenuList() {
   useEffect(() => {
     Axios.get(Constants.API_ADDRESS + `/getMenuItems/${id}`).then(
       (response) => {
+        console.log(response);
         setListOfMenus(response.data);
       }
     );
@@ -25,7 +26,9 @@ export default function MenuList() {
           listOfMenus.map((menu, key) => {
             return (
               <div key={key} className={styles.menuListElement}>
-{/*                 <Image cloudName="dwbi2ichj" publicId={imageURL}></Image> */}
+                <div>
+                  <Image cloudName="dwbi2ichj" publicId={menu.image}></Image>{" "}
+                </div>
                 <div>{menu.productname}</div>
                 <div>{menu.description}</div>
                 <div>{menu.price}</div>
