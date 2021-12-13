@@ -10,7 +10,6 @@ const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 const saltRound = 10;
-
 const jwt = require("jsonwebtoken");
 
 const app = express();
@@ -20,15 +19,16 @@ app.use(express.json());
 app.use(
   cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT"],
     credentials: true,
+    optionSuccessStatus: 200,
   })
 );
 
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+/* app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true })); */
 
-app.use(
+/* app.use(
   session({
     key: "userId",
     secret: "AWAgroup8",
@@ -38,7 +38,7 @@ app.use(
       expires: 60 * 60 * 24,
     },
   })
-);
+); */
 
 const db = mysql.createConnection({
   user: "root",
@@ -276,10 +276,11 @@ app.post(
     const productname = req.body.productname;
     const description = req.body.description;
     const price = req.body.price;
+    const image = req.body.image;
 
     db.query(
-      "INSERT INTO menu (idmenu, idrestaurant, productname, description, price) VALUES (?,?,?,?,?)",
-      [idmenu, idrestaurant, productname, description, price],
+      "INSERT INTO menu (idmenu, idrestaurant, productname, description, price, image) VALUES (?,?,?,?,?,?)",
+      [idmenu, idrestaurant, productname, description, price, image],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -291,23 +292,19 @@ app.post(
   }
 );
 
-// getting resturant menu in the restaurant mainpage
-app.get(
-  "/getMenuItems/:idrestaurant",
-  (req, res) => {
-    db.query(
-      `SELECT idrestaurant, productname, description, price FROM menu WHERE idrestaurant =${req.params.idrestaurant}`,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(result);
-          res.send(result);
-        }
+// getting restaurant menu in the restaurant mainpage
+app.get("/getMenuItems/:idrestaurant", (req, res) => {
+  db.query(
+    `SELECT idrestaurant, productname, description, price, image FROM menu WHERE idrestaurant =${req.params.idrestaurant}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
       }
-    );
-  }
-);
+    }
+  );
+});
 
 //fetch all restaurant data
 app.get(
@@ -321,7 +318,6 @@ app.get(
           console.log(err);
         } else {
           res.send(result);
-          console.log(result);
         }
       }
     );
@@ -337,13 +333,10 @@ app.get("/restaurantById/:idrestaurant", async (req, res) => {
         console.log(err);
       } else {
         res.send(result);
-        console.log(result);
       }
     }
   );
 });
-
-
 
 //Order----------
 app.post(
@@ -363,9 +356,16 @@ app.post(
           res.send("Values read");
         }
       }
-    )
-  }
-)
+    }
+  );
+});
+
+
+app.get("/getOrder", (req, res) => {
+  const restaurantID = req.body.restaurantID;
+  const userID = req.body.userID;
+  const price = req.body.price;
+  const status = req.body.status;
 
 app.get("/getOrder/:id", (req, res) => {
 
@@ -402,8 +402,28 @@ app.get("/getOrderRestaurant/:id", (req, res) => {
       }
     }
   );
+});
 
+//restaurant image
+app.put("/restaurantImage", (req, res) => {
+  const image = req.body.image;
+  const idrestaurant = req.body.idrestaurant;
+  db.query(
+    "UPDATE restaurant SET image = ? WHERE idrestaurant = ?",
+    [image, idrestaurant],
 })
+  
+  app.get("/getImage", (req, res) => {
+  db.query("SELECT image FROM restaurant", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+      console.log(result);
+    }
+  });
+});
+
 
 app.post("/confirmOrder", (req, res) => {
   const orderid = req.body.orderid;
@@ -414,11 +434,14 @@ app.post("/confirmOrder", (req, res) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values read");
+        console.log(result);
+        res.send(result);
       }
     }
-  )
-})
+  );
+});
+
+
 
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");

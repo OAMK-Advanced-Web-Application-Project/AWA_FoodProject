@@ -6,16 +6,17 @@ import RestaurantLogin from "./components/signupAndLogin/restaurantLogin.js";
 import RestaurantSignup from "./components/signupAndLogin/restaurantSignup";
 import TestRestaurantPage from "./components/shoppingCart/TestRestaurantPage";
 import RestaurantMainPage from "./components/mainpages/restaurantMainPage.js";
-import MenuDetailView from "./components/mainpages/editableRestaurantInfo/MenuDetailView.js";
 import MenuList from "./components/mainpages/editableRestaurantInfo/MenuList.js";
 import menuData from "./components/mainpages/editableRestaurantInfo/menuData.json";
 import Payment from "./components/mainpages/payment/Payment.js";
 import { v4 as uuidv4 } from "uuid";
+import Axios from "axios"
 
 const jwtStorage = localStorage.getItem("token");
 
 
 function App() {
+
   const [userJWT, setUserJWT] = useState(jwtStorage);
 
   const menus = menuData.map((menu) => {
@@ -47,7 +48,6 @@ function App() {
           path="restaurantmainpage/:id"
           element={<RestaurantMainPage jwt={userJWT} />}
         >
-          <Route path=":menuId" element={<MenuDetailView menus={menus} />} />
         </Route>
       </>
     );

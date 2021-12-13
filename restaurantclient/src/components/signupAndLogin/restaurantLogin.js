@@ -13,8 +13,6 @@ export default function RestaurantLogin(props) {
 
   const navigate = useNavigate();
 
-  const id = localStorage.getItem("restaurantID");
-
   const restaurantLogin = async (event) => {
     event.preventDefault();
     const result = await Axios.post(
@@ -30,7 +28,7 @@ export default function RestaurantLogin(props) {
     localStorage.setItem("token", result.data.token);
     const receivedJWT = result.data.token;
     props.login(receivedJWT);
-    navigate(`/restaurantmainpage`, { replace: true });
+    navigate("/restaurantmainpage", { replace: true });
   };
 
   return (
