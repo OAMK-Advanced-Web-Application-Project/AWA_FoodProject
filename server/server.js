@@ -339,27 +339,24 @@ app.get("/restaurantById/:idrestaurant", async (req, res) => {
 });
 
 //Order----------
-app.post(
-  "/createOrder", (req, res) => {
-    const restaurantID = req.body.restaurantID;
-    const userID = req.body.userID;
-    const price = req.body.price;
-    const status = "In Progress";
+app.post("/createOrder", (req, res) => {
+  const restaurantID = req.body.restaurantID;
+  const userID = req.body.userID;
+  const price = req.body.price;
+  const status = "In Progress";
 
-    db.query(
-      "INSERT INTO food.order (iduser, price, status, idrestaurant) VALUES (?, ?, ?, ?)",
-      [userID, price, status, restaurantID],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send("Values read");
-        }
+  db.query(
+    "INSERT INTO food.order (iduser, price, status, idrestaurant) VALUES (?, ?, ?, ?)",
+    [userID, price, status, restaurantID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values read");
       }
     }
   );
 });
-
 
 app.get("/getOrder", (req, res) => {
   const restaurantID = req.body.restaurantID;
@@ -367,53 +364,60 @@ app.get("/getOrder", (req, res) => {
   const price = req.body.price;
   const status = req.body.status;
 
-app.get("/getOrder/:id", (req, res) => {
-
-  db.query(
-    `SELECT iduser, price, status, idrestaurant FROM food.order 
+  app.get("/getOrder/:id", (req, res) => {
+    db.query(
+      `SELECT iduser, price, status, idrestaurant FROM food.order 
     where iduser = ${req.params.id} AND
     status = "In Progress"`,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(result);
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(result);
+        }
       }
-    }
-  );
+    );
+  });
 
-})
-
-app.get("/getOrderRestaurant/:id", (req, res) => {
-
-  db.query(
-    `Select food.order.idorder, food.order.iduser, food.user.firstname,
+  app.get("/getOrderRestaurant/:id", (req, res) => {
+    db.query(
+      `Select food.order.idorder, food.order.iduser, food.user.firstname,
     food.user.lastname, food.user.address, food.order.status
     from food.order
     inner join food.user on
     food.order.iduser = food.user.iduser
     where food.order.idrestaurant = ${req.params.id} AND
     food.order.status != "Done";`,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(result);
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(result);
+        }
       }
-    }
-  );
+    );
+  });
+
+  //restaurant image
+  app.put("/restaurantImage", (req, res) => {
+    const image = req.body.image;
+    const idrestaurant = req.body.idrestaurant;
+    db.query(
+      "UPDATE restaurant SET image = ? WHERE idrestaurant = ?",
+      [image, idrestaurant],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+          console.log(result);
+        }
+      }
+    );
+  });
 });
 
-//restaurant image
-app.put("/restaurantImage", (req, res) => {
-  const image = req.body.image;
-  const idrestaurant = req.body.idrestaurant;
-  db.query(
-    "UPDATE restaurant SET image = ? WHERE idrestaurant = ?",
-    [image, idrestaurant],
-})
-  
-  app.get("/getImage", (req, res) => {
+app.get("/getImage", (req, res) => {
   db.query("SELECT image FROM restaurant", (err, result) => {
     if (err) {
       console.log(err);
@@ -424,11 +428,11 @@ app.put("/restaurantImage", (req, res) => {
   });
 });
 
-
 app.post("/confirmOrder", (req, res) => {
   const orderid = req.body.orderid;
 
-  db.query("UPDATE food.order SET status = 'Order Confirmed' WHERE idorder = ?",
+  db.query(
+    "UPDATE food.order SET status = 'Order Confirmed' WHERE idorder = ?",
     [orderid],
     (err, result) => {
       if (err) {
@@ -440,8 +444,6 @@ app.post("/confirmOrder", (req, res) => {
     }
   );
 });
-
-
 
 app.listen(3001, () => {
   console.log("Your server is running on port 3001");
