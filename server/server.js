@@ -14,13 +14,19 @@ const jwt = require("jsonwebtoken");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "https://jolt-restaurant.netlify.app");
+app.use(function (req, res, next) {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://jolt-restaurant.netlify.app"
+  );
   res.setHeader("Access-Control-Allow-Methods", "GET,POST");
-  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-type, Authorization");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With, Content-type, Authorization"
+  );
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
-})
+});
 
 app.use(express.json());
 
@@ -302,7 +308,6 @@ app.get("/getuserdata/:id", (req, res) => {
   );
 });
 
-
 // getting restaurant menu in the restaurant mainpage
 app.get("/getMenuItems/:idrestaurant", (req, res) => {
   db.query(
@@ -370,9 +375,9 @@ app.post("/createOrder", (req, res) => {
   );
 });
 
-  app.get("/getOrder/:id", (req, res) => {
-    db.query(
-      `SELECT iduser, price, status, idrestaurant FROM food.order 
+app.get("/getOrder/:id", (req, res) => {
+  db.query(
+    `SELECT iduser, price, status, idrestaurant FROM food.order 
     where iduser = ${req.params.id} AND
     status = "In Progress"`,
     (err, result) => {
@@ -385,72 +390,70 @@ app.post("/createOrder", (req, res) => {
   );
 });
 
-
-  app.get("/getOrdersRestaurant/:id", (req, res) => {
-    db.query(
-      `Select idorder from food.order
+app.get("/getOrdersRestaurant/:id", (req, res) => {
+  db.query(
+    `Select idorder from food.order
       where idrestaurant = ${req.params.id} AND
       status != "Delivered";`,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.json(result);
-        }
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
       }
-    );
-  });
+    }
+  );
+});
 
-  app.get("/getOrderDetails/:idorder", (req, res) => {
-    db.query(
-      `Select food.order.idorder, food.order.iduser, food.user.firstname,
+app.get("/getOrderDetails/:idorder", (req, res) => {
+  db.query(
+    `Select food.order.idorder, food.order.iduser, food.user.firstname,
     food.user.lastname, food.user.address, food.order.status, food.order.productname
     from food.order
     inner join food.user on
     food.order.iduser = food.user.iduser
     where food.order.idorder = ${req.params.idorder} AND
     food.order.status != "Delivered";`,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.json(result);
-        }
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
       }
-    );
-  });
+    }
+  );
+});
 
-  app.get("/getStatus/:idorder", (req, res) => {
-    db.query(
-      `Select status from food.order where idorder = ${req.params.idorder}`,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.json(result);
-        }
+app.get("/getStatus/:idorder", (req, res) => {
+  db.query(
+    `Select status from food.order where idorder = ${req.params.idorder}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
       }
-    )
-  })
+    }
+  );
+});
 
-  //restaurant image
-  app.put("/restaurantImage", (req, res) => {
-    const image = req.body.image;
-    const idrestaurant = req.body.idrestaurant;
-    db.query(
-      "UPDATE restaurant SET image = ? WHERE idrestaurant = ?",
-      [image, idrestaurant],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-          console.log(result);
-        }
+//restaurant image
+app.put("/restaurantImage", (req, res) => {
+  const image = req.body.image;
+  const idrestaurant = req.body.idrestaurant;
+  db.query(
+    "UPDATE restaurant SET image = ? WHERE idrestaurant = ?",
+    [image, idrestaurant],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+        console.log(result);
       }
-    );
-  });
-
+    }
+  );
+});
 
 app.get("/getImage", (req, res) => {
   db.query("SELECT image FROM restaurant", (err, result) => {
@@ -460,7 +463,7 @@ app.get("/getImage", (req, res) => {
       res.send(result);
       console.log(result);
     }
-  );
+  });
 });
 
 app.post("/confirmOrder", (req, res) => {
