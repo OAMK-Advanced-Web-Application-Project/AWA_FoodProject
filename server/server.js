@@ -393,7 +393,7 @@ app.get("/getOrder/:id", (req, res) => {
   db.query(
     `SELECT iduser, price, status, idrestaurant FROM food.order 
     where iduser = ${req.params.id} AND
-    status = "In Progress"`,
+    status != "Delivered"`,
     (err, result) => {
       if (err) {
         console.log(err);
