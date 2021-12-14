@@ -7,6 +7,8 @@ export default function OrderPageList(){
     let {idorder} = useParams();
     const [orderDetails, setOrderDetails] = useState([]);
     const [orderStatus, setOrderStatus] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState(" ")
+    const idOrder = orderDetails.map((i) => i.idorder);
 
     useEffect(() => {
         Axios.get(Constants.API_ADDRESS + `/getOrderDetails/${idorder}`).then(
@@ -25,12 +27,26 @@ export default function OrderPageList(){
         )
     }, [])
 
+    const handlingOnChange = (event)=>{
+        setSelectedStatus(event.target.value);
+    }
 
 
     const setStatus = async (event) =>{
         event.preventDefault();
+        try{
+            const result = await Axios.post(Constants.API_ADDRESS + "/setStatus", {
+                status: selectedStatus,
+                idorder: idOrder
+            })
+            console.log(result);
+            console.log(result.data);
+            setOrderStatus(selectedStatus);
+        } catch (error){
+            console.error(error.message);
+        }
+        
     }
-
     
     return (
         <div>
@@ -41,6 +57,7 @@ export default function OrderPageList(){
                             <tr>Order ID: {i.idorder}</tr>
                             <tr>Name: {i.firstname} {i.lastname}</tr>
                             <tr>Address: {i.address}</tr>
+                            <tr>City: {i.city}</tr>
                             <tr></tr>
                         </table>
                     </div>
@@ -56,7 +73,7 @@ export default function OrderPageList(){
             <div>
                 <h3>Status: {orderStatus}</h3>  
             </div>
-                <div>
+                {/* <div>
                     <h3>Set Status:</h3>
                     <form onSubmit={setStatus}>
                         <input type="submit" name="status" value="Confirm"></input>
@@ -64,6 +81,21 @@ export default function OrderPageList(){
                         <input type="submit" name="status" value="Ready for delivery"></input>
                         <input type="submit" name="status" value="Delivering"></input>
                         <input type="submit" name="status" value="Delivered"></input>
+                    </form>
+                </div> */}
+                <div>
+                    <form onSubmit={setStatus}>
+                        <label>
+                            Set Status:
+                            <select value={selectedStatus} onChange={handlingOnChange}>
+                                <option value="Confirmed">Confirm</option>
+                                <option value="Preparing">Preparing</option>
+                                <option value="Ready for delivery">Ready for delivery</option>
+                                <option value="Delivering">Delivering</option>
+                                <option value="Delivered">Delivered</option>
+                            </select>
+                        </label>
+                        <input type="submit" value="Submit"></input>
                     </form>
                 </div>
         </div>
