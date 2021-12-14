@@ -6,14 +6,11 @@ import Constants from "../Constants.json";
 import jwt from "jsonwebtoken";
 
 export default function RestaurantLogin(props) {
-  Axios.defaults.withCredentials = true;
 
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
 
   const navigate = useNavigate();
-
-  const id = localStorage.getItem("restaurantID");
 
   const restaurantLogin = async (event) => {
     event.preventDefault();
@@ -25,19 +22,24 @@ export default function RestaurantLogin(props) {
           username: usernameLog,
           password: passwordLog,
         },
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }
     );
     localStorage.setItem("token", result.data.token);
     const receivedJWT = result.data.token;
     props.login(receivedJWT);
-    navigate(`/restaurantmainpage`, { replace: true });
+    navigate("/restaurantmainpage", { replace: true });
   };
 
   return (
     <div class={styles.background}>
       <form onSubmit={restaurantLogin}>
         <div class={styles.loginForm}>
-          <h1>login</h1>
+          <div className={styles.Login}>Login</div>
           <label>Username</label>
           <input
             type="text"
@@ -53,8 +55,8 @@ export default function RestaurantLogin(props) {
             }}
           />
           <button type="submit"> Login </button>
-          <h2>If you have not registered yet please</h2>
-          <Link to="/restaurantSignup/">
+          <div className={styles.SignupText}>If you have not registered yet, please sign up below</div>
+          <Link to="/restaurantSignup/" className={styles.Signup}>
             <button> Sign up </button>
           </Link>
         </div>

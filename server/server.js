@@ -10,20 +10,26 @@ const JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 const bcrypt = require("bcrypt");
 const saltRound = 10;
-
 const jwt = require("jsonwebtoken");
-
+const PORT = process.env.PORT || 3001;
 const app = express();
 
-app.use(express.json());
+app.use(function (req, res, next) {
+  /*   res.setHeader(
+    "Access-Control-Allow-Origin",
+    ["https://jolt-restaurant.netlify.app","http://localhost:3000"]
+  ); */
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With, Content-type, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
-    credentials: true,
-  })
-);
+app.use(express.json());
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,19 +46,22 @@ app.use(
   })
 );
 
+
+/* const db = mysql.createConnection({
+  user: "b22e663f52465c",
+  host: "eu-cdbr-west-02.cleardb.net",
+  password: "d7518bd1",
+  database: "heroku_7e3fd4e2b55ba77",
+}); */
+
+
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
   password: "1216",
   database: "food",
 });
-
 // ------------------------------------------------------------------
-
-app.use((req, res, next) => {
-  console.log("middleware");
-  next();
-});
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -184,13 +193,14 @@ app.post("/createRestaurant", (req, res) => {
   const operatinghours = req.body.operatinghours;
   const type = req.body.type;
   const pricelevel = req.body.pricelevel;
+  const image = req.body.image;
 
   bcrypt.hash(password, saltRound, (err, hash) => {
     if (err) {
       console.log(err);
     }
     db.query(
-      "INSERT INTO restaurant (restaurantname, username, password, address, operatinghours, type, pricelevel) VALUES (?,?,?,?,?,?,?)",
+      "INSERT INTO restaurant (restaurantname, username, password, address, operatinghours, type, pricelevel, image) VALUES (?,?,?,?,?,?,?,?)",
       [
         restaurantname,
         username,
@@ -199,6 +209,7 @@ app.post("/createRestaurant", (req, res) => {
         operatinghours,
         type,
         pricelevel,
+        image,
       ],
       (err, result) => {
         if (err) {
@@ -246,11 +257,12 @@ app.post(
     const body = {
       id: req.user.idrestaurant,
       restaurantname: req.user.restaurantname,
-      username: req.user.restaurantname,
+      username: req.user.username,
       address: req.user.address,
       operatinghours: req.user.operatinghours,
       type: req.user.type,
       pricelevel: req.user.pricelevel,
+      image: req.user.image,
     };
     const payload = {
       user: body,
@@ -269,17 +281,18 @@ app.post(
 //food item creation
 app.post(
   "/createMenuItem",
-  passport.authenticate("jwt2", { session: false }),
+  //passport.authenticate("jwt2", { session: false }),
   (req, res) => {
     const idmenu = req.body.idmenu;
     const idrestaurant = req.body.idrestaurant;
     const productname = req.body.productname;
     const description = req.body.description;
     const price = req.body.price;
+    const image = req.body.image;
 
     db.query(
-      "INSERT INTO menu (idmenu, idrestaurant, productname, description, price) VALUES (?,?,?,?,?)",
-      [idmenu, idrestaurant, productname, description, price],
+      "INSERT INTO menu (idmenu, idrestaurant, productname, description, price, image) VALUES (?,?,?,?,?,?)",
+      [idmenu, idrestaurant, productname, description, price, image],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -291,23 +304,33 @@ app.post(
   }
 );
 
-// getting resturant menu in the restaurant mainpage
-app.get(
-  "/getMenuItems/:idrestaurant",
-  (req, res) => {
-    db.query(
-      `SELECT idrestaurant, productname, description, price FROM menu WHERE idrestaurant =${req.params.idrestaurant}`,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(result);
-          res.send(result);
-        }
+//get user data
+app.get("/getuserdata/:id", (req, res) => {
+  db.query(
+    `SELECT * FROM food.user WHERE iduser =${req.params.id}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
       }
-    );
-  }
-);
+    }
+  );
+});
+
+// getting restaurant menu in the restaurant mainpage
+app.get("/getMenuItems/:idrestaurant", (req, res) => {
+  db.query(
+    `SELECT idrestaurant, productname, description, price, image FROM menu WHERE idrestaurant =${req.params.idrestaurant}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
 
 //fetch all restaurant data
 app.get(
@@ -315,13 +338,12 @@ app.get(
   passport.authenticate("jwt1", { session: false }),
   (req, res) => {
     db.query(
-      "SELECT idrestaurant, restaurantname, type, pricelevel FROM restaurant",
+      "SELECT idrestaurant, restaurantname, type, pricelevel, image FROM restaurant",
       (err, result) => {
         if (err) {
           console.log(err);
         } else {
           res.send(result);
-          console.log(result);
         }
       }
     );
@@ -331,7 +353,108 @@ app.get(
 //restaurant menu on user side
 app.get("/restaurantById/:idrestaurant", async (req, res) => {
   db.query(
-    `SELECT productname, description, price FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
+    `SELECT idmenu, idrestaurant, productname, description, price, image FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+//Order----------
+app.post("/createOrder", (req, res) => {
+  const restaurantID = req.body.restaurantID;
+  const userID = req.body.userID;
+  const price = req.body.price;
+  const productname = req.body.productname;
+  const status = "In Progress";
+
+  db.query(
+    "INSERT INTO food.order (iduser, productname, price, status, idrestaurant) VALUES (?, ?, ?, ?, ?)",
+    [userID, productname, price, status, restaurantID],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Values read");
+      }
+    }
+  );
+});
+
+app.get("/getOrder/:id", (req, res) => {
+  db.query(
+    `SELECT iduser, price, status, idrestaurant FROM food.order 
+    where iduser = ${req.params.id} AND
+    status = "In Progress"`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+      }
+    }
+  );
+});
+
+app.get("/getOrdersRestaurant/:id", (req, res) => {
+  db.query(
+
+    `SELECT idorder FROM food.order WHERE idrestaurant = ${req.params.id} AND status != "Delivered";`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+      }
+    }
+  );
+});
+
+app.get("/getOrderDetails/:idorder", (req, res) => {
+  db.query(
+    `Select food.order.idorder, food.order.iduser, food.user.firstname,
+    food.user.lastname, food.order.address, food.order.city, food.order.status, food.order.productname
+    from food.order
+    inner join food.user on
+    food.order.iduser = food.user.iduser
+    where food.order.idorder = ${req.params.idorder} AND
+    food.order.status != "Delivered";`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+      }
+    }
+  );
+});
+
+app.get("/getStatus/:idorder", (req, res) => {
+  db.query(
+    `Select status from food.order where idorder = ${req.params.idorder}`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
+      }
+    }
+  );
+});
+
+
+
+//restaurant image
+app.put("/restaurantImage", (req, res) => {
+  const image = req.body.image;
+  const idrestaurant = req.body.idrestaurant;
+  db.query(
+    "UPDATE restaurant SET image = ? WHERE idrestaurant = ?",
+    [image, idrestaurant],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -343,50 +466,35 @@ app.get("/restaurantById/:idrestaurant", async (req, res) => {
   );
 });
 
+app.get("/getImage", (req, res) => {
+  db.query("SELECT image FROM restaurant", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+      console.log(result);
+    }
+  });
+});
 
-
-//Order----------
-app.post(
-  "/createOrder", (req, res) =>{
-    const restaurantID = req.body.restaurantID;
-    const userID = req.body.userID;
-    const price = req.body.price;
-    const status = "In Progress";
-
-    db.query(
-      "INSERT INTO food.order (iduser, price, status, idrestaurant) VALUES (?, ?, ?, ?)",
-      [userID, price, status, restaurantID],
-      (err, result) =>{
-        if (err) {
-          console.log(err);
-        } else {
-          res.send("Values read");
-        }
-      }
-    )
-  }
-)
-
-app.get("/getOrder", (req, res)=>{
-  const restaurantID = req.body.restaurantID;
-  const userID = req.body.userID;
-  const price = req.body.price;
+app.post("/setStatus", (req, res) => {
+  const orderid = req.body.idorder;
   const status = req.body.status;
 
   db.query(
-    "SELECT iduser, price, status, idrestaurant FROM food.order",
-    [userID, price, status, restaurantID],
+    "UPDATE food.order SET status = ? WHERE idorder = ?",
+    [status, orderid],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.json(result);
+        console.log(result);
+        res.send(result);
       }
     }
   );
-  
-})
+});
 
-app.listen(3001, () => {
-  console.log("Your server is running on port 3001");
+app.listen(PORT, () => {
+  console.log(`Your server is running on port ${PORT}`);
 });

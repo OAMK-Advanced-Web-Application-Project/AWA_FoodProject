@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import styles from "./signup.module.css";
 import Constants from "../Constants.json";
+import { Image } from "cloudinary-react";
 
 export default function RestaurantSignup() {
   const [restaurantnameReg, setRestaurantnameReg] = useState("");
@@ -12,17 +13,47 @@ export default function RestaurantSignup() {
   const [operatinghoursReg, setOperatinghoursReg] = useState("");
   const [typeReg, setTypeReg] = useState("");
   const [pricelevelReg, setPriceLevel] = useState("");
+  const [imageSelected, setImageSelected] = useState("");
+  const [showImage, setShowImage] = useState("");
+
+  const uploadImage = () => {
+    const formData = new FormData();
+    formData.append("file", imageSelected);
+    formData.append("upload_preset", "ujyz5zuo");
+
+    Axios.post(
+      "https://api.cloudinary.com/v1_1/dwbi2ichj/image/upload",
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    ).then((response) => {
+      console.log(response.data.url);
+      setShowImage(response.data.url);
+    });
+  };
 
   const addRestaurant = () => {
-    Axios.post(Constants.API_ADDRESS + "/createRestaurant", {
-      restaurantname: restaurantnameReg,
-      username: usernameReg,
-      password: passwordReg,
-      address: addressReg,
-      operatinghours: operatinghoursReg,
-      type: typeReg,
-      pricelevel: pricelevelReg,
-    }).then((response) => {
+    Axios.post(
+      Constants.API_ADDRESS + "/createRestaurant",
+      {
+        restaurantname: restaurantnameReg,
+        username: usernameReg,
+        password: passwordReg,
+        address: addressReg,
+        operatinghours: operatinghoursReg,
+        type: typeReg,
+        pricelevel: pricelevelReg,
+        image: showImage,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    ).then((response) => {
       console.log("done");
     });
   };
@@ -30,7 +61,7 @@ export default function RestaurantSignup() {
   return (
     <div class={styles.background}>
       <div class={styles.signupForm}>
-        <h1>Signup</h1>
+        <div className={styles.Signup}>Signup</div>
         <label>Restaurant name</label>
         <input
           type="text"
@@ -59,27 +90,34 @@ export default function RestaurantSignup() {
             setAddressReg(event.target.value);
           }}
         />
-        <label>operatinghours</label>
+        <label>Operating hours</label>
         <input
           type="text"
           onChange={(event) => {
             setOperatinghoursReg(event.target.value);
           }}
         />
-        <label>type</label>
+        <label>Restaurant type</label>
         <input
           type="text"
           onChange={(event) => {
             setTypeReg(event.target.value);
           }}
         />
-        <label>pricelevel</label>
+        <label>Price level</label>
         <input
           type="text"
           onChange={(event) => {
             setPriceLevel(event.target.value);
           }}
         />
+        <input
+          type="file"
+          onChange={(event) => {
+            setImageSelected(event.target.files[0]);
+          }}
+        />
+        <button onClick={uploadImage}> Upload Image</button>
         <Link to="/restaurantlogin">
           <button onClick={addRestaurant}> Register </button>
         </Link>

@@ -11,13 +11,17 @@ export default function Navbar(props) {
       <img className= { styles.MainLogo } src="images/jolt_logo.png" alt="Logo" />
       <div className= { styles.Wrapper }>
       {props.userLoggedIn ? ( <>
-          <Link to="/orderhistory"> Order History </Link>
-          <Link to="/" onClick={props.logout}> Log Out </Link>         
+          <div className={styles.OrderHistory}>
+            <Link to="/orderhistory">  Order History </Link>
+          </div>
+          <div className={styles.LogOut}>
+            <Link to="/"  onClick={props.logout}> Log Out </Link>   
+          </div>        
         </> )
           :
-          ( <>
-            Welcome to jolt! Enjoy ordering food from the comfort of your homes!
-          </> )}
+          ( <div className={ styles.NavbarText}>
+            Welcome to Jolt - Market your restaurant the modern way!
+          </div> )}
       </div>
     </div>
   </div>

@@ -2,8 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Axios from "axios";
 import Constants from '../Constants.json';
+import jwt from "jsonwebtoken";
 
 export default function Cart({cart, setCart, userID}) {
+    const jwtStorage = localStorage.getItem("token");
+    const decodedToken = jwt.decode(jwtStorage);
+
     const getTotalSum = () =>{
         return cart.reduce((sum, {price, quantity}) => sum + price * quantity, 0);
     }
@@ -16,25 +20,27 @@ export default function Cart({cart, setCart, userID}) {
         setCart([]);
     }
 
-    const setQuantity = (product, amount) =>{
-        const newCart = [...cart];
-        newCart.find(item => item.id === product.id).quantity = amount;
-        setCart(newCart);
-    }
+    // const setQuantity = (product, amount) =>{
+    //     const newCart = [...cart];
+    //     newCart.find(item => item.id === product.id).quantity = amount;
+    //     setCart(newCart);
+    // }
 
     const createOrder = () =>{
-        const [products] = cart.map((product)=>(product.name));
+        const productname = cart.map((product)=>(product.productname));
+        const restaurantID = cart.map((product)=>(product.idrestaurant));
         Axios.post(Constants.API_ADDRESS + "/createOrder",{
-            restaurantID : cart[0].restaurantID,
+            restaurantID : restaurantID,
             userID : userID,
             price : getTotalSum(),
-            [products] : products
+            productname : productname
         }).then((response) =>{
             console.log(response)
             
         });
     }
 
+    
     return (
         <>
             <h1>Cart</h1>
@@ -43,21 +49,21 @@ export default function Cart({cart, setCart, userID}) {
             )}
 
             <div>
-                {cart.map((product, id) => (
-                <div key={id}>
-                    <h3>{product.name}</h3>
-                    <h4>€{product.price}</h4>
-                    <h4> x{product.quantity} </h4>
+                {cart.map((menu, idmenu) => (
+                <div key={idmenu}>
+                    <h3>{menu.productname}</h3>
+                    <h4>€{menu.price}</h4>
+                    <h4> x{menu.quantity} </h4>
                         {/*<input value={product.quantity} onChange={(e) =>
                         setQuantity(product, parseInt(e.target.value))}/>*/}
-                    <button onClick={() => removeFromCart(product)}>Remove</button>
+                    <button onClick={() => removeFromCart(menu)}>Remove</button>
                 </div>
                 ))}
             </div>
             <div>Total Cost: € {getTotalSum()}
 
             {cart.length > 0 && (
-                <button onClick={createOrder}><Link to="/payment" className="payBtn">Confirm payment</Link></button>
+                <button onClick={createOrder}><Link to={`/payment/${decodedToken.user.iduser}`} className="payBtn">Confirm payment</Link></button>
             )}
             </div>
 

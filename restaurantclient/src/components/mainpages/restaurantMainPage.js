@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import styles from "./restaurantMainPage.module.css";
 import "./editableRestaurantInfo/MenuList.js";
-import "./editableRestaurantInfo/MenuDetailView.js";
-import "./editableRestaurantInfo/MenuList.js";
 import MenuList from "./editableRestaurantInfo/MenuList.js";
-import MenuDetailView from "./editableRestaurantInfo/MenuDetailView.js";
 import menuData from "./editableRestaurantInfo/menuData.json";
 import { v4 as uuidv4 } from "uuid";
 import AddMenuItem from "./editableRestaurantInfo/AddMenuItem.js";
 import jwt from "jsonwebtoken";
+import Axios from "axios";
+import { Image } from "cloudinary-react";
+import Constants from "../Constants.json";
+import OrdersList from "./editableRestaurantInfo/OrdersList";
 
 export default function RestaurantMainPage(props) {
   const menus = menuData.map((menu) => {
@@ -20,7 +22,7 @@ export default function RestaurantMainPage(props) {
   localStorage.setItem("restaurantID", decodedToken.user.id);
 
   return (
-    <div>
+    <div className={styles.mainWrapper}>
       <div className={styles.restaurantInfoContainer}>
         <div className={styles.editableInfo}>
           <table>
@@ -32,19 +34,19 @@ export default function RestaurantMainPage(props) {
             <tr>Price level: {decodedToken.user.pricelevel}</tr>
           </table>
         </div>
-        <img
-          className={styles.restaurantImage}
-          src="/images/maccas.jpg"
-          alt="Logo"
-        />
+        <Image cloudName="dwbi2ichj" publicId={decodedToken.user.image}></Image>
       </div>
+      
       <div className={styles.editableMenu}>
         <MenuList menu={menus} />
-        <MenuDetailView menus={menus} />
       </div>
       <div className={styles.editableMenu}>
-      <AddMenuItem jwt={userJWT} />
+        <AddMenuItem jwt={userJWT} />
       </div>
+      <div>
+        <OrdersList />
+      </div>
+
     </div>
   );
 }

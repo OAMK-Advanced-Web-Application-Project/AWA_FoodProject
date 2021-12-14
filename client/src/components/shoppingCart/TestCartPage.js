@@ -32,8 +32,7 @@ export default function TestCartPage() {
             userID = {decodedToken.user.iduser}/>
             </div>
             <div>
-            <AdressInput
-            id = {100}/>
+            <AdressInput/>
             </div>
         </div>
     )
