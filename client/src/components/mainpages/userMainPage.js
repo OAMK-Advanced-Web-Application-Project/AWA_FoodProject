@@ -65,6 +65,7 @@ export default function SearchResult() {
                   <div>
                     {" "}
                     <Image
+                      className={styles.restaurantImage}
                       cloudName="dwbi2ichj"
                       publicId={show.image}
                     ></Image>

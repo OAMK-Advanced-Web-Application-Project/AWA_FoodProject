@@ -42,11 +42,13 @@
     opacity: 0.91;
 }
 
-img {
+.restaurantImage {
     height: auto;
     width: auto;
+    min-width: 400px;
+    min-height: 269px;
     max-width: 400px;
-    max-height: 400px;
+    max-height: 269px;
 }
 
 .name {
@@ -64,4 +66,33 @@ img {
     margin-top: 3px;
     font-size: 20px;
     color: green;
+}
+
+.restaurantMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuItem {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: left;
+    border-color: lightgray;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 5px 3px 5px rgb(236, 236, 236);
+    border-radius: 25px;
+}
+
+.menuProduct {
+    font-size: 19px;
+}
+
+.menuDesc {
+    font-size: 15px;
+}
+
+.menuPrice {
+    font-size: 17px;
 }
