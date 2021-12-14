@@ -46,12 +46,14 @@ app.use(
   })
 );
 
+
 /* const db = mysql.createConnection({
   user: "b22e663f52465c",
   host: "eu-cdbr-west-02.cleardb.net",
   password: "d7518bd1",
   database: "heroku_7e3fd4e2b55ba77",
 }); */
+
 
 const db = mysql.createConnection({
   user: "root",
@@ -400,7 +402,8 @@ app.get("/getOrder/:id", (req, res) => {
 
 app.get("/getOrdersRestaurant/:id", (req, res) => {
   db.query(
-    `SELECT idorder FROM order WHERE idrestaurant = ${req.params.id} AND status != "Delivered";`,
+
+    `SELECT idorder FROM food.order WHERE idrestaurant = ${req.params.id} AND status != "Delivered";`,
     (err, result) => {
       if (err) {
         console.log(err);
@@ -413,8 +416,8 @@ app.get("/getOrdersRestaurant/:id", (req, res) => {
 
 app.get("/getOrderDetails/:idorder", (req, res) => {
   db.query(
-    `SELECT food.order.idorder, food.order.iduser, food.user.firstname,
-    food.user.lastname, food.user.address, food.order.status, food.order.productname
+    `Select food.order.idorder, food.order.iduser, food.user.firstname,
+    food.user.lastname, food.order.address, food.order.city, food.order.status, food.order.productname
     from food.order
     inner join food.user on
     food.order.iduser = food.user.iduser
@@ -442,6 +445,8 @@ app.get("/getStatus/:idorder", (req, res) => {
     }
   );
 });
+
+
 
 //restaurant image
 app.put("/restaurantImage", (req, res) => {
@@ -472,18 +477,19 @@ app.get("/getImage", (req, res) => {
   });
 });
 
-app.post("/confirmOrder", (req, res) => {
-  const orderid = req.body.orderid;
+app.post("/setStatus", (req, res) => {
+  const orderid = req.body.idorder;
+  const status = req.body.status;
 
   db.query(
-    "UPDATE food.order SET status = 'Order Confirmed' WHERE idorder = ?",
-    [orderid],
+    "UPDATE food.order SET status = ? WHERE idorder = ?",
+    [status, orderid],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
         console.log(result);
-        res.send("Order confirmed");
+        res.send(result);
       }
     }
   );
