@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/landingPage/LandingPage";
 import RestaurantLogin from "./components/signupAndLogin/restaurantLogin.js";
 import RestaurantSignup from "./components/signupAndLogin/restaurantSignup";
-import TestRestaurantPage from "./components/shoppingCart/TestRestaurantPage";
 import RestaurantMainPage from "./components/mainpages/restaurantMainPage.js";
+import OrderPage from "./components/mainpages/OrderPage.js";
 import MenuList from "./components/mainpages/editableRestaurantInfo/MenuList.js";
 import menuData from "./components/mainpages/editableRestaurantInfo/menuData.json";
 import Payment from "./components/mainpages/payment/Payment.js";
@@ -49,6 +49,7 @@ function App() {
           element={<RestaurantMainPage jwt={userJWT} />}
         >
         </Route>
+        <Route path="orderPage/:idorder" element={<OrderPage/>}></Route>
       </>
     );
   }

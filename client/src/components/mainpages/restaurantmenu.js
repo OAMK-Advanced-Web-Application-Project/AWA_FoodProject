@@ -5,12 +5,16 @@ import Constants from "../Constants.json";
 import styles from "./userMainPage.module.css";
 
 export default function Restaurantmenu() {
-  const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]');
-
   let { idrestaurant } = useParams();
-  const [menuobject, setMenuObject] = useState();
+  const cartFromLocalStorage = JSON.parse(localStorage.getItem('cart') || '[]');
   const [cart, setCart] = useState(cartFromLocalStorage);
 
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart])
+
+
+  const [menuobject, setMenuObject] = useState();
 
   useEffect(() => {
     Axios.get(Constants.API_ADDRESS + `/restaurantById/${idrestaurant}`).then(
@@ -21,14 +25,12 @@ export default function Restaurantmenu() {
     );
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart])
+
 
   const addToCart = (props) =>{
-    let itemInCart = cart.find((item) => props.id === item.id);
+    let itemInCart = cart.find((item) => props.idmenu === item.idmenu);
     let newCart = [...cart];
-
+    console.log(props);
     if(itemInCart){
         itemInCart.quantity++;
     }else{

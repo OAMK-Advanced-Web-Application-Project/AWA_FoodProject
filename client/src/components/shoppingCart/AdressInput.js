@@ -1,46 +1,13 @@
-import React, {useState} from 'react'
-import Placeholderdata from './placeholderData.json'
+import React from 'react'
 
-export default function AdressInput({id}) {
-    const [userData] = useState(Placeholderdata.user);
-
-    const userAdress = (props)=>{
-        let userAdress = userData.find((user) => props === user.id);
-
-        if(userAdress){
-            return userAdress.adress;
-        }else{
-            return " "
-        }
-    }
-
-    const userCity = (props)=>{
-        let userCity = userData.find((user) => props === user.id);
-
-        if(userCity){
-            return userCity.city;
-        }else{
-            return " "
-        }
-    }
-
-    const [adress, setAdress] = useState(userAdress(id));
-    const [city, setCity] = useState(userCity(id));     
+export default function AdressInput() {
 
      return (
         <div>
             <h2>Adress</h2>
-            <input type="text"
-            placeholder = {adress}
-            onChange={(event)=>{
-                setAdress(event.target.value);
-            }}/>
+            <input type="text"/>
             <h2>City</h2>
-            <input type="text"
-            placeholder = {city}
-            onChange={(event)=>{
-                setCity(event.target.value);
-            }}/>
+            <input type="text"/>
         </div>
     )
 }

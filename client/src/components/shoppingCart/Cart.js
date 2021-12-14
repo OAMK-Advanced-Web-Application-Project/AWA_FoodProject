@@ -20,19 +20,20 @@ export default function Cart({cart, setCart, userID}) {
         setCart([]);
     }
 
-    const setQuantity = (product, amount) =>{
-        const newCart = [...cart];
-        newCart.find(item => item.id === product.id).quantity = amount;
-        setCart(newCart);
-    }
+    // const setQuantity = (product, amount) =>{
+    //     const newCart = [...cart];
+    //     newCart.find(item => item.id === product.id).quantity = amount;
+    //     setCart(newCart);
+    // }
 
     const createOrder = () =>{
-        const [products] = cart.map((product)=>(product.name));
+        const productname = cart.map((product)=>(product.productname));
+        const restaurantID = cart.map((product)=>(product.idrestaurant));
         Axios.post(Constants.API_ADDRESS + "/createOrder",{
-            restaurantID : cart[0].restaurantID,
+            restaurantID : restaurantID,
             userID : userID,
             price : getTotalSum(),
-            [products] : products
+            productname : productname
         }).then((response) =>{
             console.log(response)
             
