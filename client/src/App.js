@@ -12,7 +12,6 @@ import menuData from "./components/mainpages/editableRestaurantInfo/menuData.jso
 import Payment from "./components/mainpages/payment/Payment.js";
 import { v4 as uuidv4 } from "uuid";
 import AddMenuItem from "./components/mainpages/editableRestaurantInfo/AddMenuItem.js";
-import TestRestaurantPage from "./components/shoppingCart/TestRestaurantPage.js"
 import Restaurantmenu from "./components/mainpages/restaurantmenu.js";
 
 
@@ -43,7 +42,6 @@ function App() {
     authRoutes = (
       <>
         <Route path="/cart/" element={<Cart />} />
-        <Route path="/testRestaurantPage" element={<TestRestaurantPage />} />
         <Route path="/usermainpage" element={<UserMainPage />} />
         <Route path="/restaurantmenu/:idrestaurant" element={<Restaurantmenu />} />
         <Route path="/payment/:id" element={<Payment />} />

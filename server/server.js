@@ -308,7 +308,7 @@ app.get(
   passport.authenticate("jwt1", { session: false }),
   (req, res) => {
     db.query(
-      "SELECT idrestaurant, restaurantname, type, pricelevel FROM restaurant",
+      "SELECT idrestaurant, restaurantname, type, pricelevel, image FROM restaurant",
       (err, result) => {
         if (err) {
           console.log(err);
@@ -323,7 +323,7 @@ app.get(
 //restaurant menu on user side
 app.get("/restaurantById/:idrestaurant", async (req, res) => {
   db.query(
-    `SELECT productname, description, price FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
+    `SELECT productname, description, price, image FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
     (err, result) => {
       if (err) {
         console.log(err);

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./userMainPage.module.css";
 import Constants from "../Constants.json";
+import { Image } from "cloudinary-react";
+
 
 export default function SearchResult() {
   const [restaurantShow, setRestaurantShow] = useState();
@@ -21,6 +23,7 @@ export default function SearchResult() {
         restaurantname: elem.restaurantname,
         type: elem.type,
         pricelevel: elem.pricelevel,
+        image: elem.image,
       }));
       setRestaurantShow(restaurantShow);
     });
@@ -60,7 +63,7 @@ export default function SearchResult() {
                     navigate(`/restaurantmenu/${show.idrestaurant}`);
                   }}
                 >
-                  <div><img src={`../images/burger${idrestaurant}.jpg`} alt={"restaurant"}/></div>
+                  <div><Image cloudName="dwbi2ichj" publicId={show.image}></Image></div>
                   <div className={styles.name}>{show.restaurantname}</div>
                   <div className={styles.type}>{show.type}</div>
                   <div className={styles.price}>{show.pricelevel}</div>
