@@ -255,7 +255,7 @@ app.post(
     const body = {
       id: req.user.idrestaurant,
       restaurantname: req.user.restaurantname,
-      username: req.user.restaurantname,
+      username: req.user.username,
       address: req.user.address,
       operatinghours: req.user.operatinghours,
       type: req.user.type,
