@@ -19,7 +19,7 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Origin",
     ["https://jolt-restaurant.netlify.app","http://localhost:3000"]
   ); */
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST");
   res.setHeader(
     "Access-Control-Allow-Headers",
@@ -336,7 +336,7 @@ app.get(
   passport.authenticate("jwt1", { session: false }),
   (req, res) => {
     db.query(
-      "SELECT idrestaurant, restaurantname, type, pricelevel FROM restaurant",
+      "SELECT idrestaurant, restaurantname, type, pricelevel, image FROM restaurant",
       (err, result) => {
         if (err) {
           console.log(err);
@@ -351,7 +351,7 @@ app.get(
 //restaurant menu on user side
 app.get("/restaurantById/:idrestaurant", async (req, res) => {
   db.query(
-    `SELECT idmenu, idrestaurant, productname, description, price FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
+    `SELECT idmenu, idrestaurant, productname, description, price, image FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
     (err, result) => {
       if (err) {
         console.log(err);
