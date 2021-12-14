@@ -5,7 +5,6 @@ import styles from "./login.module.css";
 import Constants from "../Constants.json";
 
 export default function UserLogin(props) {
-  Axios.defaults.withCredentials = true;
 
   const [usernameLog, setUsernameLog] = useState("");
   const [passwordLog, setPasswordLog] = useState("");
@@ -19,6 +18,11 @@ export default function UserLogin(props) {
         username: usernameLog,
         password: passwordLog,
       }
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
     console.log(result);

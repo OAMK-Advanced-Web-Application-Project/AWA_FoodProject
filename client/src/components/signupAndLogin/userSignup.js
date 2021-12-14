@@ -18,6 +18,11 @@ export default function UserSignup() {
       username: usernameReg,
       password: passwordReg,
       address: addressReg,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     }).then((response) => {
       console.log(response);
     });
