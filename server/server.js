@@ -46,6 +46,15 @@ app.use(
   })
 );
 
+
+/* const db = mysql.createConnection({
+  user: "b22e663f52465c",
+  host: "eu-cdbr-west-02.cleardb.net",
+  password: "d7518bd1",
+  database: "heroku_7e3fd4e2b55ba77",
+}); */
+
+
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
@@ -248,7 +257,7 @@ app.post(
     const body = {
       id: req.user.idrestaurant,
       restaurantname: req.user.restaurantname,
-      username: req.user.restaurantname,
+      username: req.user.username,
       address: req.user.address,
       operatinghours: req.user.operatinghours,
       type: req.user.type,
@@ -329,7 +338,7 @@ app.get(
   passport.authenticate("jwt1", { session: false }),
   (req, res) => {
     db.query(
-      "SELECT idrestaurant, restaurantname, type, pricelevel FROM restaurant",
+      "SELECT idrestaurant, restaurantname, type, pricelevel, image FROM restaurant",
       (err, result) => {
         if (err) {
           console.log(err);
@@ -344,7 +353,7 @@ app.get(
 //restaurant menu on user side
 app.get("/restaurantById/:idrestaurant", async (req, res) => {
   db.query(
-    `SELECT idmenu, idrestaurant, productname, description, price FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
+    `SELECT idmenu, idrestaurant, productname, description, price, image FROM menu WHERE idrestaurant=${req.params.idrestaurant}`,
     (err, result) => {
       if (err) {
         console.log(err);
@@ -393,6 +402,7 @@ app.get("/getOrder/:id", (req, res) => {
 
 app.get("/getOrdersRestaurant/:id", (req, res) => {
   db.query(
+
     `SELECT idorder FROM food.order WHERE idrestaurant = ${req.params.id} AND status != "Delivered";`,
     (err, result) => {
       if (err) {
