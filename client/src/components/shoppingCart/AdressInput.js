@@ -1,49 +1,16 @@
-import React, {useState} from 'react'
-import Placeholderdata from './placeholderData.json'
-import styles from './ShoppingCart.module.css'
 
-export default function AdressInput({id}) {
-    const [userData] = useState(Placeholderdata.user);
+import React from 'react'
 
-    const userAdress = (props)=>{
-        let userAdress = userData.find((user) => props === user.id);
 
-        if(userAdress){
-            return userAdress.adress;
-        }else{
-            return " "
-        }
-    }
-
-    const userCity = (props)=>{
-        let userCity = userData.find((user) => props === user.id);
-
-        if(userCity){
-            return userCity.city;
-        }else{
-            return " "
-        }
-    }
-
-    const [adress, setAdress] = useState(userAdress(id));
-    const [city, setCity] = useState(userCity(id));     
+export default function AdressInput() {
 
      return (
-        <div className={styles.AddressContent}>
-            <div className={styles.Address}>Address</div>
-            <input type="text"
-            className={styles.TextBox}
-            placeholder = {adress}
-            onChange={(event)=>{
-                setAdress(event.target.value);
-            }}/>
-            <div className={styles.City}>City</div>
-            <input type="text"
-            className={styles.TextBox}
-            placeholder = {city}
-            onChange={(event)=>{
-                setCity(event.target.value);
-            }}/>
+
+        <div>
+            <h2>Adress</h2>
+            <input type="text"/>
+            <h2>City</h2>
+            <input type="text"/>
         </div>
     )
 }
