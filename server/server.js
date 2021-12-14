@@ -17,7 +17,7 @@ const app = express();
 app.use(function (req, res, next) {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://jolt-restaurant.netlify.app"
+    ["https://jolt-restaurant.netlify.app","http://localhost:3000"]
   );
   res.setHeader("Access-Control-Allow-Methods", "GET,POST");
   res.setHeader(
