@@ -46,11 +46,18 @@ app.use(
   })
 );
 
-const db = mysql.createConnection({
+/* const db = mysql.createConnection({
   user: "b22e663f52465c",
   host: "eu-cdbr-west-02.cleardb.net",
   password: "d7518bd1",
   database: "heroku_7e3fd4e2b55ba77",
+}); */
+
+const db = mysql.createConnection({
+  user: "root",
+  host: "localhost",
+  password: "1216",
+  database: "food",
 });
 // ------------------------------------------------------------------
 
@@ -393,9 +400,7 @@ app.get("/getOrder/:id", (req, res) => {
 
 app.get("/getOrdersRestaurant/:id", (req, res) => {
   db.query(
-    `Select idorder from food.order
-      where idrestaurant = ${req.params.id} AND
-      status != "Delivered";`,
+    `SELECT idorder FROM order WHERE idrestaurant = ${req.params.id} AND status != "Delivered";`,
     (err, result) => {
       if (err) {
         console.log(err);
@@ -408,7 +413,7 @@ app.get("/getOrdersRestaurant/:id", (req, res) => {
 
 app.get("/getOrderDetails/:idorder", (req, res) => {
   db.query(
-    `Select food.order.idorder, food.order.iduser, food.user.firstname,
+    `SELECT food.order.idorder, food.order.iduser, food.user.firstname,
     food.user.lastname, food.user.address, food.order.status, food.order.productname
     from food.order
     inner join food.user on
