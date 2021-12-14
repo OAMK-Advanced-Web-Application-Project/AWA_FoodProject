@@ -73,16 +73,6 @@ export default function OrderPageList(){
             <div>
                 <h3>Status: {orderStatus}</h3>  
             </div>
-                {/* <div>
-                    <h3>Set Status:</h3>
-                    <form onSubmit={setStatus}>
-                        <input type="submit" name="status" value="Confirm"></input>
-                        <input type="submit" name="status" value="Preparing"></input>
-                        <input type="submit" name="status" value="Ready for delivery"></input>
-                        <input type="submit" name="status" value="Delivering"></input>
-                        <input type="submit" name="status" value="Delivered"></input>
-                    </form>
-                </div> */}
                 <div>
                     <form onSubmit={setStatus}>
                         <label>
