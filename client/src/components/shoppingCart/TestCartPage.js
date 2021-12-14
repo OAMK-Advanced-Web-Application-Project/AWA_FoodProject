@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { useEffect } from "react";
 import Cart from './Cart'
-import AdressInput from './AdressInput';
 import jwt from "jsonwebtoken";
 
 
@@ -30,9 +29,6 @@ export default function TestCartPage() {
             cart = {cart}
             setCart = {setCart}
             userID = {decodedToken.user.iduser}/>
-            </div>
-            <div>
-            <AdressInput/>
             </div>
         </div>
     )

@@ -369,21 +369,25 @@ app.post("/createOrder", (req, res) => {
   const restaurantID = req.body.restaurantID;
   const userID = req.body.userID;
   const price = req.body.price;
+  const adress = req.body.adress;
+  const city = req.body.city;
   const productname = req.body.productname;
+  const quantity = req.body.quantity;
   const status = "In Progress";
 
   db.query(
-    "INSERT INTO food.order (iduser, productname, price, status, idrestaurant) VALUES (?, ?, ?, ?, ?)",
-    [userID, productname, price, status, restaurantID],
+    "INSERT INTO food.order (iduser, productname, price, status, idrestaurant, address, city, quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+    [userID, productname, price, status, restaurantID, adress, city, quantity],
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values read");
+        res.send(result);
       }
     }
   );
 });
+
 
 app.get("/getOrder/:id", (req, res) => {
   db.query(
