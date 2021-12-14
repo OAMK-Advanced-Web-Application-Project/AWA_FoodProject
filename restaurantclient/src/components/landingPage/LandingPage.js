@@ -17,7 +17,7 @@ export default function LandingPage(props) {
           </div>
           <div className={styles.loginButtons}>
             {props.userLoggedIn ? (
-              <Link to={`/restaurantMainpage/${decodedToken.user.id}`}> Go to mainpage </Link>
+              <Link to={`/restaurantMainpage/${decodedToken.user.id}`}> Go to main </Link>
             ) : (
               <Link to="/restaurantlogin"> Log in </Link>
             )}{" "}

@@ -17,13 +17,19 @@ export default function AddMenuItem(props) {
   const [showImageMenu, setShowImageMenu] = useState("");
 
   const uploadImage = () => {
+
     const formData = new FormData();
     formData.append("file", imageSelectedMenu);
     formData.append("upload_preset", "ujyz5zuo");
 
     Axios.post(
       "https://api.cloudinary.com/v1_1/dwbi2ichj/image/upload",
-      formData
+      formData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
     ).then((response) => {
       console.log(response.data.url);
       setShowImageMenu(response.data.url);
@@ -42,7 +48,7 @@ export default function AddMenuItem(props) {
       },
       {
         headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
+          'Content-Type': 'application/json',
         },
       }
     ).then((response) => {
@@ -54,7 +60,7 @@ export default function AddMenuItem(props) {
 
   return (
     <div className={styles.addMenuItem}>
-      <h1>Add menu item</h1>
+      <div className={styles.title}>Add menu item</div>
       <label>Product name</label>
       <input
         type="text"
@@ -83,8 +89,8 @@ export default function AddMenuItem(props) {
         }}
       />
       <button onClick={uploadImage}> Upload Image</button>
-      <div>
-        <button onClick={addProduct}> Add product </button>
+      <div className={styles.productButton}>
+        <button  onClick={addProduct}> Add product </button>
       </div>
     </div>
   );

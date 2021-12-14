@@ -1,35 +1,63 @@
-.restaurantImage {
-    height: 200px;
+.mainWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .restaurantInfoContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    margin-top: 5%;
-    min-width: 20%;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
     padding: 10px;
     border-radius: 25px;
-    margin-right: 20%;
-    margin-left: 20%;
     border: 1px solid #797979;
     background-color: #ffffff;
     box-sizing: border-box;
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.35);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+    font-size: 17px;
+    margin-top: 50px;
+}
+
+.editableInfo {
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+button {
+    font-size: 17px;
+    background-color: rgb(255, 255, 255);
+    border-color: lightgray;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 5px 3px 5px rgb(202, 202, 202);
+    border-radius: 25px;
+    padding: 15px;
+    margin: 20px;
+    transition-duration: 0.4s;
+    font-family: Arial, Helvetica, sans-serif;
+    width: fit-content;
+    text-align: center;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #0d80e4;
+    color: white;
 }
 
 .restaurantImage {
+    max-height: 500px;
+    max-width: 500px;
     padding: 10px;
-}
-
-.editableMenu {
-    border: 1px solid #797979;
-    box-shadow: 5px 5px 5px 0px rgb(0 0 0 / 35%);
-    margin-right: 20%;
-    margin-left: 20%;
-    margin-top: 1%;
-    border-radius: 25px;
-    padding: 10px 10px 10px 10px;
 }

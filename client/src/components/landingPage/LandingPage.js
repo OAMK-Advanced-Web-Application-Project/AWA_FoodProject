@@ -7,13 +7,13 @@ export default function LandingPage(props) {
     <div className={styles.background}>
       <div className={styles.landingContainer}>
         <div className={styles.containerContent}>
-          <div>
+          <div className={styles.containerText}>
             You are  {" "}
             {props.userLoggedIn ? " logged in" : " not logged in"}
           </div>
-          <div className={styles.loginButtons}>
+          <div className={styles.LoginText}>
             {props.userLoggedIn ? (
-              <Link to="/userMainpage"> Go to mainpage </Link>
+              <Link to="/userMainpage"> Go to main </Link>
             ) : (
               <Link to="/userlogin"> Log in </Link>
             )}

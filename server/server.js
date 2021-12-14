@@ -11,24 +11,23 @@ const JwtStrategy = require("passport-jwt").Strategy,
 const bcrypt = require("bcrypt");
 const saltRound = 10;
 const jwt = require("jsonwebtoken");
-
+const PORT = process.env.PORT || 3001;
 const app = express();
+
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "https://jolt-restaurant.netlify.app");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST");
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+})
 
 app.use(express.json());
 
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "PUT"],
-    credentials: true,
-    optionSuccessStatus: 200,
-  })
-);
-
-/* app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true })); */
-
-/* app.use(
   session({
     key: "userId",
     secret: "AWAgroup8",
@@ -38,21 +37,15 @@ app.use(bodyParser.urlencoded({ extended: true })); */
       expires: 60 * 60 * 24,
     },
   })
-); */
+);
 
 const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "1216",
-  database: "food",
+  user: "b22e663f52465c",
+  host: "eu-cdbr-west-02.cleardb.net",
+  password: "d7518bd1",
+  database: "heroku_7e3fd4e2b55ba77",
 });
-
 // ------------------------------------------------------------------
-
-app.use((req, res, next) => {
-  console.log("middleware");
-  next();
-});
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -184,13 +177,14 @@ app.post("/createRestaurant", (req, res) => {
   const operatinghours = req.body.operatinghours;
   const type = req.body.type;
   const pricelevel = req.body.pricelevel;
+  const image = req.body.image;
 
   bcrypt.hash(password, saltRound, (err, hash) => {
     if (err) {
       console.log(err);
     }
     db.query(
-      "INSERT INTO restaurant (restaurantname, username, password, address, operatinghours, type, pricelevel) VALUES (?,?,?,?,?,?,?)",
+      "INSERT INTO restaurant (restaurantname, username, password, address, operatinghours, type, pricelevel, image) VALUES (?,?,?,?,?,?,?,?)",
       [
         restaurantname,
         username,
@@ -199,6 +193,7 @@ app.post("/createRestaurant", (req, res) => {
         operatinghours,
         type,
         pricelevel,
+        image,
       ],
       (err, result) => {
         if (err) {
@@ -251,6 +246,7 @@ app.post(
       operatinghours: req.user.operatinghours,
       type: req.user.type,
       pricelevel: req.user.pricelevel,
+      image: req.user.image,
     };
     const payload = {
       user: body,
@@ -269,7 +265,7 @@ app.post(
 //food item creation
 app.post(
   "/createMenuItem",
-  passport.authenticate("jwt2", { session: false }),
+  //passport.authenticate("jwt2", { session: false }),
   (req, res) => {
     const idmenu = req.body.idmenu;
     const idrestaurant = req.body.idrestaurant;
@@ -374,21 +370,21 @@ app.post("/createOrder", (req, res) => {
   );
 });
 
-
   app.get("/getOrder/:id", (req, res) => {
     db.query(
       `SELECT iduser, price, status, idrestaurant FROM food.order 
     where iduser = ${req.params.id} AND
     status = "In Progress"`,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.json(result);
-        }
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(result);
       }
-    );
-  });
+    }
+  );
+});
+
 
   app.get("/getOrdersRestaurant/:id", (req, res) => {
     db.query(
@@ -464,7 +460,7 @@ app.get("/getImage", (req, res) => {
       res.send(result);
       console.log(result);
     }
-  });
+  );
 });
 
 app.post("/confirmOrder", (req, res) => {
@@ -484,6 +480,6 @@ app.post("/confirmOrder", (req, res) => {
   );
 });
 
-app.listen(3001, () => {
-  console.log("Your server is running on port 3001");
+app.listen(PORT, () => {
+  console.log(`Your server is running on port ${PORT}`);
 });
