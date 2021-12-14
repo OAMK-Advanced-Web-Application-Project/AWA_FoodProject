@@ -42,11 +42,13 @@
     opacity: 0.91;
 }
 
-img {
+.restaurantImage {
     height: auto;
     width: auto;
+    min-width: 400px;
+    min-height: 269px;
     max-width: 400px;
-    max-height: 400px;
+    max-height: 269px;
 }
 
 .name {
