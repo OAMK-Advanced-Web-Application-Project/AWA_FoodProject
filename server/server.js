@@ -15,10 +15,11 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(function (req, res, next) {
-  res.setHeader(
+  /*   res.setHeader(
     "Access-Control-Allow-Origin",
     ["https://jolt-restaurant.netlify.app","http://localhost:3000"]
-  );
+  ); */
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST");
   res.setHeader(
     "Access-Control-Allow-Headers",
