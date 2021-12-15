@@ -47,20 +47,20 @@ app.use(
 );
 
 
-/* const db = mysql.createConnection({
+  const db = mysql.createConnection({
   user: "b22e663f52465c",
   host: "eu-cdbr-west-02.cleardb.net",
   password: "d7518bd1",
   database: "heroku_7e3fd4e2b55ba77",
-}); */
+}); 
 
 
-const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "1216",
-  database: "food",
-});
+// const db = mysql.createConnection({
+//   user: "root",
+//   host: "localhost",
+//   password: "1216",
+//   database: "food",
+// });
 // ------------------------------------------------------------------
 
 const jwtOptions = {
